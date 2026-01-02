@@ -1,0 +1,193 @@
+bl_info = {
+    "name": "Vertex Order Fixer (UV Primary, Margin Control)",
+    "author": "ChatGPT",
+    "version": (1, 4),
+    "blender": (3, 3, 0),
+    "location": "View3D > N Panel > Vertex Tools",
+    "description": "Reorder vertices using UV-primary matching with user-controlled margins",
+    "category": "Mesh",
+}
+
+import bpy
+import bmesh
+from mathutils import Vector
+from mathutils.kdtree import KDTree
+
+
+def get_vertex_uvs(obj):
+    me = obj.data
+    uv_layer = me.uv_layers.active
+    if not uv_layer:
+        return None
+
+    vert_uv = [Vector((0.0, 0.0)) for _ in me.vertices]
+    count = [0] * len(me.vertices)
+
+    for loop in me.loops:
+        vid = loop.vertex_index
+        vert_uv[vid] += uv_layer.data[loop.index].uv
+        count[vid] += 1
+
+    for i in range(len(vert_uv)):
+        if count[i]:
+            vert_uv[i] /= count[i]
+
+    return vert_uv
+
+
+class OBJECT_OT_fix_vertex_order_uv_margin(bpy.types.Operator):
+    bl_idname = "object.fix_vertex_order_uv_margin"
+    bl_label = "Fix Vertex Order (UV Primary)"
+    bl_options = {'REGISTER', 'UNDO'}
+
+    def execute(self, context):
+        props = context.scene.vertex_order_props
+
+        sel = context.selected_objects
+        if len(sel) != 2:
+            self.report({'ERROR'}, "Select exactly 2 mesh objects")
+            return {'CANCELLED'}
+
+        target = context.active_object
+        reference = [o for o in sel if o != target][0]
+
+        if target.type != 'MESH' or reference.type != 'MESH':
+            self.report({'ERROR'}, "Both objects must be meshes")
+            return {'CANCELLED'}
+
+        if len(target.data.vertices) != len(reference.data.vertices):
+            self.report({'ERROR'}, "Vertex count mismatch")
+            return {'CANCELLED'}
+
+        ref_uvs = get_vertex_uvs(reference)
+        tgt_uvs = get_vertex_uvs(target)
+
+        if not ref_uvs or not tgt_uvs:
+            self.report({'ERROR'}, "Both meshes need active UV maps")
+            return {'CANCELLED'}
+
+        size = len(reference.data.vertices)
+
+        # --- Build UV KDTree (UV PRIMARY) ---
+        kd = KDTree(size)
+        for i, uv in enumerate(ref_uvs):
+            kd.insert(Vector((uv.x, uv.y, 0.0)), i)
+        kd.balance()
+
+        mapping = [None] * size
+        used = set()
+        unmatched = 0
+
+        for i, v in enumerate(target.data.vertices):
+            uv_t = tgt_uvs[i]
+            pos_t = target.matrix_world @ v.co
+
+            _, ref_index, dist = kd.find(Vector((uv_t.x, uv_t.y, 0.0)))
+
+            if ref_index in used:
+                continue
+
+            if dist > props.uv_margin:
+                unmatched += 1
+                continue
+
+            pos_r = reference.matrix_world @ reference.data.vertices[ref_index].co
+            if (pos_t - pos_r).length > props.pos_margin:
+                unmatched += 1
+                continue
+
+            mapping[ref_index] = i
+            used.add(ref_index)
+
+        if None in mapping:
+            self.report(
+                {'ERROR'},
+                f"Mapping incomplete ({mapping.count(None)} verts unmatched). "
+                "Increase margins or split mesh into parts."
+            )
+            return {'CANCELLED'}
+
+        # --- Rebuild mesh safely ---
+        bm_old = bmesh.new()
+        bm_old.from_mesh(target.data)
+        bm_old.verts.ensure_lookup_table()
+        bm_old.faces.ensure_lookup_table()
+
+        bm_new = bmesh.new()
+        new_verts = [bm_new.verts.new(bm_old.verts[mapping[i]].co) for i in range(size)]
+        bm_new.verts.ensure_lookup_table()
+
+        for face in bm_old.faces:
+            try:
+                bm_new.faces.new([new_verts[v.index] for v in face.verts])
+            except ValueError:
+                pass
+
+        bm_new.to_mesh(target.data)
+        bm_old.free()
+        bm_new.free()
+
+        self.report({'INFO'}, "Vertex order fixed (UV primary)")
+        return {'FINISHED'}
+
+
+class VertexOrderProps(bpy.types.PropertyGroup):
+    uv_margin: bpy.props.FloatProperty(
+        name="UV Margin",
+        description="Maximum UV distance to consider vertices identical",
+        default=0.02,
+        min=0.0001,
+        max=0.2,
+        precision=4
+    )
+
+    pos_margin: bpy.props.FloatProperty(
+        name="Position Margin",
+        description="Maximum world-space distance allowed",
+        default=0.003,
+        min=0.00001,
+        max=0.1,
+        precision=5
+    )
+
+
+class VIEW3D_PT_vertex_order_fixer(bpy.types.Panel):
+    bl_label = "Vertex Order Fixer (UV Primary)"
+    bl_idname = "VIEW3D_PT_vertex_order_fixer_uv_margin"
+    bl_space_type = 'VIEW_3D'
+    bl_region_type = 'UI'
+    bl_category = "Vertex Tools"
+
+    def draw(self, context):
+        layout = self.layout
+        props = context.scene.vertex_order_props
+
+        col = layout.column(align=True)
+        col.label(text="Margins:")
+        col.prop(props, "uv_margin")
+        col.prop(props, "pos_margin")
+        col.separator()
+        col.label(text="Workflow:")
+        col.label(text="• Reference first")
+        col.label(text="• Target active")
+        col.label(text="• Best used per mesh part")
+        col.separator()
+        col.operator("object.fix_vertex_order_uv_margin", icon="SORTSIZE")
+
+
+def register():
+    bpy.utils.register_class(VertexOrderProps)
+    bpy.types.Scene.vertex_order_props = bpy.props.PointerProperty(type=VertexOrderProps)
+    bpy.utils.register_class(OBJECT_OT_fix_vertex_order_uv_margin)
+    bpy.utils.register_class(VIEW3D_PT_vertex_order_fixer)
+
+
+def unregister():
+    bpy.utils.unregister_class(VIEW3D_PT_vertex_order_fixer)
+    bpy.utils.unregister_class(OBJECT_OT_fix_vertex_order_uv_margin)
+    del bpy.types.Scene.vertex_order_props
+    bpy.utils.unregister_class(VertexOrderProps)
+
+
+if __name__ == "__main__":
+    register()
