@@ -1,0 +1,134 @@
+# Blender Add-on: Snap Selected Bones to Strongest Weighted Vertex Position
+# Moves selected pose/edit bones to the weighted center of the mesh
+# based on the vertex group with the same bone name.
+#
+# How to use:
+# 1. Select Armature + Mesh
+# 2. Select armature active
+# 3. Enter EDIT MODE on armature
+# 4. Select bones you want to move
+# 5. Run script
+# 6. Press button: Bone Tools > Snap Bones To Weight
+
+bl_info = {
+    "name": "Snap Bones To Strongest Weight",
+    "author": "AkELkA",
+    "version": (1, 0),
+    "blender": (3, 0, 0),
+    "location": "View3D > Sidebar > Bone Tools",
+    "category": "Rigging",
+}
+
+import bpy
+from mathutils import Vector
+
+
+# ---------------------------------------------------
+# Find mesh object
+# ---------------------------------------------------
+def get_selected_mesh(context, armature):
+    for obj in context.selected_objects:
+        if obj.type == 'MESH' and obj != armature:
+            return obj
+    return None
+
+
+# ---------------------------------------------------
+# Find strongest weighted vertex for bone
+# ---------------------------------------------------
+def strongest_weight_position(mesh, bone_name):
+    vg = mesh.vertex_groups.get(bone_name)
+    if not vg:
+        return None
+
+    best_weight = -1
+    best_pos = None
+
+    for v in mesh.data.vertices:
+        for g in v.groups:
+            if g.group == vg.index:
+                if g.weight > best_weight:
+                    best_weight = g.weight
+                    best_pos = mesh.matrix_world @ v.co
+
+    return best_pos
+
+
+# ---------------------------------------------------
+# Operator
+# ---------------------------------------------------
+class ARMATURE_OT_snap_bones_weight(bpy.types.Operator):
+    bl_idname = "armature.snap_bones_weight"
+    bl_label = "Snap Bones To Weight"
+    bl_description = "Move selected bones to strongest weighted vertex"
+
+    def execute(self, context):
+        arm = context.object
+
+        if not arm or arm.type != 'ARMATURE':
+            self.report({'ERROR'}, "Select armature")
+            return {'CANCELLED'}
+
+        mesh = get_selected_mesh(context, arm)
+
+        if not mesh:
+            self.report({'ERROR'}, "Select mesh too")
+            return {'CANCELLED'}
+
+        if context.mode != 'EDIT_ARMATURE':
+            self.report({'ERROR'}, "Must be in Edit Mode")
+            return {'CANCELLED'}
+
+        moved = 0
+
+        for bone in arm.data.edit_bones:
+            if bone.select:
+                pos = strongest_weight_position(mesh, bone.name)
+
+                if pos:
+                    length = bone.length
+                    direction = (bone.tail - bone.head).normalized()
+
+                    local_pos = arm.matrix_world.inverted() @ pos
+
+                    bone.head = local_pos
+                    bone.tail = local_pos + direction * length
+                    moved += 1
+
+        self.report({'INFO'}, f"Moved {moved} bones")
+        return {'FINISHED'}
+
+
+# ---------------------------------------------------
+# Panel
+# ---------------------------------------------------
+class VIEW3D_PT_snap_bones_weight(bpy.types.Panel):
+    bl_label = "Bone Tools"
+    bl_idname = "VIEW3D_PT_snap_bones_weight"
+    bl_space_type = 'VIEW_3D'
+    bl_region_type = 'UI'
+    bl_category = 'Bone Tools'
+
+    def draw(self, context):
+        layout = self.layout
+        layout.operator("armature.snap_bones_weight")
+
+
+# ---------------------------------------------------
+# Register
+# ---------------------------------------------------
+classes = (
+    ARMATURE_OT_snap_bones_weight,
+    VIEW3D_PT_snap_bones_weight,
+)
+
+def register():
+    for c in classes:
+        bpy.utils.register_class(c)
+
+def unregister():
+    for c in reversed(classes):
+        bpy.utils.unregister_class(c)
+
+if __name__ == "__main__":
+    register()
