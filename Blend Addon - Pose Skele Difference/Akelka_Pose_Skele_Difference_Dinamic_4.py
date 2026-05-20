@@ -1,7 +1,7 @@
 bl_info = {
-    "name": "Armature Difference Pose Live Link",
+    "name": "AkELkA Difference Pose Live - Skele Difference Dinamic",
     "author": "AkELkA",
-    "version": (1, 0, 3),
+    "version": (1, 0, 4),
     "blender": (3, 0, 0),
     "location": "View3D > Sidebar (N) > Akelka Tools",
     "description": "Live link one armature to another using matching bone names",
