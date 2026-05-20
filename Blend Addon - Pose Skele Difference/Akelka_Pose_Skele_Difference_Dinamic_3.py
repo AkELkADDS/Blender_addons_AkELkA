@@ -1,9 +1,9 @@
 bl_info = {
-    "name": "Armature Difference Pose Live Link",
+    "name": "Armature Difference Pose Live Link (Pose Skele Difference Dinamic)",
     "author": "AkELkA",
-    "version": (1, 0, 0),
+    "version": (1, 0, 1),
     "blender": (3, 0, 0),
-    "location": "View3D > Sidebar > Tool",
+    "location": "View3D > Sidebar (N) > Akelka Tools",
     "description": "Live link one armature to another using matching bone names",
     "category": "Rigging",
 }
@@ -92,7 +92,7 @@ def add_live_constraints(driver, driven, head_only=False):
 
 
 class ARMATURE_OT_dp_live_enable(bpy.types.Operator):
-    bl_idname = "armature.dp_live_enable"
+    bl_idname = "armature.dp2_live_enable"
     bl_label = "Enable Live Link"
     bl_description = "Make the active armature follow the other selected armature in real time"
 
@@ -102,7 +102,7 @@ class ARMATURE_OT_dp_live_enable(bpy.types.Operator):
             self.report({'ERROR'}, err)
             return {'CANCELLED'}
 
-        head_only = context.scene.dp_head_only
+        head_only = context.scene.dp2_head_only
 
         # Work in Object mode first
         if context.mode != 'OBJECT':
@@ -130,7 +130,7 @@ class ARMATURE_OT_dp_live_enable(bpy.types.Operator):
 
 
 class ARMATURE_OT_dp_live_disable(bpy.types.Operator):
-    bl_idname = "armature.dp_live_disable"
+    bl_idname = "armature.dp2_live_disable"
     bl_label = "Disable Live Link"
     bl_description = "Remove live link constraints from the active armature"
 
@@ -153,16 +153,16 @@ class ARMATURE_OT_dp_live_disable(bpy.types.Operator):
 
 class VIEW3D_PT_dp_live_panel(bpy.types.Panel):
     bl_label = "Difference Pose Live"
-    bl_idname = "VIEW3D_PT_dp_live_panel"
+    bl_idname = "VIEW3D_PT_dp2_live_panel"
     bl_space_type = 'VIEW_3D'
     bl_region_type = 'UI'
-    bl_category = 'Tool'
+    bl_category = "Akelka Tools"
 
     def draw(self, context):
         layout = self.layout
-        layout.prop(context.scene, "dp_head_only")
-        layout.operator("armature.dp_live_enable", icon='CONSTRAINT_BONE')
-        layout.operator("armature.dp_live_disable", icon='X')
+        layout.prop(context.scene, "dp2_head_only")
+        layout.operator("armature.dp2_live_enable", icon='CONSTRAINT_BONE')
+        layout.operator("armature.dp2_live_disable", icon='X')
 
 
 classes = (
@@ -176,15 +176,17 @@ def register():
     for cls in classes:
         bpy.utils.register_class(cls)
 
-    bpy.types.Scene.dp_head_only = bpy.props.BoolProperty(
-        name="Head / Neck Only",
-        description="Only link bones whose names contain head or neck",
-        default=True
-    )
+    if not hasattr(bpy.types.Scene, "dp2_head_only"):
+        bpy.types.Scene.dp2_head_only = bpy.props.BoolProperty(
+            name="Head / Neck Only",
+            description="Only link bones whose names contain head or neck",
+            default=True,
+        )
 
 
 def unregister():
-    del bpy.types.Scene.dp_head_only
+    if hasattr(bpy.types.Scene, "dp2_head_only"):
+        del bpy.types.Scene.dp2_head_only
 
     for cls in reversed(classes):
         bpy.utils.unregister_class(cls)
