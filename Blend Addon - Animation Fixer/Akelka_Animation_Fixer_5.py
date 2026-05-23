@@ -2,7 +2,7 @@
 bl_info = {
     "name": "Akelka Animation Fixer",
     "author": "Akelka",
-    "version": (1, 0, 2),
+    "version": (1, 0, 5),
     "blender": (4, 5, 2),
     "location": "View3D > Sidebar (N) > Pose Align",
     "description": "Rotate parent bone so child (head/tail) moves close to target (head/tail). Supports multiple Parent/Child/Target combos (add/remove). Analytic + iterative solvers, modal bake, pick selected bone. Uses Graph Editor Gaussian Smooth for bone F-curves (calls bpy.ops.graph.gaussian_smooth safely). Includes preset sets and a one-click quickfix.",
