@@ -2,7 +2,7 @@
 bl_info = {
     "name": "Akelka Animation Fixer",
     "author": "Akelka",
-    "version": (1, 0, 1),
+    "version": (1, 0, 2),
     "blender": (4, 5, 2),
     "location": "View3D > Sidebar (N) > Pose Align",
     "description": "Rotate parent bone so child (head/tail) moves close to target (head/tail). Supports multiple Parent/Child/Target combos (add/remove). Analytic + iterative solvers, modal bake, pick selected bone. Uses Graph Editor Gaussian Smooth for bone F-curves (calls bpy.ops.graph.gaussian_smooth safely). Includes preset sets and a one-click quickfix.",
@@ -168,6 +168,20 @@ def register_props():
         description="Gaussian smooth factor for manual work (0 = skip smoothing, 1.0 = full smoothing, 0.5 = half smoothing, etc.)"
     )
 
+    # Bake debug (console) — one bone name, e.g. Hip_R
+    sc.align_debug_bake = bpy.props.BoolProperty(
+        name="Debug bake to console", default=True,
+        description="Print per-frame rotation info for one parent bone during bake (see System Console)"
+    )
+    sc.align_debug_bone = bpy.props.StringProperty(
+        name="Debug bone", default="Hip_R",
+        description="Parent bone name to log during bake (case-sensitive)"
+    )
+    sc.align_debug_spike_deg = bpy.props.FloatProperty(
+        name="Spike threshold (deg)", default=45.0, min=5.0, max=180.0,
+        description="Log *** SPIKE *** when rotation jumps more than this vs previous baked frame"
+    )
+
 def unregister_props():
     for p in ("show_advanced",
               "align_parent_bone", "align_child_bone", "align_target_bone",
@@ -175,7 +189,8 @@ def unregister_props():
               "align_triples", "align_triples_index",
               "align_is_baking", "align_bake_progress", "align_bake_cancel",
               "align_use_threading", "align_thread_workers",
-              "smooth_only_selected_bones", "align_locked_axis", "quickfix_smooth_count", "manual_smooth_count"):
+              "smooth_only_selected_bones", "align_locked_axis", "quickfix_smooth_count", "manual_smooth_count",
+              "align_debug_bake", "align_debug_bone", "align_debug_spike_deg"):
         if hasattr(bpy.types.Scene, p):
             delattr(bpy.types.Scene, p)
 
@@ -188,6 +203,225 @@ def pose_point_world(arm_obj, pb, use_head: bool):
         return arm_obj.matrix_world @ pb.head
     else:
         return arm_obj.matrix_world @ pb.tail
+
+def bone_rotation_as_quaternion(pb_parent):
+    """Current parent rotation as a quaternion regardless of rotation_mode."""
+    if pb_parent.rotation_mode == 'QUATERNION':
+        return pb_parent.rotation_quaternion.copy()
+    return pb_parent.rotation_euler.to_quaternion()
+
+def quat_make_continuous(new_q, ref_q):
+    """Pick the quaternion hemisphere closest to ref_q (q and -q are the same rotation)."""
+    if new_q.dot(ref_q) < 0.0:
+        new_q.negate()
+
+def _debug_bone_enabled(sc, bone_name):
+    if sc is None or not getattr(sc, 'align_debug_bake', False):
+        return False
+    target = (getattr(sc, 'align_debug_bone', None) or 'Hip_R').strip()
+    return bone_name == target
+
+def quat_delta_deg(q_a, q_b):
+    """Angle in degrees between two unit quaternions (same rotation if q and -q)."""
+    d = abs(min(1.0, max(-1.0, q_a.dot(q_b))))
+    return math.degrees(2.0 * math.acos(d))
+
+def _fmt_euler(pb):
+    if pb.rotation_mode == 'QUATERNION':
+        e = pb.rotation_quaternion.to_euler('XYZ')
+        mode = 'QUAT->XYZ'
+    else:
+        e = pb.rotation_euler
+        mode = pb.rotation_mode
+    return mode, (round(e.x, 4), round(e.y, 4), round(e.z, 4))
+
+def align_debug_log_bone(sc, pb_parent, frame, stage, bake_state=None, dist=None, extra=""):
+    """Console log for one debug bone during bake. Open Window > Toggle System Console."""
+    if not _debug_bone_enabled(sc, pb_parent.name):
+        return
+    mode, eul = _fmt_euler(pb_parent)
+    q = bone_rotation_as_quaternion(pb_parent)
+    q_str = tuple(round(v, 4) for v in q)
+
+    delta_deg = None
+    quat_flipped = False
+    prev = bake_state.get(pb_parent.name) if bake_state else None
+    if prev is not None:
+        delta_deg = quat_delta_deg(q, prev['quat'])
+        quat_flipped = q.dot(prev['quat']) < 0.0
+
+    spike_thr = float(getattr(sc, 'align_debug_spike_deg', 45.0))
+    is_spike = delta_deg is not None and delta_deg >= spike_thr
+    tag = "*** SPIKE ***" if is_spike else "ok"
+
+    dist_s = f" dist={dist:.6f}" if dist is not None else ""
+    delta_s = f" delta_deg={delta_deg:.2f}" if delta_deg is not None else " delta_deg=n/a"
+    flip_s = " quat_hemisphere_flip=True" if quat_flipped else ""
+    extra_s = f" {extra}" if extra else ""
+
+    print(
+        f"[AAF][{pb_parent.name}] frame={int(frame)} {stage} [{tag}] "
+        f"mode={mode} euler={eul} quat={q_str}{delta_s}{flip_s}{dist_s}{extra_s}"
+    )
+
+def _collect_bake_parent_bone_names(sc):
+    names = set()
+    if len(sc.align_triples) > 0:
+        for tri in sc.align_triples:
+            if tri.parent_bone:
+                names.add(tri.parent_bone)
+    elif sc.align_parent_bone:
+        names.add(sc.align_parent_bone)
+    return names
+
+def strip_conflicting_parent_rotation_fcurves(arm_obj, parent_bone_names):
+    """Remove euler f-curves on quaternion bones (and vice versa) so only one channel drives rotation."""
+    if not arm_obj.animation_data or not arm_obj.animation_data.action:
+        return 0
+    action = arm_obj.animation_data.action
+    to_remove = []
+    for fcu in action.fcurves:
+        bone = _extract_bone_name_from_path(fcu.data_path)
+        if bone not in parent_bone_names:
+            continue
+        pb = arm_obj.pose.bones.get(bone)
+        if not pb:
+            continue
+        if pb.rotation_mode == 'QUATERNION' and 'rotation_euler' in fcu.data_path:
+            to_remove.append(fcu)
+        elif pb.rotation_mode != 'QUATERNION' and 'rotation_quaternion' in fcu.data_path:
+            to_remove.append(fcu)
+    for fcu in to_remove:
+        action.fcurves.remove(fcu)
+    return len(to_remove)
+
+def remove_subframe_rotation_keys(action, bone_name, frame_start, frame_end):
+    """Delete rotation keys that sit between integer frames (common source of in-between pops)."""
+    removed = 0
+    for fcu in list(action.fcurves):
+        if _extract_bone_name_from_path(fcu.data_path) != bone_name:
+            continue
+        if 'rotation_euler' not in fcu.data_path and 'rotation_quaternion' not in fcu.data_path:
+            continue
+        for kp in list(fcu.keyframe_points):
+            fr = float(kp.co[0])
+            if frame_start <= fr <= frame_end and abs(fr - round(fr)) > 1e-4:
+                fcu.keyframe_points.remove(kp, fast=False)
+                removed += 1
+    return removed
+
+def prepare_bake_parent_bones(arm_obj, sc, frame_start, frame_end, verbose=False):
+    parent_names = _collect_bake_parent_bone_names(sc)
+    if not parent_names:
+        return
+    removed_fcurves = strip_conflicting_parent_rotation_fcurves(arm_obj, parent_names)
+    removed_keys = 0
+    action = arm_obj.animation_data.action if arm_obj.animation_data else None
+    if action:
+        for name in parent_names:
+            removed_keys += remove_subframe_rotation_keys(action, name, frame_start, frame_end)
+    if verbose:
+        print(
+            f"[AAF] bake prep parents={sorted(parent_names)} "
+            f"removed_fcurves={removed_fcurves} removed_subframe_keys={removed_keys}"
+        )
+
+def seed_parent_rotation_from_bake(pb_parent, bake_state):
+    """Use last baked rotation instead of action interpolation (fixes BEFORE_SOLVE spikes)."""
+    prev = bake_state.get(pb_parent.name)
+    if prev is None:
+        return False
+    prev_mode = prev['mode']
+    if prev_mode == 'QUATERNION':
+        pb_parent.rotation_mode = 'QUATERNION'
+        pb_parent.rotation_quaternion = prev['quat'].copy()
+    elif prev.get('euler') is not None:
+        pb_parent.rotation_mode = prev_mode
+        pb_parent.rotation_euler = prev['euler'].copy()
+    else:
+        pb_parent.rotation_mode = 'QUATERNION'
+        pb_parent.rotation_quaternion = prev['quat'].copy()
+    return True
+
+def seed_all_bake_parents(arm_obj, sc, bake_state, frame, deps):
+    for name in _collect_bake_parent_bone_names(sc):
+        pb = arm_obj.pose.bones.get(name)
+        if not pb:
+            continue
+        if seed_parent_rotation_from_bake(pb, bake_state):
+            if _debug_bone_enabled(sc, name):
+                align_debug_log_bone(sc, pb, frame, "SEEDED", bake_state, extra="from_prev_bake")
+    deps.update()
+
+def euler_unwrap_continuous(new_euler, prev_euler, order='XYZ'):
+    """Shift euler angles by +/- 2pi so they stay close to the previous frame."""
+    out = [float(new_euler[i]) for i in range(3)]
+    prev = [float(prev_euler[i]) for i in range(3)]
+    for i in range(3):
+        while out[i] - prev[i] > math.pi:
+            out[i] -= 2.0 * math.pi
+        while out[i] - prev[i] < -math.pi:
+            out[i] += 2.0 * math.pi
+    return Euler(out, order)
+
+def bake_keyframe_parent_rotation(pb_parent, frame, bake_state, rotation_mode_override=None):
+    """
+    Keyframe parent rotation with frame-to-frame continuity to avoid 180-degree flips.
+    bake_state: dict bone_name -> {'quat': Quaternion, 'euler': Euler|None, 'mode': str}
+    rotation_mode_override: use when pose was applied in QUATERNION mode but bone normally uses euler.
+    """
+    bone_name = pb_parent.name
+    prev_mode = rotation_mode_override or pb_parent.rotation_mode
+    if bone_name in bake_state and rotation_mode_override is None:
+        prev_mode = bake_state[bone_name]['mode']
+    new_q = bone_rotation_as_quaternion(pb_parent)
+
+    prev = bake_state.get(bone_name)
+    quat_flipped_before = False
+    if prev is not None:
+        quat_flipped_before = new_q.dot(prev['quat']) < 0.0
+        quat_make_continuous(new_q, prev['quat'])
+
+    entry = {'quat': new_q.copy(), 'euler': None, 'mode': prev_mode}
+
+    if prev_mode == 'QUATERNION':
+        pb_parent.rotation_mode = 'QUATERNION'
+        pb_parent.rotation_quaternion = new_q
+    else:
+        try:
+            if prev is not None and prev.get('euler') is not None:
+                eul = euler_unwrap_continuous(
+                    new_q.to_euler(prev_mode), prev['euler'], prev_mode
+                )
+            else:
+                eul = new_q.to_euler(prev_mode)
+            entry['euler'] = eul.copy()
+            pb_parent.rotation_euler = eul
+            pb_parent.rotation_mode = prev_mode
+        except Exception:
+            pb_parent.rotation_mode = 'QUATERNION'
+            pb_parent.rotation_quaternion = new_q
+
+    sc = bpy.context.scene
+    if _debug_bone_enabled(sc, bone_name):
+        extra_parts = []
+        if quat_flipped_before:
+            extra_parts.append("hemisphere_corrected=True")
+        if entry.get('euler') is not None:
+            e = entry['euler']
+            extra_parts.append(f"keyed_euler={tuple(round(v, 4) for v in e)}")
+        align_debug_log_bone(
+            sc, pb_parent, frame, "KEYFRAME", bake_state, extra=" ".join(extra_parts)
+        )
+
+    bake_state[bone_name] = entry
+
+    if prev_mode == 'QUATERNION':
+        pb_parent.keyframe_insert(data_path="rotation_quaternion", frame=frame)
+    elif entry.get('euler') is not None:
+        pb_parent.keyframe_insert(data_path="rotation_euler", frame=frame)
+    else:
+        pb_parent.keyframe_insert(data_path="rotation_quaternion", frame=frame)
 
 # -----------------------------
 # Pure-Python vector/quaternion utilities for worker threads
@@ -617,7 +851,7 @@ class SCENE_OT_make_larian_good(bpy.types.Operator):
             print(tb)
             return {'FINISHED'}
 
-        self.report({'INFO'}, f"Quickfix started: smoothing (factor={smooth_factor}), loaded presets, started iterative bake (multithread ON).")
+        self.report({'INFO'}, f"Quickfix started: smoothing (factor={smooth_factor}), loaded presets, started iterative bake.")
         return {'FINISHED'}
 
 # -----------------------------
@@ -952,6 +1186,23 @@ class POSE_OT_bake_fast(bpy.types.Operator):
             pass
 
         self.deps = bpy.context.evaluated_depsgraph_get()
+        self._bake_rotation_state = {}
+
+        prepare_bake_parent_bones(
+            arm_obj, sc, self.start, self.end,
+            verbose=getattr(sc, 'align_debug_bake', False),
+        )
+        try:
+            self.deps.update()
+        except Exception:
+            pass
+
+        if getattr(sc, 'align_debug_bake', False):
+            dbg_bone = (getattr(sc, 'align_debug_bone', None) or 'Hip_R').strip()
+            print(
+                f"[AAF] bake debug ON bone='{dbg_bone}' frames={self.start}-{self.end} "
+                f"method={self.method} spike_deg={getattr(sc, 'align_debug_spike_deg', 45.0)}"
+            )
 
         wm = context.window_manager
         self.total = (self.end - self.start + 1)
@@ -998,6 +1249,9 @@ class POSE_OT_bake_fast(bpy.types.Operator):
                         return self.finish(context, success=False)
                     sc.frame_set(self.frame)
                     self.deps.update()
+                    seed_all_bake_parents(
+                        self.arm_obj, sc, self._bake_rotation_state, self.frame, self.deps
+                    )
 
                     # collect snapshots for each triple
                     frame_snaps = []
@@ -1077,6 +1331,9 @@ class POSE_OT_bake_fast(bpy.types.Operator):
                     # apply results in order
                     sc.frame_set(fnum)
                     self.deps.update()
+                    seed_all_bake_parents(
+                        self.arm_obj, sc, self._bake_rotation_state, fnum, self.deps
+                    )
                     if len(sc.align_triples) > 0:
                         for idx, tri in enumerate(sc.align_triples):
                             res = results[idx] if idx < len(results) else None
@@ -1086,9 +1343,12 @@ class POSE_OT_bake_fast(bpy.types.Operator):
                             if not pb_parent:
                                 continue
                             try:
+                                prev_mode = pb_parent.rotation_mode
                                 pb_parent.rotation_mode = 'QUATERNION'
                                 pb_parent.rotation_quaternion = Quaternion(res)
-                                pb_parent.keyframe_insert(data_path="rotation_quaternion", frame=fnum)
+                                bake_keyframe_parent_rotation(
+                                    pb_parent, fnum, self._bake_rotation_state, prev_mode
+                                )
                             except Exception:
                                 pass
                     else:
@@ -1098,9 +1358,12 @@ class POSE_OT_bake_fast(bpy.types.Operator):
                             pb_parent = self.arm_obj.pose.bones.get(sc.align_parent_bone)
                             if pb_parent:
                                 try:
+                                    prev_mode = pb_parent.rotation_mode
                                     pb_parent.rotation_mode = 'QUATERNION'
                                     pb_parent.rotation_quaternion = Quaternion(res)
-                                    pb_parent.keyframe_insert(data_path="rotation_quaternion", frame=fnum)
+                                    bake_keyframe_parent_rotation(
+                                        pb_parent, fnum, self._bake_rotation_state, prev_mode
+                                    )
                                 except Exception:
                                     pass
 
@@ -1127,6 +1390,9 @@ class POSE_OT_bake_fast(bpy.types.Operator):
 
                 sc.frame_set(self.frame)
                 self.deps.update()
+                seed_all_bake_parents(
+                    self.arm_obj, sc, self._bake_rotation_state, self.frame, self.deps
+                )
 
                 if len(sc.align_triples) > 0:
                     for tri in sc.align_triples:
@@ -1139,6 +1405,19 @@ class POSE_OT_bake_fast(bpy.types.Operator):
                         # Get locked axis for this triple
                         locked_axis = tri.locked_axis
 
+                        dbg_dist = None
+                        if _debug_bone_enabled(sc, tri.parent_bone):
+                            child_use_head = sc.align_mode.startswith('HEAD_')
+                            target_use_head = sc.align_mode.endswith('_HEAD')
+                            p = pose_point_world(self.arm_obj, pb_child, child_use_head)
+                            t = pose_point_world(self.arm_obj, pb_target, target_use_head)
+                            dbg_dist = (p - t).length
+                            align_debug_log_bone(
+                                sc, pb_parent, self.frame, "BEFORE_SOLVE",
+                                self._bake_rotation_state, dist=dbg_dist,
+                                extra=f"method={self.method} lock={locked_axis}",
+                            )
+
                         if self.method == 'ANALYTIC':
                             analytic_rotate_core(self.arm_obj, pb_parent, pb_child, pb_target, sc.align_mode)
                         elif self.method == 'ITERATIVE':
@@ -1147,12 +1426,21 @@ class POSE_OT_bake_fast(bpy.types.Operator):
                             analytic_rotate_core(self.arm_obj, pb_parent, pb_child, pb_target, sc.align_mode)
                             iterative_minimize_core(self.arm_obj, pb_parent, pb_child, pb_target, sc, self.deps, locked_axis_char=locked_axis)
 
-                        # keyframe parent
+                        if _debug_bone_enabled(sc, tri.parent_bone):
+                            child_use_head = sc.align_mode.startswith('HEAD_')
+                            target_use_head = sc.align_mode.endswith('_HEAD')
+                            p = pose_point_world(self.arm_obj, pb_child, child_use_head)
+                            t = pose_point_world(self.arm_obj, pb_target, target_use_head)
+                            dbg_dist = (p - t).length
+                            align_debug_log_bone(
+                                sc, pb_parent, self.frame, "AFTER_SOLVE",
+                                self._bake_rotation_state, dist=dbg_dist,
+                            )
+
                         try:
-                            if pb_parent.rotation_mode == 'QUATERNION':
-                                pb_parent.keyframe_insert(data_path="rotation_quaternion", frame=self.frame)
-                            else:
-                                pb_parent.keyframe_insert(data_path="rotation_euler", frame=self.frame)
+                            bake_keyframe_parent_rotation(
+                                pb_parent, self.frame, self._bake_rotation_state
+                            )
                         except Exception:
                             pass
                 else:
@@ -1173,10 +1461,9 @@ class POSE_OT_bake_fast(bpy.types.Operator):
                             iterative_minimize_core(self.arm_obj, pb_parent, pb_child, pb_target, sc, self.deps, locked_axis_char=locked_axis)
 
                         try:
-                            if pb_parent.rotation_mode == 'QUATERNION':
-                                pb_parent.keyframe_insert(data_path="rotation_quaternion", frame=self.frame)
-                            else:
-                                pb_parent.keyframe_insert(data_path="rotation_euler", frame=self.frame)
+                            bake_keyframe_parent_rotation(
+                                pb_parent, self.frame, self._bake_rotation_state
+                            )
                         except Exception:
                             pass
 
@@ -1749,6 +2036,14 @@ class VIEW3D_PT_pose_align_panel(bpy.types.Panel):
             bake_col.operator("pose.align_child_bake_fast", icon='REC', text=("Bake" if not sc.align_is_baking else "Baking..."))
             bake_mode_row = bake_col.row(align=True)
             bake_mode_row.prop(sc, "align_bake_mode", expand=True)
+
+            dbg_box = box2.box()
+            dbg_box.label(text="Bake debug (System Console):")
+            dbg_box.prop(sc, "align_debug_bake", text="Log bone each frame")
+            dbg_row = dbg_box.row(align=True)
+            dbg_row.enabled = sc.align_debug_bake
+            dbg_row.prop(sc, "align_debug_bone", text="Bone")
+            dbg_row.prop(sc, "align_debug_spike_deg", text="Spike °")
 
             # advice about cancel
             box2.label(text="Cancel: Esc or Right-click")
