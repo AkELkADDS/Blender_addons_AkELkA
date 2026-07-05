@@ -2,7 +2,7 @@
 bl_info = {
     "name": "Akelka Animation Fixer",
     "author": "Akelka",
-    "version": (1, 1, 1),
+    "version": (1, 0, 9),
     "blender": (4, 5, 2),
     "location": "View3D > Sidebar (N) > Pose Align",
     "description": "Rotate parent bone so child (head/tail) moves close to target (head/tail). Supports multiple Parent/Child/Target combos (add/remove). Analytic + iterative solvers, modal bake, pick selected bone. Uses Graph Editor Gaussian Smooth for bone F-curves (calls bpy.ops.graph.gaussian_smooth safely). Includes preset sets and a one-click quickfix.",
@@ -14,7 +14,6 @@ import math
 import os
 import traceback
 import concurrent.futures
-from contextlib import contextmanager
 from mathutils import Euler, Quaternion, Vector
 
 # -----------------------------
@@ -65,8 +64,8 @@ def register_props():
 
     # Show/hide manual work settings (collapsible)
     sc.show_advanced = bpy.props.BoolProperty(
-        name="Manual Work",
-        description="Show manual triples, smoothing, and bake controls inside Old Method",
+        name="Show Manual Work",
+        description="Toggle visibility of manual work options (triples, smoothing, bake settings)",
         default=False,
         update=update_show_advanced,
     )
@@ -188,37 +187,21 @@ def register_props():
     )
 
     sc.ik_leg_chain_count = bpy.props.IntProperty(
-        name="Leg IK chain", default=3, min=0, max=32,
+        name="Leg IK chain", default=1, min=0, max=32,
         description="IK chain length on Ankle_L/R (bones counted from the constrained bone)",
     )
     sc.ik_hand_chain_count = bpy.props.IntProperty(
         name="Hand IK chain", default=3, min=0, max=32,
         description="IK chain length on Wrist_L/R (bones counted from the constrained bone)",
     )
-    sc.aaf_ik_rotation = bpy.props.BoolProperty(
+    sc.ik_use_target_rotation = bpy.props.BoolProperty(
         name="IK target rotation", default=True,
         description="Match end bone rotation to the Dummy_*_IK target (IK constraint Rotation)",
     )
-    sc.aaf_auto_bezier = bpy.props.BoolProperty(
-        name="Auto Bezier", default=True,
-        description="Automatically set keyframe interpolation to Bezier during addon operations",
-    )
-    sc.aaf_ik_bone_length_scale = bpy.props.BoolProperty(
-        name="IK bone length ×0.005", default=True,
-        description="Scale Ankle_L/R and Wrist_L/R bone length ×0.005 when setting up IK",
-    )
-    sc.aaf_smooth_mode = bpy.props.EnumProperty(
-        name="Smooth",
-        items=[
-            ('ROOT_NLA', "Root NLA", "Smooth Root_M on bottom NLA track"),
-            ('WHOLE', "Whole Rig", "Smooth whole animation on the active armature"),
-        ],
-        default='ROOT_NLA',
-        description="Animation smooth to run when setting up IK",
-    )
-    sc.aaf_smooth_passes = bpy.props.IntProperty(
-        name="Smooth passes", default=3, min=0, max=20,
-        description="Gaussian smooth passes (×3, ×4, etc.)",
+
+    sc.aaf_make_bezier = bpy.props.BoolProperty(
+        name="Make Bezier", default=True,
+        description="Automatically set keyframe interpolation to Bezier during Quickfix and bake (BG3 imports often use Constant)",
     )
 
 def unregister_props():
@@ -230,9 +213,8 @@ def unregister_props():
               "align_use_threading", "align_thread_workers",
               "smooth_only_selected_bones", "align_locked_axis", "quickfix_smooth_count", "manual_smooth_count",
               "align_debug_bake", "align_debug_bone", "align_debug_log_all_parents", "align_debug_spike_deg",
-              "ik_leg_chain_count", "ik_hand_chain_count",
-              "aaf_ik_rotation", "aaf_auto_bezier", "aaf_ik_bone_length_scale",
-              "aaf_smooth_mode", "aaf_smooth_passes"):
+              "ik_leg_chain_count", "ik_hand_chain_count", "ik_use_target_rotation",
+              "aaf_make_bezier"):
         if hasattr(bpy.types.Scene, p):
             delattr(bpy.types.Scene, p)
 
@@ -315,20 +297,6 @@ def align_debug_log_bone(sc, pb_parent, frame, stage, bake_state=None, dist=None
         f"mode={mode} euler={eul} quat={q_str}{delta_s}{flip_s}{dist_s}{extra_s}"
     )
 
-def _aaf_auto_bezier_on(sc):
-    return bool(getattr(sc, 'aaf_auto_bezier', True))
-
-def _aaf_ik_rotation_on(sc):
-    return bool(getattr(sc, 'aaf_ik_rotation', True))
-
-def _aaf_ik_bone_length_scale_on(sc, arm_obj=None):
-    if arm_obj and ik_bones_already_small(arm_obj):
-        return False
-    return bool(getattr(sc, 'aaf_ik_bone_length_scale', True))
-
-def _aaf_toggle_label(enabled, on_text, off_text):
-    return on_text if enabled else off_text
-
 def resolve_bone_on_armature(arm_obj, *candidates):
     """Return first bone name that exists on arm_obj, else first candidate."""
     if not candidates:
@@ -383,7 +351,7 @@ def remove_aaf_ik_constraints(arm_obj):
             if con.type == 'IK' and con.name.startswith('AAF_IK_'):
                 pb.constraints.remove(con)
 
-def setup_larian_ik_constraints_on_armature(arm_obj, leg_chain_count=3, hand_chain_count=3, use_rotation=True):
+def setup_larian_ik_constraints_on_armature(arm_obj, leg_chain_count=1, hand_chain_count=3, use_rotation=True):
     """
     Create/update 4 IK constraints on Ankle_L/R and Wrist_L/R targeting Dummy_*_IK bones.
     Returns (created_or_updated_names, error_messages).
@@ -411,392 +379,6 @@ def setup_larian_ik_constraints_on_armature(arm_obj, leg_chain_count=3, hand_cha
         rot_s = "rot=ON" if use_rotation else "rot=OFF"
         print(f"[AAF] IK {label}: {bone} -> {target} chain_count={chain_count} {rot_s}")
     return ok, errors
-
-_IK_BONE_LENGTH_SCALE = 0.005
-_IK_BONE_ALREADY_SMALL_MAX = 0.02
-
-def ik_bones_already_small(arm_obj):
-    """True when ankle/wrist bones are already at scaled (×0.005) length."""
-    if not arm_obj or arm_obj.type != 'ARMATURE' or not arm_obj.data:
-        return False
-    checked = 0
-    for spec in resolve_larian_ik_limbs(arm_obj):
-        name = spec['bone']
-        bone = arm_obj.data.bones.get(name) if name else None
-        if not bone:
-            continue
-        checked += 1
-        if bone.length > _IK_BONE_ALREADY_SMALL_MAX:
-            return False
-    return checked > 0
-
-def scale_larian_ik_bone_lengths(arm_obj, factor=_IK_BONE_LENGTH_SCALE):
-    """Scale Ankle_L/R and Wrist_L/R edit-bone lengths by factor (default 0.005)."""
-    if not arm_obj or arm_obj.type != 'ARMATURE':
-        return [], ["No armature"]
-    bone_names = []
-    for spec in resolve_larian_ik_limbs(arm_obj):
-        name = spec['bone']
-        if name and arm_obj.data.bones.get(name):
-            bone_names.append(name)
-    if not bone_names:
-        return [], ["No IK bones found (Ankle_L/R, Wrist_L/R)"]
-
-    prev_mode = arm_obj.mode
-    prev_active = bpy.context.view_layer.objects.active
-    errors = []
-    ok = []
-    try:
-        bpy.context.view_layer.objects.active = arm_obj
-        if arm_obj.mode != 'EDIT':
-            bpy.ops.object.mode_set(mode='EDIT')
-        eb = arm_obj.data.edit_bones
-        for name in bone_names:
-            if name not in eb:
-                errors.append(f"{name}: missing in edit bones")
-                continue
-            b = eb[name]
-            old_len = b.length
-            b.length = max(1e-8, old_len * factor)
-            ok.append(name)
-            print(f"[AAF] IK bone length {name}: {old_len:.6f} -> {b.length:.6f} (×{factor})")
-    except Exception as e:
-        errors.append(str(e))
-    finally:
-        try:
-            bpy.context.view_layer.objects.active = arm_obj
-            if prev_mode == 'EDIT':
-                bpy.ops.object.mode_set(mode='EDIT')
-            elif prev_mode == 'POSE':
-                bpy.ops.object.mode_set(mode='POSE')
-            else:
-                bpy.ops.object.mode_set(mode='OBJECT')
-        except Exception:
-            pass
-        try:
-            if prev_active:
-                bpy.context.view_layer.objects.active = prev_active
-        except Exception:
-            pass
-    return ok, errors
-
-_AAF_ROOT_SMOOTH_BONE = "Root_M"
-_AAF_SMOOTH_FACTOR = 1.0
-
-def _aaf_find_window_region(area):
-    for region in area.regions:
-        if region.type == 'WINDOW':
-            return region
-    return None
-
-def _aaf_find_area(screen, area_type):
-    for area in screen.areas:
-        if area.type == area_type:
-            return area
-    return None
-
-def _aaf_object_override(ctx, arm_obj):
-    return {
-        'window': ctx.window,
-        'screen': ctx.screen,
-        'active_object': arm_obj,
-        'object': arm_obj,
-        'selected_objects': [arm_obj],
-        'selected_editable_objects': [arm_obj],
-    }
-
-def _aaf_run_in_editor(ctx, arm_obj, area_type, operator_name, **operator_kwargs):
-    screen = ctx.screen
-    area = _aaf_find_area(screen, area_type)
-    restored_type = None
-
-    if area is None:
-        if not screen.areas:
-            return False
-        area = screen.areas[0]
-        restored_type = area.type
-        area.type = area_type
-
-    region = _aaf_find_window_region(area)
-    if region is None:
-        if restored_type is not None:
-            area.type = restored_type
-        return False
-
-    override = {**_aaf_object_override(ctx, arm_obj), 'area': area, 'region': region}
-    if area_type == 'GRAPH_EDITOR':
-        override['space_data'] = area.spaces.active
-
-    try:
-        with ctx.temp_override(**override):
-            op = getattr(bpy.ops, operator_name.split('.')[0])
-            op_fn = getattr(op, operator_name.split('.')[1])
-            if not op_fn.poll():
-                return False
-            op_fn(**operator_kwargs)
-        return True
-    finally:
-        if restored_type is not None:
-            try:
-                area.type = restored_type
-            except Exception:
-                pass
-
-def get_bottom_nla_strip(arm_obj):
-    """Return (action, track_name, strip) for the bottom-most NLA track."""
-    ad = arm_obj.animation_data
-    if ad is None or len(ad.nla_tracks) == 0:
-        return None, None, None
-
-    bottom_track = ad.nla_tracks[0]
-    for strip in bottom_track.strips:
-        if strip.action is not None:
-            return strip.action, bottom_track.name, strip
-    return None, bottom_track.name, None
-
-def _aaf_find_active_nla_strip(ad):
-    for track in ad.nla_tracks:
-        for strip in track.strips:
-            if strip.active:
-                return strip
-    return None
-
-def _aaf_find_track_for_strip(ad, strip):
-    for track in ad.nla_tracks:
-        for s in track.strips:
-            if s == strip:
-                return track
-    return None
-
-def _aaf_save_strip_selection(ad):
-    saved = []
-    for track in ad.nla_tracks:
-        for strip in track.strips:
-            saved.append((strip, strip.select))
-    return saved
-
-def _aaf_restore_strip_selection(saved):
-    for strip, selected in saved:
-        try:
-            strip.select = selected
-        except Exception:
-            pass
-
-def _aaf_select_nla_strip(ad, strip):
-    track = _aaf_find_track_for_strip(ad, strip)
-    if track is None:
-        return
-    ad.nla_tracks.active = track
-    for t in ad.nla_tracks:
-        for s in t.strips:
-            s.select = (s == strip)
-
-@contextmanager
-def nla_tweak_strip(ctx, arm_obj, strip):
-    """Enter NLA tweak mode on strip so its action is editable, then restore."""
-    ad = arm_obj.animation_data
-    if ad is None:
-        raise RuntimeError("Armature has no animation data.")
-
-    if arm_obj.name not in ctx.view_layer.objects:
-        raise RuntimeError(f"Armature '{arm_obj.name}' is not in the current view layer.")
-
-    saved = {
-        'action': ad.action,
-        'use_tweak_mode': ad.use_tweak_mode,
-        'active_strip': _aaf_find_active_nla_strip(ad),
-        'active_track': ad.nla_tracks.active,
-        'strip_select': _aaf_save_strip_selection(ad),
-        'active': ctx.view_layer.objects.active,
-        'mode': ctx.mode,
-    }
-    entered_tweak = False
-
-    try:
-        arm_obj.select_set(True)
-        ctx.view_layer.objects.active = arm_obj
-
-        active_strip = _aaf_find_active_nla_strip(ad)
-        if ad.use_tweak_mode and active_strip is not None and active_strip != strip:
-            _aaf_run_in_editor(ctx, arm_obj, 'NLA_EDITOR', 'nla.tweakmode_exit')
-
-        _aaf_select_nla_strip(ad, strip)
-
-        if ad.use_tweak_mode and _aaf_find_active_nla_strip(ad) == strip:
-            entered_tweak = False
-        elif _aaf_run_in_editor(ctx, arm_obj, 'NLA_EDITOR', 'nla.tweakmode_enter'):
-            entered_tweak = True
-        else:
-            ad.use_tweak_mode = True
-            if strip.action:
-                ad.action = strip.action
-            entered_tweak = True
-
-        action = ad.action or strip.action
-        if action is None:
-            raise RuntimeError("NLA strip has no action to edit.")
-
-        yield action
-
-    finally:
-        if entered_tweak and ad.use_tweak_mode:
-            _aaf_run_in_editor(ctx, arm_obj, 'NLA_EDITOR', 'nla.tweakmode_exit')
-
-        if saved['use_tweak_mode'] and saved['active_strip'] is not None:
-            _aaf_select_nla_strip(ad, saved['active_strip'])
-            if not ad.use_tweak_mode:
-                _aaf_run_in_editor(ctx, arm_obj, 'NLA_EDITOR', 'nla.tweakmode_enter')
-            _aaf_restore_strip_selection(saved['strip_select'])
-        else:
-            try:
-                ad.action = saved['action']
-                ad.nla_tracks.active = saved['active_track']
-            except Exception:
-                pass
-            _aaf_restore_strip_selection(saved['strip_select'])
-
-        if saved['active'] and saved['active'].name in ctx.view_layer.objects:
-            try:
-                ctx.view_layer.objects.active = saved['active']
-            except Exception:
-                pass
-
-def _aaf_action_has_usable_fcurves(action, bone_names=None):
-    if not action or not action.fcurves:
-        return False
-    bone_filter = set(bone_names) if bone_names else None
-    for fcu in action.fcurves:
-        if bone_filter is not None:
-            if not fcu.data_path.startswith('pose.bones'):
-                continue
-            dp = fcu.data_path
-            start = dp.find('["')
-            end = dp.find('"]', start + 1)
-            if start == -1 or end == -1:
-                start = dp.find("['")
-                end = dp.find("']", start + 1)
-                if start == -1 or end == -1:
-                    continue
-            bone = dp[start + 2:end]
-            if bone not in bone_filter:
-                continue
-        return True
-    return False
-
-def resolve_whole_smooth_source(arm):
-    """Return (action, nla_strip, track_name) for whole-rig smoothing."""
-    ad = arm.animation_data
-    if ad is None:
-        return None, None, None
-
-    # Larian rigs usually animate on NLA; prefer bottom strip when tracks exist.
-    if len(ad.nla_tracks) > 0:
-        action, track_name, strip = get_bottom_nla_strip(arm)
-        if strip and action and _aaf_action_has_usable_fcurves(action):
-            return action, strip, track_name
-        for track in ad.nla_tracks:
-            for s in track.strips:
-                if s.action and _aaf_action_has_usable_fcurves(s.action):
-                    return s.action, s, track.name
-
-    if ad.action and _aaf_action_has_usable_fcurves(ad.action):
-        return ad.action, None, None
-
-    return None, None, None
-
-def smooth_root_nla_bottom(context, arm, passes):
-    if passes <= 0:
-        raise RuntimeError("NLA smooth passes must be at least 1.")
-
-    if arm.pose.bones.get(_AAF_ROOT_SMOOTH_BONE) is None:
-        raise RuntimeError(f"Bone '{_AAF_ROOT_SMOOTH_BONE}' not found on '{arm.name}'.")
-
-    action, track_name, strip = get_bottom_nla_strip(arm)
-    if strip is None or action is None:
-        msg = f"No action on bottom NLA track for '{arm.name}'."
-        if track_name:
-            msg = f"No action on bottom NLA track '{track_name}' ({arm.name})."
-        raise RuntimeError(msg)
-
-    with nla_tweak_strip(context, arm, strip) as tweak_action:
-        total = 0
-        for _ in range(passes):
-            total = apply_graph_gaussian_smooth_for_armature_operator(
-                arm,
-                factor=_AAF_SMOOTH_FACTOR,
-                action=tweak_action,
-                bone_names={_AAF_ROOT_SMOOTH_BONE},
-                verbose=True,
-            )
-
-    if total == 0:
-        raise RuntimeError(
-            f"No F-curves found for '{_AAF_ROOT_SMOOTH_BONE}' in '{action.name}' ({arm.name})."
-        )
-
-    return total, track_name, action.name
-
-def smooth_whole_armature_action(context, arm, passes):
-    if passes <= 0:
-        raise RuntimeError("Whole animation smooth passes must be at least 1.")
-
-    action, strip, track_name = resolve_whole_smooth_source(arm)
-    if action is None:
-        raise RuntimeError(f"No animation data on '{arm.name}'.")
-
-    if strip:
-        with nla_tweak_strip(context, arm, strip) as tweak_action:
-            total = 0
-            for _ in range(passes):
-                total = apply_graph_gaussian_smooth_for_armature_operator(
-                    arm,
-                    factor=_AAF_SMOOTH_FACTOR,
-                    action=tweak_action,
-                    smooth_all_fcurves=True,
-                    verbose=True,
-                )
-        source_label = f"NLA '{track_name}'" if track_name else "NLA"
-    else:
-        total = 0
-        for _ in range(passes):
-            total = apply_graph_gaussian_smooth_for_armature_operator(
-                arm,
-                factor=_AAF_SMOOTH_FACTOR,
-                action=action,
-                smooth_all_fcurves=True,
-                verbose=True,
-            )
-        source_label = action.name
-
-    if total == 0:
-        raise RuntimeError(f"No bone F-curves found for '{arm.name}' ({source_label}).")
-
-    return total, action.name
-
-def apply_aaf_ik_smooth_extras(context, arm_obj, sc):
-    warnings = []
-    mode = getattr(sc, 'aaf_smooth_mode', 'ROOT_NLA')
-    passes = int(getattr(sc, 'aaf_smooth_passes', 3))
-    if passes <= 0:
-        return warnings
-    try:
-        if mode == 'ROOT_NLA':
-            curves, track_name, action_name = smooth_root_nla_bottom(context, arm_obj, passes)
-            print(
-                f"[AAF] Root NLA smooth {arm_obj.name}: {_AAF_ROOT_SMOOTH_BONE} x{passes} "
-                f"(NLA '{track_name}', {curves} curves, {action_name})"
-            )
-        elif mode == 'WHOLE':
-            curves, action_name = smooth_whole_armature_action(context, arm_obj, passes)
-            print(
-                f"[AAF] Whole rig smooth {arm_obj.name}: x{passes} "
-                f"({action_name}, {curves} curves)"
-            )
-    except Exception as e:
-        label = "Root NLA smooth" if mode == 'ROOT_NLA' else "Whole rig smooth"
-        warnings.append(f"{label}: {e}")
-        print(f"[AAF] {label} failed: {e}")
-    return warnings
 
 def _upgrade_hand_parent_to_elbow(arm_obj, tri, triple_index=None):
     """Wrist targets are reached by elbow flex, not whole-shoulder swings."""
@@ -938,7 +520,7 @@ def apply_bezier_interpolation_to_armature(arm_obj, verbose=False):
     return changed
 
 def apply_bezier_if_enabled(arm_obj, sc, verbose=False):
-    if sc is not None and _aaf_auto_bezier_on(sc):
+    if sc is not None and getattr(sc, 'aaf_make_bezier', True):
         return apply_bezier_interpolation_to_armature(arm_obj, verbose=verbose)
     return 0
 
@@ -1152,7 +734,7 @@ def bake_keyframe_parent_rotation(pb_parent, frame, bake_state, rotation_mode_ov
             pb_parent.keyframe_insert(data_path="rotation_quaternion", frame=frame)
         if keyframe_counts is not None:
             keyframe_counts[bone_name] = keyframe_counts.get(bone_name, 0) + 1
-        if _aaf_auto_bezier_on(sc):
+        if getattr(sc, 'aaf_make_bezier', True):
             set_bone_rotation_keyframes_bezier_at_frame(pb_parent.id_data, bone_name, frame)
         return True
     except Exception as e:
@@ -1188,7 +770,7 @@ def bake_hold_keyframe_parent_rotation(pb_parent, frame, bake_state, keyframe_co
             pb_parent.keyframe_insert(data_path="rotation_quaternion", frame=frame)
         if keyframe_counts is not None:
             keyframe_counts[bone_name] = keyframe_counts.get(bone_name, 0) + 1
-        if _aaf_auto_bezier_on(sc):
+        if getattr(sc, 'aaf_make_bezier', True):
             set_bone_rotation_keyframes_bezier_at_frame(pb_parent.id_data, bone_name, frame)
         return True
     except Exception as e:
@@ -1651,50 +1233,17 @@ class POSE_OT_setup_larian_ik_constraints(bpy.types.Operator):
             arm_obj,
             leg_chain_count=int(sc.ik_leg_chain_count),
             hand_chain_count=int(sc.ik_hand_chain_count),
-            use_rotation=_aaf_ik_rotation_on(sc),
+            use_rotation=bool(sc.ik_use_target_rotation),
         )
         if not ok:
             msg = "; ".join(errors) if errors else "No limbs configured"
             self.report({'ERROR'}, f"IK setup failed: {msg}")
             return {'CANCELLED'}
-        if _aaf_ik_bone_length_scale_on(sc, arm_obj):
-            scaled, scale_errors = scale_larian_ik_bone_lengths(arm_obj)
-            if scale_errors and not scaled:
-                self.report({'WARNING'}, f"IK set but bone length scale failed: {'; '.join(scale_errors)}")
-            elif scaled:
-                print(f"[AAF] IK bone lengths scaled on: {', '.join(scaled)}")
         if errors:
             self.report({'WARNING'}, f"IK set ({len(ok)}/4): {'; '.join(errors)}")
         else:
             self.report({'INFO'}, f"IK constraints set on {len(ok)} limbs.")
         apply_bezier_if_enabled(arm_obj, sc, verbose=True)
-        smooth_warnings = apply_aaf_ik_smooth_extras(context, arm_obj, sc)
-        if smooth_warnings:
-            self.report({'WARNING'}, "; ".join(smooth_warnings))
-        return {'FINISHED'}
-
-class POSE_OT_scale_ik_bone_lengths(bpy.types.Operator):
-    bl_idname = "pose.scale_ik_bone_lengths"
-    bl_label = "Scale IK Bones ×0.005"
-    bl_description = "Set Ankle_L/R and Wrist_L/R bone length to current length × 0.005"
-    bl_options = {'REGISTER', 'UNDO'}
-
-    @classmethod
-    def poll(cls, context):
-        arm = get_armature_from_context(context)
-        return arm is not None and arm.type == 'ARMATURE'
-
-    def execute(self, context):
-        arm_obj = get_armature_from_context(context)
-        if not arm_obj:
-            self.report({'ERROR'}, "Select an armature.")
-            return {'CANCELLED'}
-        ok, errors = scale_larian_ik_bone_lengths(arm_obj)
-        if not ok:
-            msg = "; ".join(errors) if errors else "No bones scaled"
-            self.report({'ERROR'}, msg)
-            return {'CANCELLED'}
-        self.report({'INFO'}, f"Scaled {len(ok)} IK bone(s): {', '.join(ok)}")
         return {'FINISHED'}
 
 # -----------------------------
@@ -1711,7 +1260,7 @@ class SCENE_OT_make_larian_good(bpy.types.Operator):
         # Get armature from context
         arm = get_armature_from_context(context)
         if not arm or arm.type != 'ARMATURE':
-            self.report({'ERROR'}, "Select an Armature and press Make Larian Animation Good.")
+            self.report({'ERROR'}, "Select an Armature and press the Quickfix button.")
             return {'CANCELLED'}
 
         apply_bezier_if_enabled(arm, sc, verbose=True)
@@ -1762,7 +1311,7 @@ class SCENE_OT_make_larian_good(bpy.types.Operator):
             print(tb)
             return {'FINISHED'}
 
-        self.report({'INFO'}, f"Old Method started: smoothing (factor={smooth_factor}), loaded presets, started COMBO bake.")
+        self.report({'INFO'}, f"Quickfix started: smoothing (factor={smooth_factor}), loaded presets, started COMBO bake.")
         return {'FINISHED'}
 
 class SCENE_OT_make_bezier(bpy.types.Operator):
@@ -2569,10 +2118,7 @@ def _extract_bone_name_from_path(dp):
 # - Uses an override with a Graph Editor area/region so the operator poll succeeds
 # - Restores selection and (if temporarily changed) area.type
 # -----------------------------
-def apply_graph_gaussian_smooth_for_armature_operator(
-    arm_obj, only_selected_bones=False, factor=1.0, verbose=False,
-    action=None, bone_names=None, smooth_all_fcurves=False,
-):
+def apply_graph_gaussian_smooth_for_armature_operator(arm_obj, only_selected_bones=False, factor=1.0, verbose=False):
     """
     Apply Blender's built-in Gaussian smooth operator to bone F-curves
     in the armature's action. Temporarily switches to pose mode to ensure proper context.
@@ -2581,9 +2127,6 @@ def apply_graph_gaussian_smooth_for_armature_operator(
         only_selected_bones: If True, only smooth selected bones
         factor: Smooth factor (0.0 to 10.0, default 1.0)
         verbose: If True, print debug messages
-        action: Optional action to smooth (defaults to animation_data.action)
-        bone_names: Optional set/list of bone names to limit smoothing
-        smooth_all_fcurves: If True, smooth every F-curve in the action
     Returns the number of fcurves targeted (approx).
     """
     ctx = bpy.context
@@ -2591,22 +2134,13 @@ def apply_graph_gaussian_smooth_for_armature_operator(
     if ob is None or getattr(ob, 'type', None) != 'ARMATURE':
         raise RuntimeError("Provided object must be an Armature.")
 
-    ad = ob.animation_data
-    saved_action = None
-    need_restore_action = False
-    if action is None:
-        if ad:
-            action = ad.action
-    elif ad is not None and ad.action != action:
-        saved_action = ad.action
-        ad.action = action
-        need_restore_action = True
-
+    # Ensure there's animation data and fcurves
+    action = None
+    if ob.animation_data:
+        action = ob.animation_data.action
     if action is None or not action.fcurves:
         if verbose:
             print("apply_graph_gaussian_smooth_for_armature_operator: no action or fcurves found; nothing to smooth.")
-        if need_restore_action and ad is not None:
-            ad.action = saved_action
         return 0
 
     # Save current mode and active object
@@ -2617,16 +2151,12 @@ def apply_graph_gaussian_smooth_for_armature_operator(
     
     # Save bone selection states (from object mode if we're in object mode)
     bone_names_to_select = None
-    if bone_names is not None:
-        bone_names_to_select = set(bone_names)
-    elif only_selected_bones:
+    if only_selected_bones:
         # Get currently selected bones (works in both modes)
         bone_names_to_select = {pb.name for pb in ob.pose.bones if pb.bone.select}
         if not bone_names_to_select:
             if verbose:
                 print("apply_graph_gaussian_smooth_for_armature_operator: only_selected_bones=True but no bones selected.")
-            if need_restore_action and ad is not None:
-                ad.action = saved_action
             return 0
 
     # Save selection states for all fcurves & keypoints in action
@@ -2635,18 +2165,16 @@ def apply_graph_gaussian_smooth_for_armature_operator(
         kp_sel = [kp.select_control_point for kp in fcu.keyframe_points]
         saved_states.append((fcu, fcu.select, kp_sel))
 
-    # Decide which fcurves to select for the operator
+    # Decide which fcurves to select for the operator: all bone fcurves matching filter
     target_fcurves = []
     for fcu in action.fcurves:
-        if smooth_all_fcurves:
-            target_fcurves.append(fcu)
-            continue
         if not _is_bone_fcurve(fcu):
             continue
-        if bone_names_to_select is not None:
-            bone = _extract_bone_name_from_path(fcu.data_path)
-            if bone is None or bone not in bone_names_to_select:
-                continue
+        bone = _extract_bone_name_from_path(fcu.data_path)
+        if bone is None:
+            continue
+        if bone_names_to_select is not None and bone not in bone_names_to_select:
+            continue
         target_fcurves.append(fcu)
 
     if not target_fcurves:
@@ -2660,8 +2188,6 @@ def apply_graph_gaussian_smooth_for_armature_operator(
                 pass
         if verbose:
             print("apply_graph_gaussian_smooth_for_armature_operator: no bone fcurves matched filter.")
-        if need_restore_action and ad is not None:
-            ad.action = saved_action
         return 0
 
     # Select the target fcurves & their keys (operator works on selected keyframes/fcurves)
@@ -2713,12 +2239,10 @@ def apply_graph_gaussian_smooth_for_armature_operator(
                         ctx.view_layer.objects.active = original_active
                     except Exception:
                         pass
-                if need_restore_action and ad is not None:
-                    ad.action = saved_action
                 return 0
         
         # Select bones in pose mode based on our filter
-        if bone_names_to_select is not None:
+        if only_selected_bones and bone_names_to_select:
             # Deselect all bones first
             bpy.ops.pose.select_all(action='DESELECT')
             # Select only the bones we want
@@ -2726,8 +2250,8 @@ def apply_graph_gaussian_smooth_for_armature_operator(
                 pb = ob.pose.bones.get(bone_name)
                 if pb:
                     pb.bone.select = True
-        elif not only_selected_bones and not smooth_all_fcurves:
-            # Select all bones if we're smoothing all bone fcurves
+        elif not only_selected_bones:
+            # Select all bones if we're smoothing all
             bpy.ops.pose.select_all(action='SELECT')
         
         # Find or create Graph Editor area for context override
@@ -2776,9 +2300,6 @@ def apply_graph_gaussian_smooth_for_armature_operator(
                 'area': area,
                 'region': region,
                 'active_object': ob,
-                'object': ob,
-                'selected_objects': [ob],
-                'selected_editable_objects': [ob],
             }
             if space_data:
                 override['space_data'] = space_data
@@ -2832,11 +2353,6 @@ def apply_graph_gaussian_smooth_for_armature_operator(
                 ctx.view_layer.objects.active = original_active
             except Exception:
                 pass
-        if need_restore_action and ad is not None:
-            try:
-                ad.action = saved_action
-            except Exception:
-                pass
         # re-raise wrapped error for caller to log if needed
         raise
 
@@ -2864,12 +2380,6 @@ def apply_graph_gaussian_smooth_for_armature_operator(
     if need_restore_active and original_active:
         try:
             ctx.view_layer.objects.active = original_active
-        except Exception:
-            pass
-
-    if need_restore_action and ad is not None:
-        try:
-            ad.action = saved_action
         except Exception:
             pass
 
@@ -2927,96 +2437,59 @@ class VIEW3D_PT_pose_align_panel(bpy.types.Panel):
     def poll(cls, context):
         return True
 
-    def _draw_aaf_toggle(self, layout, sc, prop_name, on_text, off_text):
-        row = layout.row(align=True)
-        enabled = bool(getattr(sc, prop_name))
-        row.prop(
-            sc, prop_name,
-            text=_aaf_toggle_label(enabled, on_text, off_text),
-            toggle=True,
-        )
-
-    def _draw_smooth_option(self, layout, sc):
-        row = layout.row(align=True)
-        split = row.split(factor=0.8, align=True)
-        split.row(align=True).prop(sc, "aaf_smooth_mode", expand=True)
-        split.prop(sc, "aaf_smooth_passes", text="×")
-
-    def _draw_ik_toggles(self, layout, sc, context):
-        self._draw_aaf_toggle(layout, sc, "aaf_ik_rotation", "IK Target Rotation", "IK Target Rotation (Off)")
-        arm = get_armature_from_context(context)
-        bone_length_locked = ik_bones_already_small(arm) if arm else False
-        bone_row = layout.row(align=True)
-        bone_row.enabled = not bone_length_locked
-        if bone_length_locked:
-            bone_row.alignment = 'CENTER'
-            bone_row.label(text="Bone Length ×0.005 (Off)")
-        else:
-            enabled = bool(getattr(sc, "aaf_ik_bone_length_scale"))
-            bone_row.prop(
-                sc, "aaf_ik_bone_length_scale",
-                text=_aaf_toggle_label(enabled, "Bone Length ×0.005", "Bone Length ×0.005 (Off)"),
-                toggle=True,
-            )
-        self._draw_aaf_toggle(layout, sc, "aaf_auto_bezier", "Auto Bezier", "Auto Bezier (Off)")
-        self._draw_smooth_option(layout, sc)
-
     def draw(self, context):
         layout = self.layout
         sc = context.scene
 
-        # --- IK & tools (top) ---
-        tools_box = layout.box()
-        tools_col = tools_box.column(align=True)
-        tools_col.label(text="IK Setup:", icon='CONSTRAINT_BONE')
-        ik_chain_row = tools_col.row(align=True)
+        # Quickfix button - placed at the top of everything
+        quickfix_box = layout.box()
+        quickfix_col = quickfix_box.column(align=True)
+        quickfix_col.operator("scene.make_larian_good", icon='LIGHT_SUN', text="Make Larian Animation Good")
+        smooth_row = quickfix_col.row(align=True)
+        smooth_row.prop(sc, "quickfix_smooth_count", text="Smooth animation")
+        bezier_row = quickfix_col.row(align=True)
+        bezier_row.prop(sc, "aaf_make_bezier", text="Auto Bezier")
+        bezier_row.operator("scene.make_bezier", text="Make Bezier")
+        quickfix_col.prop(sc, "align_mode", text="Align")
+        ik_chain_row = quickfix_col.row(align=True)
         ik_chain_row.prop(sc, "ik_leg_chain_count", text="Leg chain")
         ik_chain_row.prop(sc, "ik_hand_chain_count", text="Hand chain")
-        self._draw_ik_toggles(tools_col, sc, context)
-        tools_col.operator(
+        quickfix_col.prop(sc, "ik_use_target_rotation", text="IK target rotation")
+        quickfix_col.operator(
             "pose.setup_larian_ik_constraints",
             icon='CONSTRAINT_BONE',
             text="Setup 4 IK Constraints",
         )
-
-        layout.separator()
-        self._draw_old_method_box(layout, context, sc)
-
-    def _draw_old_method_box(self, layout, context, sc):
-        old_box = layout.box()
-        old_col = old_box.column(align=True)
-        old_col.label(text="Old Method:", icon='PRESET')
-        old_col.operator("scene.make_larian_good", icon='LIGHT_SUN', text="Make Larian Animation Good")
-        smooth_row = old_col.row(align=True)
-        smooth_row.prop(sc, "quickfix_smooth_count", text="Smooth animation")
-        old_col.prop(sc, "align_mode", text="Align")
-        bake_mode_row = old_col.row(align=True)
+        bake_mode_row = quickfix_col.row(align=True)
         bake_mode_row.prop(sc, "align_bake_mode", expand=True)
 
-        old_col.separator()
-        manual_row = old_col.row(align=True)
-        manual_row.prop(sc, "show_advanced", toggle=True, text="Manual Work")
+        # Manual Work toggle (collapsible): this now hides/unhides manual work options
+        adv_row = layout.row(align=True)
+        adv_row.prop(sc, "show_advanced", toggle=True, text="Manual Work")
 
+        # If manual work is collapsed, avoid drawing the manual work blocks (hides everything inside)
         if not sc.show_advanced:
             return
 
+        # --- Manual Work: show Mode and all other controls ---
         arm = get_armature_from_context(context)
         if arm and arm.type == 'ARMATURE' and arm.data:
-            manual_col = old_col.column(align=True)
-            manual_col.separator()
-            row = manual_col.row(align=True)
+            layout.prop(sc, "align_mode")
+            # Button that loads 4 preset sets
+            row = layout.row(align=True)
             row.operator("scene.load_default_sets", icon='OUTLINER_OB_ARMATURE', text="Load 4 Sets")
             row.operator(
                 "pose.setup_larian_ik_constraints",
                 icon='CONSTRAINT_BONE',
                 text="Setup IK",
             )
-            ik_row = manual_col.row(align=True)
+            ik_row = layout.row(align=True)
             ik_row.prop(sc, "ik_leg_chain_count", text="Leg chain")
             ik_row.prop(sc, "ik_hand_chain_count", text="Hand chain")
-            self._draw_ik_toggles(manual_col, sc, context)
+            layout.prop(sc, "ik_use_target_rotation", text="IK target rotation")
 
-            box = manual_col.box()
+            # UI list of sets/triples (no "Set:" label)
+            box = layout.box()
             col = box.column()
             for i, tri in enumerate(sc.align_triples):
                 tri_box = col.box()
@@ -3039,17 +2512,20 @@ class VIEW3D_PT_pose_align_panel(bpy.types.Panel):
                 op.slot = 'TARGET'
                 op.index = i
 
+                # Axis lock buttons (X, Y, Z) - only one can be active
                 axis_row = tri_box.row(align=True)
                 axis_row.label(text="Lock Axis:")
                 axis_row.prop(tri, "locked_axis", expand=True)
 
                 tri_box.separator()
 
+            # add/remove buttons
             r = box.row(align=True)
             r.operator('scene.align_triple_add', icon='ADD', text='Add')
             r.operator('scene.align_triple_remove', icon='REMOVE', text='Remove')
 
-            sbox = manual_col.box()
+            # --- Smoothing section using Graph Editor operator ---
+            sbox = layout.box()
             sbox.label(text="Smooth Bone Curves:")
             srow = sbox.row(align=True)
             srow.prop(sc, "smooth_only_selected_bones", text="Only selected bones")
@@ -3058,10 +2534,18 @@ class VIEW3D_PT_pose_align_panel(bpy.types.Panel):
             srow = sbox.row(align=True)
             srow.operator("scene.gaussian_smooth_curves", icon='SMOOTHCURVE', text='Gaussian Smooth')
 
-            box2 = manual_col.box()
+            # Test button section (single iteration) - HIDDEN
+            # test_box = layout.box()
+            # test_box.label(text="Test:")
+            # test_row = test_box.row(align=True)
+            # test_row.operator("pose.align_child_iterative_single", icon='PLAY', text="Single Step")
+
+            # compact bake UI
+            box2 = layout.box()
             box2.label(text="Bake Animation:")
             box2.prop(sc, "align_bake_method")
 
+            # Threading button and workers in same row
             worker_row = box2.row(align=True)
             worker_row.operator("scene.toggle_threading", icon='CHECKBOX_HLT' if sc.align_use_threading else 'CHECKBOX_DEHLT', text="Threading")
             workers_sub = worker_row.row(align=True)
@@ -3083,13 +2567,15 @@ class VIEW3D_PT_pose_align_panel(bpy.types.Panel):
             dbg_row.prop(sc, "align_debug_bone", text="Bone")
             dbg_row.prop(sc, "align_debug_spike_deg", text="Spike °")
 
+            # advice about cancel
             box2.label(text="Cancel: Esc or Right-click")
 
             if sc.align_is_baking:
                 total = (sc.frame_end - sc.frame_start + 1)
                 box2.label(text=f"Progress: {sc.align_bake_progress}/{total}")
+
         else:
-            old_col.label(text="Select an armature", icon='INFO')
+            layout.label(text="Select an armature", icon='INFO')
 
 # -----------------------------
 # Addon Preferences
@@ -3111,7 +2597,6 @@ classes = (
     SCENE_OT_align_triple_remove,
     SCENE_OT_load_default_sets,
     POSE_OT_setup_larian_ik_constraints,
-    POSE_OT_scale_ik_bone_lengths,
     SCENE_OT_make_larian_good,
     SCENE_OT_make_bezier,
     SCENE_OT_toggle_advanced_settings,
