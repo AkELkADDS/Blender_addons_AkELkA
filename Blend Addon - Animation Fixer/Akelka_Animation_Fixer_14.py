@@ -48,89 +48,6 @@ def get_armature_from_context(context):
             return o
     return None
 
-
-def _save_armature_pose_context(arm_obj):
-    """Snapshot mode, active object, and pose bone selection for later restore."""
-    ctx = bpy.context
-    bone_select = {}
-    active_bone_name = None
-    if arm_obj and getattr(arm_obj, 'type', None) == 'ARMATURE':
-        for pb in arm_obj.pose.bones:
-            bone_select[pb.name] = bool(pb.bone.select)
-        active_bone = arm_obj.data.bones.active
-        if active_bone:
-            active_bone_name = active_bone.name
-    return {
-        'mode': ctx.mode,
-        'arm_mode': arm_obj.mode if arm_obj else None,
-        'active_object': ctx.view_layer.objects.active,
-        'bone_select': bone_select,
-        'active_bone_name': active_bone_name,
-    }
-
-
-def _restore_armature_pose_context(arm_obj, saved):
-    """Restore mode and pose bone selection saved by _save_armature_pose_context."""
-    if not saved or not arm_obj:
-        return
-    ctx = bpy.context
-    try:
-        arm_obj.select_set(True)
-        ctx.view_layer.objects.active = arm_obj
-    except Exception:
-        pass
-
-    target_mode = saved.get('arm_mode')
-    if not target_mode:
-        ctx_mode = saved.get('mode', '')
-        if ctx_mode == 'POSE':
-            target_mode = 'POSE'
-        elif ctx_mode == 'EDIT':
-            target_mode = 'EDIT'
-        else:
-            target_mode = 'OBJECT'
-
-    try:
-        if arm_obj.mode != target_mode:
-            bpy.ops.object.mode_set(mode=target_mode)
-    except Exception:
-        try:
-            if arm_obj.mode != 'OBJECT':
-                bpy.ops.object.mode_set(mode='OBJECT')
-            if target_mode != 'OBJECT':
-                bpy.ops.object.mode_set(mode=target_mode)
-        except Exception:
-            pass
-
-    if arm_obj.mode == 'POSE':
-        bone_select = saved.get('bone_select') or {}
-        active_bone_name = saved.get('active_bone_name')
-        try:
-            for pb in arm_obj.pose.bones:
-                pb.bone.select = bool(bone_select.get(pb.name, False))
-            if active_bone_name:
-                pb = arm_obj.pose.bones.get(active_bone_name)
-                if pb:
-                    pb.bone.select = True
-                    arm_obj.data.bones.active = pb.bone
-        except Exception:
-            pass
-
-    try:
-        ctx.view_layer.update()
-    except Exception:
-        pass
-
-
-@contextmanager
-def preserve_armature_work_context(arm_obj):
-    """Preserve pose mode and bone selection around addon operations."""
-    saved = _save_armature_pose_context(arm_obj)
-    try:
-        yield saved
-    finally:
-        _restore_armature_pose_context(arm_obj, saved)
-
 def update_show_advanced(self, context):
     """Auto-load 4 sets when advanced settings are first shown."""
     if not self.show_advanced:
@@ -283,6 +200,10 @@ def register_props():
         name="Hand IK chain", default=3, min=0, max=32,
         description="IK chain length on Wrist_L/R (bones counted from the constrained bone)",
     )
+    sc.aaf_ik_rotation = bpy.props.BoolProperty(
+        name="IK target rotation", default=True,
+        description="Match end bone rotation to the Dummy_*_IK target (IK constraint Rotation)",
+    )
     sc.aaf_auto_bezier = bpy.props.BoolProperty(
         name="Auto Bezier", default=True,
         description="Automatically set keyframe interpolation to Bezier during addon operations",
@@ -299,11 +220,6 @@ def register_props():
         name="Spike",
         default=45.0, min=1.0, max=180.0, step=1.0,
         description="Spike angle threshold (°) — fix IK keys that jump more than this vs neighbors",
-    )
-    sc.aaf_ik_quat_smooth = bpy.props.BoolProperty(
-        name="IK Quat Smooth",
-        default=True,
-        description="Alt+S polish on cliff/spike zones only (±5 keys around each vertical flip region)",
     )
     sc.aaf_smooth_mode = bpy.props.EnumProperty(
         name="Smooth",
@@ -329,8 +245,8 @@ def unregister_props():
               "smooth_only_selected_bones", "align_locked_axis", "quickfix_smooth_count", "manual_smooth_count",
               "align_debug_bake", "align_debug_bone", "align_debug_log_all_parents", "align_debug_spike_deg",
               "ik_leg_chain_count", "ik_hand_chain_count",
-              "aaf_auto_bezier", "aaf_ik_bone_length_scale",
-              "aaf_ik_quat_fix", "aaf_ik_quat_spike_deg", "aaf_ik_quat_smooth",
+              "aaf_ik_rotation", "aaf_auto_bezier", "aaf_ik_bone_length_scale",
+              "aaf_ik_quat_fix", "aaf_ik_quat_spike_deg",
               "aaf_smooth_mode", "aaf_smooth_passes"):
         if hasattr(bpy.types.Scene, p):
             delattr(bpy.types.Scene, p)
@@ -417,6 +333,9 @@ def align_debug_log_bone(sc, pb_parent, frame, stage, bake_state=None, dist=None
 def _aaf_auto_bezier_on(sc):
     return bool(getattr(sc, 'aaf_auto_bezier', True))
 
+def _aaf_ik_rotation_on(sc):
+    return bool(getattr(sc, 'aaf_ik_rotation', True))
+
 def _aaf_ik_bone_length_scale_on(sc, arm_obj=None):
     if arm_obj and ik_bones_already_small(arm_obj):
         return False
@@ -424,9 +343,6 @@ def _aaf_ik_bone_length_scale_on(sc, arm_obj=None):
 
 def _aaf_ik_quat_fix_on(sc):
     return bool(getattr(sc, 'aaf_ik_quat_fix', True))
-
-def _aaf_ik_quat_smooth_on(sc):
-    return bool(getattr(sc, 'aaf_ik_quat_smooth', True))
 
 def _aaf_toggle_label(enabled, on_text, off_text):
     return on_text if enabled else off_text
@@ -623,24 +539,6 @@ def _ikqf_build_sequence(channel_mode, channels, times):
         prev_q = q
     return seq
 
-
-def _ikqf_build_sequence_raw(channel_mode, channels, times):
-    """Sample rotation keys without hemisphere continuity (for spike/polish detection)."""
-    seq = []
-    for t in times:
-        frame = float(t)
-        if channel_mode == 'QUATERNION':
-            q = _ikqf_evaluate_quat(channels, frame)
-        else:
-            q = Euler((
-                channels[0].evaluate(frame),
-                channels[1].evaluate(frame),
-                channels[2].evaluate(frame),
-            )).to_quaternion()
-        seq.append((frame, q.copy()))
-    return seq
-
-
 def _ikqf_detect_spikes(seq, spike_deg):
     if len(seq) < 3:
         return []
@@ -657,97 +555,6 @@ def _ikqf_detect_spikes(seq, spike_deg):
         ):
             spikes.append(i)
     return spikes
-
-
-_IKQF_SMOOTH_RADIUS_MIN = 4
-_IKQF_SMOOTH_RADIUS_MAX = 10
-_IKQF_LOCAL_SMOOTH_RADIUS = 5
-_IKQF_LOCAL_SMOOTH_FACTOR = 1.0
-_IKQF_MAX_POLISH_KEY_RATIO = 0.15
-_IKQF_CLIFF_JUMP_FACTOR = 8.0
-_IKQF_CLIFF_ABS_MIN = 0.1
-_IKQF_POLISH_JUMP_DEG = 25.0
-_IKQF_ZONE_GAP_FRAMES = 10
-
-
-def _ikqf_detect_fcurve_cliff_frames(action, bone_name, jump_factor=_IKQF_CLIFF_JUMP_FACTOR, abs_min=_IKQF_CLIFF_ABS_MIN):
-    """Vertical component cliffs in the graph (quaternion flip steps like frames 65–75)."""
-    frames = set()
-    for fcu in _ikqf_rotation_fcurves(action, bone_name):
-        kps = fcu.keyframe_points
-        if len(kps) < 4:
-            continue
-        deltas = [abs(kps[i].co[1] - kps[i - 1].co[1]) for i in range(1, len(kps))]
-        median_d = sorted(deltas)[len(deltas) // 2]
-        thr = max(median_d * float(jump_factor), float(abs_min))
-        for i in range(1, len(kps)):
-            if deltas[i - 1] > thr:
-                frames.add(int(round(kps[i - 1].co[0])))
-                frames.add(int(round(kps[i].co[0])))
-    return sorted(frames)
-
-
-def _ikqf_detect_rotation_jump_frames(raw_seq, threshold_deg):
-    if len(raw_seq) < 2:
-        return []
-    thr = float(threshold_deg)
-    frames = set()
-    for i in range(1, len(raw_seq)):
-        if quat_delta_deg(raw_seq[i - 1][1], raw_seq[i][1]) > thr:
-            frames.add(int(round(float(raw_seq[i - 1][0]))))
-            frames.add(int(round(float(raw_seq[i][0]))))
-    return sorted(frames)
-
-
-def _ikqf_cluster_int_frames(frame_ints, max_gap=_IKQF_ZONE_GAP_FRAMES):
-    if not frame_ints:
-        return []
-    ints = sorted(set(int(f) for f in frame_ints))
-    clusters = [[ints[0]]]
-    for f in ints[1:]:
-        if f - clusters[-1][-1] <= max_gap:
-            clusters[-1].append(f)
-        else:
-            clusters.append([f])
-    return clusters
-
-
-def _ikqf_unique_frame_times(*frame_lists):
-    out = []
-    seen = set()
-    for group in frame_lists:
-        for t in group or []:
-            key = int(round(float(t)))
-            if key not in seen:
-                seen.add(key)
-                out.append(float(t))
-    return out
-
-
-def _ikqf_collect_polish_centers(spike_frames, cliff_frames, jump_frames, flip_frames=None):
-    return _ikqf_unique_frame_times(spike_frames, cliff_frames, jump_frames, flip_frames)
-
-
-def _ikqf_smooth_windows_from_zones(seq, zone_frame_ints, radius=_IKQF_LOCAL_SMOOTH_RADIUS):
-    if not zone_frame_ints or not seq:
-        return []
-    r = max(_IKQF_SMOOTH_RADIUS_MIN, min(_IKQF_SMOOTH_RADIUS_MAX, int(radius)))
-    clusters = _ikqf_cluster_int_frames(zone_frame_ints)
-    frame_to_idx = {int(round(float(seq[j][0]))): j for j in range(len(seq))}
-    frames = set()
-    for cluster in clusters:
-        idxs = [frame_to_idx[f] for f in cluster if f in frame_to_idx]
-        if idxs:
-            lo = max(0, min(idxs) - r)
-            hi = min(len(seq) - 1, max(idxs) + r)
-            for j in range(lo, hi + 1):
-                frames.add(int(round(float(seq[j][0]))))
-        else:
-            for f in cluster:
-                for fr in range(f - r, f + r + 1):
-                    frames.add(fr)
-    return sorted(frames)
-
 
 def _ikqf_fix_spikes(seq, spike_indices):
     """Replace spike keyframes with SLERP between neighbors. Returns (count, frame times)."""
@@ -837,18 +644,40 @@ def _ikqf_write_euler_sequence(action, bone_name, seq, rotation_mode):
         fcu.update()
     return count
 
+_IKQF_LOCAL_SMOOTH_RADIUS = 5
+_IKQF_LOCAL_SMOOTH_FACTOR = 1.0
+_IKQF_SMOOTH_DELTA_DEG = 4.0
 
-def _ikqf_apply_local_gaussian_smooth(action, bone_name, frame_times, factor, expand_radius=0):
+
+def _ikqf_frames_with_elevated_delta(seq, threshold_deg=_IKQF_SMOOTH_DELTA_DEG):
+    """Frames that still have noticeable rotation steps (post-fix jitter zones)."""
+    if len(seq) < 2:
+        return []
+    thr = float(threshold_deg)
+    frames = []
+    for i in range(1, len(seq)):
+        d = quat_delta_deg(seq[i - 1][1], seq[i][1])
+        if d > thr:
+            frames.append(float(seq[i - 1][0]))
+            frames.append(float(seq[i][0]))
+    out = []
+    seen = set()
+    for t in frames:
+        key = int(round(t))
+        if key not in seen:
+            seen.add(key)
+            out.append(t)
+    return out
+
+
+def _ikqf_apply_local_gaussian_smooth(action, bone_name, center_frames, radius, factor):
     """
-    Gaussian-smooth rotation f-curve keys on frame_times (Alt+S-style).
-    Uses every key on the curve as samples; only frame_times keys are updated.
+    Gaussian-smooth rotation f-curve keys around center frames (one Alt+S-style pass).
+    Direct f-curve edit — does not rely on Graph Editor operator context.
     """
-    if not frame_times:
+    if not center_frames:
         return 0
-    if expand_radius > 0:
-        frame_set = _ikqf_expand_frame_neighborhood(frame_times, expand_radius)
-    else:
-        frame_set = {int(round(float(t))) for t in frame_times}
+    frame_set = _ikqf_expand_frame_neighborhood(center_frames, radius)
     if not frame_set:
         return 0
 
@@ -894,23 +723,6 @@ def _ikqf_apply_local_gaussian_smooth(action, bone_name, frame_times, factor, ex
 
     return changed
 
-
-def _ikqf_graph_selected_frames(action, bone_name):
-    """Integer frames with selected rotation keys in the Graph Editor for this bone."""
-    if not action:
-        return []
-    prefix = f'pose.bones["{bone_name}"].'
-    frames = set()
-    for fcu in action.fcurves:
-        if not fcu.data_path.startswith(prefix):
-            continue
-        if 'rotation_quaternion' not in fcu.data_path and 'rotation_euler' not in fcu.data_path:
-            continue
-        for kp in fcu.keyframe_points:
-            if kp.select_control_point:
-                frames.add(int(round(kp.co[0])))
-    return sorted(frames)
-
 def resolve_ik_quat_fix_bone_names(arm_obj, context=None):
     """Selected pose bones if any, otherwise all Dummy_*_IK targets."""
     if context and getattr(context, 'mode', None) == 'POSE':
@@ -926,12 +738,11 @@ def resolve_ik_quat_fix_bone_names(arm_obj, context=None):
 def fix_ik_target_bone_rotation(
     arm_obj,
     bone_name,
-    action,
     spike_deg=45.0,
-    smooth_enabled=True,
     verbose=False,
 ):
     """Fix quaternion spikes on one IK target bone. Returns stats dict."""
+    action = _ikqf_action_for_armature(arm_obj)
     stats = {
         "bone": bone_name,
         "spikes_fixed": 0,
@@ -948,64 +759,40 @@ def fix_ik_target_bone_rotation(
     channel_mode, channels = _ikqf_resolve_rotation_channels(action, arm_obj, bone_name)
     if not channels:
         return {**stats, "error": "No rotation f-curves"}
-    graph_frames = _ikqf_graph_selected_frames(action, bone_name)
     times = _ikqf_integer_frames(fcurves)
     if len(times) < 2:
         return {**stats, "error": "Not enough keyframes"}
-    raw_seq = _ikqf_build_sequence_raw(channel_mode, channels, times)
     seq = _ikqf_build_sequence(channel_mode, channels, times)
-    cliff_frames = _ikqf_detect_fcurve_cliff_frames(action, bone_name)
-    jump_frames = _ikqf_detect_rotation_jump_frames(raw_seq, _IKQF_POLISH_JUMP_DEG)
-    spike_indices = _ikqf_detect_spikes(raw_seq, spike_deg)
+    spike_indices = _ikqf_detect_spikes(seq, spike_deg)
     stats["spikes_fixed"], spike_frames = _ikqf_fix_spikes(seq, spike_indices)
     stats["hemisphere_fixes"], flip_frames = _ikqf_hemisphere_pass(seq)
-    polish_centers = _ikqf_collect_polish_centers(
-        spike_frames, cliff_frames, jump_frames, flip_frames,
-    )
-    if graph_frames:
-        polish_centers = list(dict.fromkeys(polish_centers + [float(f) for f in graph_frames]))
-
     if channel_mode == 'QUATERNION':
         stats["keys_rekeyed"] = _ikqf_write_quat_sequence(action, bone_name, seq)
     else:
         stats["keys_rekeyed"] = _ikqf_write_euler_sequence(action, bone_name, seq, channel_mode)
 
-    if smooth_enabled and polish_centers:
-        zone_ints = [int(round(float(t))) for t in polish_centers]
-        smooth_frame_list = _ikqf_smooth_windows_from_zones(
-            seq, zone_ints, _IKQF_LOCAL_SMOOTH_RADIUS,
+    fcurves = _ikqf_rotation_fcurves(action, bone_name)
+    channel_mode, channels = _ikqf_resolve_rotation_channels(action, arm_obj, bone_name)
+    smooth_centers = list(dict.fromkeys(spike_frames + flip_frames))
+    if channels:
+        times = _ikqf_integer_frames(fcurves)
+        seq_post_fix = _ikqf_build_sequence(channel_mode, channels, times)
+        smooth_centers = list(dict.fromkeys(
+            smooth_centers + _ikqf_frames_with_elevated_delta(seq_post_fix)
+        ))
+
+    if smooth_centers:
+        changed = _ikqf_apply_local_gaussian_smooth(
+            action, bone_name, smooth_centers,
+            _IKQF_LOCAL_SMOOTH_RADIUS, _IKQF_LOCAL_SMOOTH_FACTOR,
         )
-        total_keys = len(times)
-        max_polish_keys = max(11, int(total_keys * _IKQF_MAX_POLISH_KEY_RATIO))
-        if len(smooth_frame_list) > max_polish_keys:
-            if verbose:
-                print(
-                    f"[AAF] IK quat smooth {bone_name}: too many keys "
-                    f"({len(smooth_frame_list)}/{total_keys}) — cliffs only"
-                )
-            cliff_only = _ikqf_unique_frame_times(cliff_frames, spike_frames)
-            smooth_frame_list = _ikqf_smooth_windows_from_zones(
-                seq, [int(round(float(t))) for t in cliff_only],
-                min(_IKQF_LOCAL_SMOOTH_RADIUS, 4),
-            )
-        smooth_changed = _ikqf_apply_local_gaussian_smooth(
-            action, bone_name, smooth_frame_list, _IKQF_LOCAL_SMOOTH_FACTOR,
-        )
-        stats["smooth_frames"] = len(smooth_frame_list)
-        if verbose:
-            clusters = _ikqf_cluster_int_frames(zone_ints)
-            zones_s = "; ".join(f"{c[0]}-{c[-1]}" for c in clusters[:6])
-            more = "..." if len(clusters) > 6 else ""
-            print(
-                f"[AAF] IK quat smooth {bone_name}: ON zones=[{zones_s}{more}] "
-                f"window={len(smooth_frame_list)}/{total_keys} keys "
-                f"cliffs={len(cliff_frames)} jumps={len(jump_frames)} "
-                f"spikes={len(spike_frames)} fcurve_keys={smooth_changed}"
-            )
-    elif verbose and smooth_enabled and not polish_centers:
-        print(f"[AAF] IK quat smooth {bone_name}: skipped (no cliff/spike zones)")
-    elif verbose:
-        print(f"[AAF] IK quat smooth {bone_name}: OFF (toggle disabled)")
+        stats["smooth_frames"] = len(
+            _ikqf_expand_frame_neighborhood(smooth_centers, _IKQF_LOCAL_SMOOTH_RADIUS)
+        ) if changed else 0
+        if verbose and changed:
+            centers_s = ", ".join(str(int(round(t))) for t in smooth_centers[:12])
+            more = "..." if len(smooth_centers) > 12 else ""
+            print(f"[AAF] IK quat smooth {bone_name}: ±{_IKQF_LOCAL_SMOOTH_RADIUS} around [{centers_s}{more}]")
 
     fcurves = _ikqf_rotation_fcurves(action, bone_name)
     channel_mode, channels = _ikqf_resolve_rotation_channels(action, arm_obj, bone_name)
@@ -1022,65 +809,31 @@ def fix_ik_target_bone_rotation(
     return stats
 
 
-def resolve_ik_quat_fix_action(arm_obj):
-    """Prefer bottom NLA strip action; fall back to armature.action."""
-    ad = arm_obj.animation_data if arm_obj else None
-    if ad is None:
-        return None, None, None
-    if len(ad.nla_tracks) > 0:
-        action, track_name, strip = get_bottom_nla_strip(arm_obj)
-        if strip is not None and action is not None:
-            return action, strip, track_name
-    if ad.action:
-        return ad.action, None, None
-    return None, None, None
-
-
 def apply_aaf_ik_quat_fix(arm_obj, sc, verbose=True, context=None):
-    """Fix quaternion spikes on all Dummy_*_IK targets (ignores bone selection)."""
+    """Fix quaternion spikes on IK targets (selected bones, or all Dummy_*_IK)."""
     if not _aaf_ik_quat_fix_on(sc):
         return [], []
-    if context is None:
-        context = bpy.context
     spike_deg = float(getattr(sc, 'aaf_ik_quat_spike_deg', 45.0))
-    smooth_enabled = _aaf_ik_quat_smooth_on(sc)
-    bone_names = larian_ik_target_bone_names(arm_obj)
-    action, strip, track_name = resolve_ik_quat_fix_action(arm_obj)
-    if action is None:
-        return [], ["No animation action found on armature"]
-
-    def run_fix(target_action):
-        ok, errors = [], []
-        for name in bone_names:
-            stats = fix_ik_target_bone_rotation(
-                arm_obj, name, target_action,
-                spike_deg=spike_deg,
-                smooth_enabled=smooth_enabled,
-                verbose=verbose,
+    bone_names = resolve_ik_quat_fix_bone_names(arm_obj, context)
+    ok = []
+    errors = []
+    for name in bone_names:
+        stats = fix_ik_target_bone_rotation(
+            arm_obj, name,
+            spike_deg=spike_deg,
+            verbose=verbose,
+        )
+        if stats.get("error"):
+            errors.append(f"{name}: {stats['error']}")
+            continue
+        ok.append(name)
+        if verbose:
+            print(
+                f"[AAF] IK quat fix {name}: spikes={stats['spikes_fixed']} "
+                f"hem={stats['hemisphere_fixes']} keys={stats['keys_rekeyed']} "
+                f"smooth={stats['smooth_frames']} tremor={stats['tremor_frames']}"
             )
-            if stats.get("error"):
-                errors.append(f"{name}: {stats['error']}")
-                continue
-            ok.append(name)
-            if verbose:
-                print(
-                    f"[AAF] IK quat fix {name}: spikes={stats['spikes_fixed']} "
-                    f"hem={stats['hemisphere_fixes']} keys={stats['keys_rekeyed']} "
-                    f"smooth={stats['smooth_frames']} tremor={stats['tremor_frames']}"
-                )
-        return ok, errors
-
-    if strip is not None:
-        with nla_tweak_strip(context, arm_obj, strip) as tweak_action:
-            if verbose:
-                print(
-                    f"[AAF] IK quat fix editing NLA '{track_name}' "
-                    f"action '{tweak_action.name}' smooth={'ON' if smooth_enabled else 'OFF'}"
-                )
-            return run_fix(tweak_action)
-    if verbose:
-        print(f"[AAF] IK quat fix editing action '{action.name}' smooth={'ON' if smooth_enabled else 'OFF'}")
-    return run_fix(action)
+    return ok, errors
 
 _IK_BONE_LENGTH_SCALE = 0.005
 _IK_BONE_ALREADY_SMALL_MAX = 0.02
@@ -1112,8 +865,8 @@ def scale_larian_ik_bone_lengths(arm_obj, factor=_IK_BONE_LENGTH_SCALE):
     if not bone_names:
         return [], ["No IK bones found (Ankle_L/R, Wrist_L/R)"]
 
+    prev_mode = arm_obj.mode
     prev_active = bpy.context.view_layer.objects.active
-    saved_pose = _save_armature_pose_context(arm_obj)
     errors = []
     ok = []
     try:
@@ -1135,13 +888,17 @@ def scale_larian_ik_bone_lengths(arm_obj, factor=_IK_BONE_LENGTH_SCALE):
     finally:
         try:
             bpy.context.view_layer.objects.active = arm_obj
+            if prev_mode == 'EDIT':
+                bpy.ops.object.mode_set(mode='EDIT')
+            elif prev_mode == 'POSE':
+                bpy.ops.object.mode_set(mode='POSE')
+            else:
+                bpy.ops.object.mode_set(mode='OBJECT')
         except Exception:
             pass
-        _restore_armature_pose_context(arm_obj, saved_pose)
         try:
-            if prev_active and prev_active.name in bpy.context.view_layer.objects:
-                if prev_active != arm_obj:
-                    bpy.context.view_layer.objects.active = prev_active
+            if prev_active:
+                bpy.context.view_layer.objects.active = prev_active
         except Exception:
             pass
     return ok, errors
@@ -1275,7 +1032,6 @@ def nla_tweak_strip(ctx, arm_obj, strip):
         'strip_select': _aaf_save_strip_selection(ad),
         'active': ctx.view_layer.objects.active,
         'mode': ctx.mode,
-        'pose_context': _save_armature_pose_context(arm_obj),
     }
     entered_tweak = False
 
@@ -1327,8 +1083,6 @@ def nla_tweak_strip(ctx, arm_obj, strip):
                 ctx.view_layer.objects.active = saved['active']
             except Exception:
                 pass
-
-        _restore_armature_pose_context(arm_obj, saved.get('pose_context'))
 
 def _aaf_action_has_usable_fcurves(action, bone_names=None):
     if not action or not action.fcurves:
@@ -2341,37 +2095,36 @@ class POSE_OT_setup_larian_ik_constraints(bpy.types.Operator):
             self.report({'ERROR'}, "Select an armature.")
             return {'CANCELLED'}
         sc = context.scene
-        with preserve_armature_work_context(arm_obj):
-            ok, errors = setup_larian_ik_constraints_on_armature(
-                arm_obj,
-                leg_chain_count=int(sc.ik_leg_chain_count),
-                hand_chain_count=int(sc.ik_hand_chain_count),
-                use_rotation=True,
-            )
-            if not ok:
-                msg = "; ".join(errors) if errors else "No limbs configured"
-                self.report({'ERROR'}, f"IK setup failed: {msg}")
-                return {'CANCELLED'}
-            if _aaf_ik_bone_length_scale_on(sc, arm_obj):
-                scaled, scale_errors = scale_larian_ik_bone_lengths(arm_obj)
-                if scale_errors and not scaled:
-                    self.report({'WARNING'}, f"IK set but bone length scale failed: {'; '.join(scale_errors)}")
-                elif scaled:
-                    print(f"[AAF] IK bone lengths scaled on: {', '.join(scaled)}")
-            if errors:
-                self.report({'WARNING'}, f"IK set ({len(ok)}/4): {'; '.join(errors)}")
-            else:
-                self.report({'INFO'}, f"IK constraints set on {len(ok)} limbs.")
-            apply_bezier_if_enabled(arm_obj, sc, verbose=True, context=context)
-            smooth_warnings = apply_aaf_ik_smooth_extras(context, arm_obj, sc)
-            if smooth_warnings:
-                self.report({'WARNING'}, "; ".join(smooth_warnings))
-            quat_ok, quat_errors = apply_aaf_ik_quat_fix(arm_obj, sc, verbose=True, context=context)
-            if quat_errors and not quat_ok:
-                self.report({'WARNING'}, f"IK quat fix: {'; '.join(quat_errors)}")
-            elif quat_ok:
-                fixed_count = len(quat_ok)
-                print(f"[AAF] IK quat fix applied on {fixed_count} target(s): {', '.join(quat_ok)}")
+        ok, errors = setup_larian_ik_constraints_on_armature(
+            arm_obj,
+            leg_chain_count=int(sc.ik_leg_chain_count),
+            hand_chain_count=int(sc.ik_hand_chain_count),
+            use_rotation=_aaf_ik_rotation_on(sc),
+        )
+        if not ok:
+            msg = "; ".join(errors) if errors else "No limbs configured"
+            self.report({'ERROR'}, f"IK setup failed: {msg}")
+            return {'CANCELLED'}
+        if _aaf_ik_bone_length_scale_on(sc, arm_obj):
+            scaled, scale_errors = scale_larian_ik_bone_lengths(arm_obj)
+            if scale_errors and not scaled:
+                self.report({'WARNING'}, f"IK set but bone length scale failed: {'; '.join(scale_errors)}")
+            elif scaled:
+                print(f"[AAF] IK bone lengths scaled on: {', '.join(scaled)}")
+        if errors:
+            self.report({'WARNING'}, f"IK set ({len(ok)}/4): {'; '.join(errors)}")
+        else:
+            self.report({'INFO'}, f"IK constraints set on {len(ok)} limbs.")
+        apply_bezier_if_enabled(arm_obj, sc, verbose=True, context=context)
+        smooth_warnings = apply_aaf_ik_smooth_extras(context, arm_obj, sc)
+        if smooth_warnings:
+            self.report({'WARNING'}, "; ".join(smooth_warnings))
+        quat_ok, quat_errors = apply_aaf_ik_quat_fix(arm_obj, sc, verbose=True, context=context)
+        if quat_errors and not quat_ok:
+            self.report({'WARNING'}, f"IK quat fix: {'; '.join(quat_errors)}")
+        elif quat_ok:
+            fixed_count = len(quat_ok)
+            print(f"[AAF] IK quat fix applied on {fixed_count} target(s): {', '.join(quat_ok)}")
         return {'FINISHED'}
 
 class POSE_OT_scale_ik_bone_lengths(bpy.types.Operator):
@@ -3323,10 +3076,9 @@ def apply_graph_gaussian_smooth_for_armature_operator(
             ad.action = saved_action
         return 0
 
-    # Save current mode, active object, and pose bone selection
+    # Save current mode and active object
     original_mode = ctx.mode
     original_active = ctx.active_object
-    saved_pose_context = _save_armature_pose_context(ob)
     need_restore_mode = False
     need_restore_active = False
     
@@ -3450,7 +3202,6 @@ def apply_graph_gaussian_smooth_for_armature_operator(
                         ctx.view_layer.objects.active = original_active
                     except Exception:
                         pass
-                _restore_armature_pose_context(ob, saved_pose_context)
                 if need_restore_action and ad is not None:
                     ad.action = saved_action
                 return 0
@@ -3561,11 +3312,9 @@ def apply_graph_gaussian_smooth_for_armature_operator(
                     bpy.ops.object.mode_set(mode='OBJECT')
                 elif original_mode == 'EDIT':
                     bpy.ops.object.mode_set(mode='EDIT')
-                elif original_mode == 'POSE':
-                    bpy.ops.object.mode_set(mode='POSE')
+                # Add other modes as needed
             except Exception:
                 pass
-        _restore_armature_pose_context(ob, saved_pose_context)
         # restore original active object
         if need_restore_active and original_active:
             try:
@@ -3596,12 +3345,9 @@ def apply_graph_gaussian_smooth_for_armature_operator(
                 bpy.ops.object.mode_set(mode='OBJECT')
             elif original_mode == 'EDIT':
                 bpy.ops.object.mode_set(mode='EDIT')
-            elif original_mode == 'POSE':
-                bpy.ops.object.mode_set(mode='POSE')
+            # Add other modes as needed
         except Exception:
             pass
-
-    _restore_armature_pose_context(ob, saved_pose_context)
     
     # restore original active object
     if need_restore_active and original_active:
@@ -3688,26 +3434,16 @@ class VIEW3D_PT_pose_align_panel(bpy.types.Panel):
     def _draw_ik_quat_fix_row(self, layout, sc):
         row = layout.row(align=True)
         quat_enabled = bool(getattr(sc, "aaf_ik_quat_fix"))
-        split = row.split(factor=0.52, align=True)
+        split = row.split(factor=0.72, align=True)
         split.prop(
             sc, "aaf_ik_quat_fix",
             text=_aaf_toggle_label(quat_enabled, "IK Quat Fix", "IK Quat Fix (Off)"),
             toggle=True,
         )
-        right = split.row(align=True)
-        right.enabled = quat_enabled
-        right.prop(sc, "aaf_ik_quat_spike_deg", text="Spike °")
-        smooth_on = bool(getattr(sc, "aaf_ik_quat_smooth", True))
-        smooth_btn = right.row(align=True)
-        smooth_btn.enabled = quat_enabled
-        smooth_btn.prop(
-            sc, "aaf_ik_quat_smooth",
-            text="",
-            icon='SMOOTHCURVE' if smooth_on else 'DECORATE_DRIVER',
-            toggle=True,
-        )
+        split.prop(sc, "aaf_ik_quat_spike_deg", text="Spike °")
 
     def _draw_ik_toggles(self, layout, sc, context):
+        self._draw_aaf_toggle(layout, sc, "aaf_ik_rotation", "IK Target Rotation", "IK Target Rotation (Off)")
         arm = get_armature_from_context(context)
         bone_length_locked = ik_bones_already_small(arm) if arm else False
         bone_row = layout.row(align=True)

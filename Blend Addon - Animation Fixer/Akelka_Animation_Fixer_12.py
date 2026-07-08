@@ -671,7 +671,10 @@ _IKQF_ZONE_GAP_FRAMES = 10
 
 
 def _ikqf_detect_fcurve_cliff_frames(action, bone_name, jump_factor=_IKQF_CLIFF_JUMP_FACTOR, abs_min=_IKQF_CLIFF_ABS_MIN):
-    """Vertical component cliffs in the graph (quaternion flip steps like frames 65–75)."""
+    """
+    Find vertical component cliffs in the graph (quaternion flip steps like frames 65–75).
+    Uses per-channel median — only abnormal jumps, not normal motion.
+    """
     frames = set()
     for fcu in _ikqf_rotation_fcurves(action, bone_name):
         kps = fcu.keyframe_points
@@ -688,6 +691,7 @@ def _ikqf_detect_fcurve_cliff_frames(action, bone_name, jump_factor=_IKQF_CLIFF_
 
 
 def _ikqf_detect_rotation_jump_frames(raw_seq, threshold_deg):
+    """Both sides of a large rotation step between keys (raw, no continuity mask)."""
     if len(raw_seq) < 2:
         return []
     thr = float(threshold_deg)
@@ -725,10 +729,12 @@ def _ikqf_unique_frame_times(*frame_lists):
 
 
 def _ikqf_collect_polish_centers(spike_frames, cliff_frames, jump_frames, flip_frames=None):
+    """Local polish zones: SLERP spike fixes + graph cliffs + large rotation jumps."""
     return _ikqf_unique_frame_times(spike_frames, cliff_frames, jump_frames, flip_frames)
 
 
 def _ikqf_smooth_windows_from_zones(seq, zone_frame_ints, radius=_IKQF_LOCAL_SMOOTH_RADIUS):
+    """±radius keys around each contiguous cliff/spike zone (e.g. 65–75, 115–125)."""
     if not zone_frame_ints or not seq:
         return []
     r = max(_IKQF_SMOOTH_RADIUS_MIN, min(_IKQF_SMOOTH_RADIUS_MAX, int(radius)))
@@ -910,6 +916,7 @@ def _ikqf_graph_selected_frames(action, bone_name):
             if kp.select_control_point:
                 frames.add(int(round(kp.co[0])))
     return sorted(frames)
+
 
 def resolve_ik_quat_fix_bone_names(arm_obj, context=None):
     """Selected pose bones if any, otherwise all Dummy_*_IK targets."""

@@ -505,7 +505,6 @@ class BAC_PT_main(Panel):
 
         box = col.box()
         toggle_col = box.column(align=True)
-        toggle_col.scale_y = 0.90
         _toggle_row(toggle_col, props, "only_selected", "visual_keying")
         _toggle_row(toggle_col, props, "clear_constraints", "clear_parents")
         _toggle_row(toggle_col, props, "overwrite_action", "clean_curves")
