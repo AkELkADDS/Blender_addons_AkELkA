@@ -1,0 +1,893 @@
+BG3 GR2 ANIMATION COMPARISON — FULL READABLE REPORT
+============================================================
+Generated: 2026-07-09 19:17:50
+Animation length: ~19.9 seconds
+Camera-cut zone: ~12.3s
+
+WHAT THE FILES ARE
+----------------------------------------
+  [raw] TIF_FS_Rig_SCENE_CAMP_Karlach_SD_ROM_ForgingOfTheHeart_Romance_Karlach_000.GR2
+    Size: 92,340 bytes
+    Bones: no bone names (animation-only)
+
+  [lslib (reference)] TIF_FS_Rig_SCENE_CAMP_Karlach_SD_ROM_ForgingOfTheHeart_Romance_Karlach_000_TIF_SK.GR2
+    Size: 176,668 bytes
+    Bones: Dummy_Root, Dummy_L_Foot_IK, Dummy_R_Foot_IK, Dummy_L_Hand_IK, Dummy_R_Hand_IK, Root_M, Chest_M
+
+  [blender (test)] TIF_FS_Rig_SCENE_CAMP_Karlach_SD_ROM_ForgingOfTheHeart_Romance_Karlach_DGB_EL_1_sk_tif.GR2
+    Size: 955,092 bytes
+    Bones: Dummy_Root, Dummy_L_Foot_IK, Dummy_R_Foot_IK, Dummy_L_Hand_IK, Dummy_R_Hand_IK, Root_M, Chest_M
+
+SUMMARY
+----------------------------------------
+  9 BAD  |  4 WARN  |  5 OK
+
+CRITICAL ISSUES
+----------------------------------------
+  * Dummy_L_Hand_IK / rotation: BAD. Max error 101.09 deg at 4.74s. Left hand IK target.
+  * Dummy_L_Foot_IK / rotation: BAD. Max error 77.57 deg at 12.35s. Left foot IK target — game plants foot here. Keys 263->599 (resampled). Near camera cut — likely in-game drift.
+  * Dummy_R_Foot_IK / rotation: BAD. Max error 40.66 deg at 10.11s. Right foot IK target.
+  * Dummy_R_Hand_IK / rotation: BAD. Max error 16.30 deg at 12.83s. Right hand IK target. Near camera cut — likely in-game drift.
+  * Dummy_L_Foot_IK / translation: BAD. Max error 14.36 cm at 12.50s. Left foot IK target — game plants foot here. Near camera cut — likely in-game drift.
+  * Dummy_Root / translation: BAD. Max error 8.96 cm at 12.73s. Moves the whole character in the scene (cinematic world position). Keys 229->599 (resampled). Near camera cut — likely in-game drift.
+  * Dummy_L_Hand_IK / translation: BAD. Max error 7.69 cm at 12.50s. Left hand IK target. Near camera cut — likely in-game drift.
+  * Dummy_R_Foot_IK / translation: BAD. Max error 6.15 cm at 12.73s. Right foot IK target. Near camera cut — likely in-game drift.
+  * Dummy_R_Hand_IK / translation: BAD. Max error 5.83 cm at 12.93s. Right hand IK target. Near camera cut — likely in-game drift.
+
+WARNINGS
+----------------------------------------
+  * Root_M / translation: WARNING. Max error 4.79 cm at 12.39s. Main body anchor on the rig. Near camera cut — likely in-game drift.
+  * Root_M / rotation: WARNING. Max error 8.56 deg at 12.36s. Main body anchor on the rig. Keys 178->599 (resampled). Near camera cut — likely in-game drift.
+  * Chest_M / rotation: WARNING. Max error 3.39 deg at 12.36s. Upper torso. Keys 157->599 (resampled). Near camera cut — likely in-game drift.
+  * Head_M / rotation: WARNING. Max error 4.38 deg at 15.50s. Head orientation. Keys 267->599 (resampled).
+
+WHAT THIS MEANS IN-GAME
+----------------------------------------
+  Scene cinematics use Dummy_Root position + IK foot/hand bones.
+  Wrong values at camera cuts (~12s) = character jumps or slides.
+
+ALL TRACKS
+----------------------------------------
+  [BAD    ] Dummy_Root             translation  8.96 cm @ 12.73s  keys 229->599
+  [OK     ] Dummy_Root             rotation     0.00 deg @ 0.00s  keys 1->1
+  [WARN   ] Root_M                 translation  4.79 cm @ 12.39s  keys 355->599
+  [WARN   ] Root_M                 rotation     8.56 deg @ 12.36s  keys 178->599
+  [OK     ] Chest_M                translation  0.22 cm @ 12.26s  keys 123->599
+  [WARN   ] Chest_M                rotation     3.39 deg @ 12.36s  keys 157->599
+  [BAD    ] Dummy_L_Foot_IK        translation  14.36 cm @ 12.50s  keys 336->599
+  [BAD    ] Dummy_L_Foot_IK        rotation     77.57 deg @ 12.35s  keys 263->599
+  [BAD    ] Dummy_R_Foot_IK        translation  6.15 cm @ 12.73s  keys 446->599
+  [BAD    ] Dummy_R_Foot_IK        rotation     40.66 deg @ 10.11s  keys 438->599
+  [BAD    ] Dummy_L_Hand_IK        translation  7.69 cm @ 12.50s  keys 506->599
+  [BAD    ] Dummy_L_Hand_IK        rotation     101.09 deg @ 4.74s  keys 583->599
+  [BAD    ] Dummy_R_Hand_IK        translation  5.83 cm @ 12.93s  keys 386->599
+  [BAD    ] Dummy_R_Hand_IK        rotation     16.30 deg @ 12.83s  keys 405->599
+  [OK     ] Toes_L                 translation  0.00 cm @ 0.00s  keys 1->1
+  [OK     ] Toes_L                 rotation     0.25 deg @ 0.00s  keys 25->599
+  [OK     ] Head_M                 translation  0.00 cm @ 0.00s  keys 1->1
+  [WARN   ] Head_M                 rotation     4.38 deg @ 15.50s  keys 267->599
+
+=== DECODED GLB: REFERENCE (lslib.glb) ===
+File: lslib.glb
+Nodes (bones): 118
+Meshes: 0  (0 = animation/skeleton only, no body mesh)
+Skins: 1
+Animations: 1
+
+BONE HIERARCHY (parent -> child):
+--------------------------------------------------
+  (root) -> Dummy_Root
+  Dummy_Root -> Dummy_CastFX
+  Dummy_Root -> Dummy_OverheadFX
+  Dummy_Root -> Dummy_Playerlight
+  Dummy_Root -> Dummy_Custom_Anim
+  Dummy_Root -> Dummy_FollowPhysics
+  Dummy_Root -> Dummy_L_Hand_IK
+  Dummy_Root -> Dummy_R_Hand_IK
+  Dummy_Root -> Dummy_L_Foot_IK
+  Dummy_Root -> Dummy_R_Foot_IK
+  Dummy_Root -> Dummy_HitImpactFX
+  Dummy_Root -> Root_M
+  Root_M -> Hip_R
+  Hip_R -> Knee_R
+  Knee_R -> Dummy_R_KneeFX_01
+  Knee_R -> Ankle_R
+  Ankle_R -> Toes_R
+  Toes_R -> ToesEnd_R_endBone
+  Toes_R -> Dummy_R_Foot_01
+  Hip_R -> Hip_R_Twist_01
+  Hip_R_Twist_01 -> Hip_R_Twist_02
+  Root_M -> Hip_L
+  Hip_L -> Knee_L
+  Knee_L -> Dummy_L_KneeFX_01
+  Knee_L -> Ankle_L
+  Ankle_L -> Toes_L
+  Toes_L -> Dummy_L_Foot_01
+  Toes_L -> ToesEnd_L_endBone
+  Hip_L -> Hip_L_Twist_01
+  Hip_L_Twist_01 -> Hip_L_Twist_02
+  Root_M -> Spine1_M
+  Spine1_M -> Spine2_M
+  Spine2_M -> Chest_M
+  Chest_M -> Scapula_R
+  Scapula_R -> Shoulder_R
+  Shoulder_R -> Elbow_R
+  Elbow_R -> Dummy_R_TentacleFX
+  Elbow_R -> Elbow_Twist_R
+  Elbow_R -> Wrist_R
+  Wrist_R -> Dummy_R_HandFX
+  Wrist_R -> Dummy_R_Hand
+  Wrist_R -> RingFinger0_R
+  RingFinger0_R -> RingFinger1_R
+  RingFinger1_R -> RingFinger2_R
+  RingFinger2_R -> RingFinger3_R
+  RingFinger3_R -> RingFinger4_R_endBone
+  Wrist_R -> PinkyFinger0_R
+  PinkyFinger0_R -> PinkyFinger1_R
+  PinkyFinger1_R -> PinkyFinger2_R
+  PinkyFinger2_R -> PinkyFinger3_R
+  PinkyFinger3_R -> PinkyFinger4_R_endBone
+  Wrist_R -> MiddleFinger1_R
+  MiddleFinger1_R -> MiddleFinger2_R
+  MiddleFinger2_R -> MiddleFinger3_R
+  MiddleFinger3_R -> MiddleFinger4_R_endBone
+  Wrist_R -> IndexFinger1_R
+  IndexFinger1_R -> IndexFinger2_R
+  IndexFinger2_R -> IndexFinger3_R
+  IndexFinger3_R -> IndexFinger4_R_endBone
+  Wrist_R -> ThumbFinger1_R
+  ThumbFinger1_R -> ThumbFinger2_R
+  ThumbFinger2_R -> ThumbFinger3_R
+  ThumbFinger3_R -> ThumbFinger4_R_endBone
+  Shoulder_R -> Shoulder_R_Twist_01
+  Shoulder_R_Twist_01 -> Shoulder_R_Twist_02
+  Chest_M -> Scapula_L
+  Scapula_L -> Shoulder_L
+  Shoulder_L -> Elbow_L
+  Elbow_L -> Elbow_Twist_L
+  Elbow_L -> Dummy_L_TentacleFX
+  Elbow_L -> Wrist_L
+  Wrist_L -> Dummy_L_Hand
+  Wrist_L -> Dummy_L_HandFX
+  Wrist_L -> RingFinger0_L
+  RingFinger0_L -> RingFinger1_L
+  RingFinger1_L -> RingFinger2_L
+  RingFinger2_L -> RingFinger3_L
+  RingFinger3_L -> RingFinger4_L_endBone
+  Wrist_L -> PinkyFinger0_L
+  PinkyFinger0_L -> PinkyFinger1_L
+  PinkyFinger1_L -> PinkyFinger2_L
+  PinkyFinger2_L -> PinkyFinger3_L
+  PinkyFinger3_L -> PinkyFinger4_L_endBone
+  Wrist_L -> MiddleFinger1_L
+  MiddleFinger1_L -> MiddleFinger2_L
+  MiddleFinger2_L -> MiddleFinger3_L
+  MiddleFinger3_L -> MiddleFinger4_L_endBone
+  Wrist_L -> IndexFinger1_L
+  IndexFinger1_L -> IndexFinger2_L
+  IndexFinger2_L -> IndexFinger3_L
+  IndexFinger3_L -> IndexFinger4_L_endBone
+  Wrist_L -> ThumbFinger1_L
+  ThumbFinger1_L -> ThumbFinger2_L
+  ThumbFinger2_L -> ThumbFinger3_L
+  ThumbFinger3_L -> ThumbFinger4_L_endBone
+  Shoulder_L -> Shoulder_L_Twist_01
+  Shoulder_L_Twist_01 -> Shoulder_L_Twist_02
+  Chest_M -> Dummy_Sheath_Upper_R
+  Chest_M -> Dummy_Sheath_Upper_L
+  Chest_M -> Dummy_Sheath_Music
+  Chest_M -> Dummy_WingFX
+  Chest_M -> Dummy_ChestFX
+  Chest_M -> Neck_M
+  Neck_M -> Head_M
+  Head_M -> Dummy_StatusFX
+  Head_M -> Dummy_HeadFX
+  Head_M -> Dummy_MouthFX
+  Head_M -> Dummy_EyeFX_01
+  Head_M -> Dummy_EyeFX_02
+  Head_M -> HeadEnd_M_endBone
+  Neck_M -> Dummy_NeckFX
+  Spine2_M -> Dummy_Sheath_Shield
+  Spine2_M -> Dummy_Sheath_Ranged
+  Spine1_M -> Dummy_Sheath_Lower_R
+  Spine1_M -> Dummy_Sheath_Lower_L
+  Spine1_M -> Dummy_BodyFX
+  Root_M -> Dummy_Sheath_Hip_L
+  Root_M -> Dummy_Sheath_Hip_R
+
+ANIMATION TRACKS (every channel in file):
+--------------------------------------------------
+  Dummy_Root                   scale            1 keys  (0.00s - 0.00s)
+  Dummy_Root                   rotation         1 keys  (0.00s - 0.00s)
+  Dummy_Root                   translation    229 keys  (0.00s - 19.93s)
+  Dummy_CastFX                 scale            1 keys  (0.00s - 0.00s)
+  Dummy_CastFX                 rotation         1 keys  (0.00s - 0.00s)
+  Dummy_CastFX                 translation      1 keys  (0.00s - 0.00s)
+  Dummy_OverheadFX             scale            1 keys  (0.00s - 0.00s)
+  Dummy_OverheadFX             rotation         1 keys  (0.00s - 0.00s)
+  Dummy_OverheadFX             translation      1 keys  (0.00s - 0.00s)
+  Dummy_Playerlight            scale            1 keys  (0.00s - 0.00s)
+  Dummy_Playerlight            rotation         1 keys  (0.00s - 0.00s)
+  Dummy_Playerlight            translation      1 keys  (0.00s - 0.00s)
+  Dummy_Custom_Anim            scale            1 keys  (0.00s - 0.00s)
+  Dummy_Custom_Anim            rotation         1 keys  (0.00s - 0.00s)
+  Dummy_Custom_Anim            translation      1 keys  (0.00s - 0.00s)
+  Dummy_FollowPhysics          scale            1 keys  (0.00s - 0.00s)
+  Dummy_FollowPhysics          rotation         1 keys  (0.00s - 0.00s)
+  Dummy_FollowPhysics          translation      1 keys  (0.00s - 0.00s)
+  Dummy_L_Hand_IK              scale            1 keys  (0.00s - 0.00s)
+  Dummy_L_Hand_IK              rotation       583 keys  (0.00s - 19.93s)
+  Dummy_L_Hand_IK              translation    506 keys  (0.00s - 19.93s)
+  Dummy_R_Hand_IK              scale            1 keys  (0.00s - 0.00s)
+  Dummy_R_Hand_IK              rotation       405 keys  (0.00s - 19.93s)
+  Dummy_R_Hand_IK              translation    386 keys  (0.00s - 19.93s)
+  Dummy_L_Foot_IK              scale            1 keys  (0.00s - 0.00s)
+  Dummy_L_Foot_IK              rotation       263 keys  (0.00s - 19.93s)
+  Dummy_L_Foot_IK              translation    336 keys  (0.00s - 19.93s)
+  Dummy_R_Foot_IK              scale            1 keys  (0.00s - 0.00s)
+  Dummy_R_Foot_IK              rotation       438 keys  (0.00s - 19.93s)
+  Dummy_R_Foot_IK              translation    446 keys  (0.00s - 19.93s)
+  Dummy_HitImpactFX            scale            1 keys  (0.00s - 0.00s)
+  Dummy_HitImpactFX            rotation         1 keys  (0.00s - 0.00s)
+  Dummy_HitImpactFX            translation      1 keys  (0.00s - 0.00s)
+  Root_M                       scale            1 keys  (0.00s - 0.00s)
+  Root_M                       rotation       178 keys  (0.00s - 19.93s)
+  Root_M                       translation    355 keys  (0.00s - 19.93s)
+  Hip_R                        scale            1 keys  (0.00s - 0.00s)
+  Hip_R                        rotation       241 keys  (0.00s - 19.93s)
+  Hip_R                        translation      1 keys  (0.00s - 0.00s)
+  Knee_R                       scale            1 keys  (0.00s - 0.00s)
+  Knee_R                       rotation       156 keys  (0.00s - 19.93s)
+  Knee_R                       translation      1 keys  (0.00s - 0.00s)
+  Dummy_R_KneeFX_01            scale            1 keys  (0.00s - 0.00s)
+  Dummy_R_KneeFX_01            rotation         1 keys  (0.00s - 0.00s)
+  Dummy_R_KneeFX_01            translation      1 keys  (0.00s - 0.00s)
+  Ankle_R                      scale            1 keys  (0.00s - 0.00s)
+  Ankle_R                      rotation       315 keys  (0.00s - 19.93s)
+  Ankle_R                      translation      1 keys  (0.00s - 0.00s)
+  Toes_R                       scale            1 keys  (0.00s - 0.00s)
+  Toes_R                       rotation       245 keys  (0.00s - 19.93s)
+  Toes_R                       translation      1 keys  (0.00s - 0.00s)
+  ToesEnd_R_endBone            scale            1 keys  (0.00s - 0.00s)
+  ToesEnd_R_endBone            rotation         1 keys  (0.00s - 0.00s)
+  ToesEnd_R_endBone            translation      1 keys  (0.00s - 0.00s)
+  Dummy_R_Foot_01              scale            1 keys  (0.00s - 0.00s)
+  Dummy_R_Foot_01              rotation         1 keys  (0.00s - 0.00s)
+  Dummy_R_Foot_01              translation      1 keys  (0.00s - 0.00s)
+  Hip_R_Twist_01               scale            1 keys  (0.00s - 0.00s)
+  Hip_R_Twist_01               rotation       187 keys  (0.00s - 19.93s)
+  Hip_R_Twist_01               translation      1 keys  (0.00s - 0.00s)
+  Hip_R_Twist_02               scale            1 keys  (0.00s - 0.00s)
+  Hip_R_Twist_02               rotation       135 keys  (0.00s - 19.93s)
+  Hip_R_Twist_02               translation      1 keys  (0.00s - 0.00s)
+  Hip_L                        scale            1 keys  (0.00s - 0.00s)
+  Hip_L                        rotation       214 keys  (0.00s - 19.93s)
+  Hip_L                        translation      1 keys  (0.00s - 0.00s)
+  Knee_L                       scale            1 keys  (0.00s - 0.00s)
+  Knee_L                       rotation       140 keys  (0.00s - 19.93s)
+  Knee_L                       translation      1 keys  (0.00s - 0.00s)
+  Dummy_L_KneeFX_01            scale            1 keys  (0.00s - 0.00s)
+  Dummy_L_KneeFX_01            rotation         1 keys  (0.00s - 0.00s)
+  Dummy_L_KneeFX_01            translation      1 keys  (0.00s - 0.00s)
+  Ankle_L                      scale            1 keys  (0.00s - 0.00s)
+  Ankle_L                      rotation       213 keys  (0.00s - 19.93s)
+  Ankle_L                      translation      1 keys  (0.00s - 0.00s)
+  Toes_L                       scale            1 keys  (0.00s - 0.00s)
+  Toes_L                       rotation        25 keys  (0.00s - 19.93s)
+  Toes_L                       translation      1 keys  (0.00s - 0.00s)
+  Dummy_L_Foot_01              scale            1 keys  (0.00s - 0.00s)
+  Dummy_L_Foot_01              rotation         1 keys  (0.00s - 0.00s)
+  Dummy_L_Foot_01              translation      1 keys  (0.00s - 0.00s)
+  ToesEnd_L_endBone            scale            1 keys  (0.00s - 0.00s)
+  ToesEnd_L_endBone            rotation         1 keys  (0.00s - 0.00s)
+  ToesEnd_L_endBone            translation      1 keys  (0.00s - 0.00s)
+  Hip_L_Twist_01               scale            1 keys  (0.00s - 0.00s)
+  Hip_L_Twist_01               rotation       169 keys  (0.00s - 19.93s)
+  Hip_L_Twist_01               translation      1 keys  (0.00s - 0.00s)
+  Hip_L_Twist_02               scale            1 keys  (0.00s - 0.00s)
+  Hip_L_Twist_02               rotation       130 keys  (0.00s - 19.93s)
+  Hip_L_Twist_02               translation      1 keys  (0.00s - 0.00s)
+  Spine1_M                     scale            1 keys  (0.00s - 0.00s)
+  Spine1_M                     rotation        83 keys  (0.00s - 19.93s)
+  Spine1_M                     translation      1 keys  (0.00s - 0.00s)
+  Spine2_M                     scale            1 keys  (0.00s - 0.00s)
+  Spine2_M                     rotation        89 keys  (0.00s - 19.93s)
+  Spine2_M                     translation     69 keys  (0.00s - 19.93s)
+  Chest_M                      scale            1 keys  (0.00s - 0.00s)
+  Chest_M                      rotation       157 keys  (0.00s - 19.93s)
+  Chest_M                      translation    123 keys  (0.00s - 19.93s)
+  Scapula_R                    scale            1 keys  (0.00s - 0.00s)
+  Scapula_R                    rotation       206 keys  (0.00s - 19.93s)
+  Scapula_R                    translation      1 keys  (0.00s - 0.00s)
+  Shoulder_R                   scale            1 keys  (0.00s - 0.00s)
+  Shoulder_R                   rotation       331 keys  (0.00s - 19.93s)
+  Shoulder_R                   translation      1 keys  (0.00s - 0.00s)
+  Elbow_R                      scale            1 keys  (0.00s - 0.00s)
+  Elbow_R                      rotation       261 keys  (0.00s - 19.93s)
+  Elbow_R                      translation      1 keys  (0.00s - 0.00s)
+  Dummy_R_TentacleFX           scale            1 keys  (0.00s - 0.00s)
+  Dummy_R_TentacleFX           rotation         1 keys  (0.00s - 0.00s)
+  Dummy_R_TentacleFX           translation      1 keys  (0.00s - 0.00s)
+  Elbow_Twist_R                scale            1 keys  (0.00s - 0.00s)
+  Elbow_Twist_R                rotation       175 keys  (0.00s - 19.93s)
+  Elbow_Twist_R                translation      1 keys  (0.00s - 0.00s)
+  Wrist_R                      scale            1 keys  (0.00s - 0.00s)
+  Wrist_R                      rotation       335 keys  (0.00s - 19.93s)
+  Wrist_R                      translation      1 keys  (0.00s - 0.00s)
+  Dummy_R_HandFX               scale            1 keys  (0.00s - 0.00s)
+  Dummy_R_HandFX               rotation         1 keys  (0.00s - 0.00s)
+  Dummy_R_HandFX               translation      1 keys  (0.00s - 0.00s)
+  Dummy_R_Hand                 scale            1 keys  (0.00s - 0.00s)
+  Dummy_R_Hand                 rotation         1 keys  (0.00s - 0.00s)
+  Dummy_R_Hand                 translation      1 keys  (0.00s - 0.00s)
+  RingFinger0_R                scale            1 keys  (0.00s - 0.00s)
+  RingFinger0_R                rotation        41 keys  (0.00s - 19.93s)
+  RingFinger0_R                translation      1 keys  (0.00s - 0.00s)
+  RingFinger1_R                scale            1 keys  (0.00s - 0.00s)
+  RingFinger1_R                rotation        69 keys  (0.00s - 19.93s)
+  RingFinger1_R                translation      1 keys  (0.00s - 0.00s)
+  RingFinger2_R                scale            1 keys  (0.00s - 0.00s)
+  RingFinger2_R                rotation        64 keys  (0.00s - 19.93s)
+  RingFinger2_R                translation      1 keys  (0.00s - 0.00s)
+  RingFinger3_R                scale            1 keys  (0.00s - 0.00s)
+  RingFinger3_R                rotation        57 keys  (0.00s - 19.93s)
+  RingFinger3_R                translation      1 keys  (0.00s - 0.00s)
+  PinkyFinger0_R               scale            1 keys  (0.00s - 0.00s)
+  PinkyFinger0_R               rotation        41 keys  (0.00s - 19.93s)
+  PinkyFinger0_R               translation      1 keys  (0.00s - 0.00s)
+  PinkyFinger1_R               scale            1 keys  (0.00s - 0.00s)
+  PinkyFinger1_R               rotation        70 keys  (0.00s - 19.93s)
+  PinkyFinger1_R               translation      1 keys  (0.00s - 0.00s)
+  PinkyFinger2_R               scale            1 keys  (0.00s - 0.00s)
+  PinkyFinger2_R               rotation        71 keys  (0.00s - 19.93s)
+  PinkyFinger2_R               translation      1 keys  (0.00s - 0.00s)
+  PinkyFinger3_R               scale            1 keys  (0.00s - 0.00s)
+  PinkyFinger3_R               rotation        59 keys  (0.00s - 19.93s)
+  PinkyFinger3_R               translation      1 keys  (0.00s - 0.00s)
+  MiddleFinger1_R              scale            1 keys  (0.00s - 0.00s)
+  MiddleFinger1_R              rotation        71 keys  (0.00s - 19.93s)
+  MiddleFinger1_R              translation      1 keys  (0.00s - 0.00s)
+  MiddleFinger2_R              scale            1 keys  (0.00s - 0.00s)
+  MiddleFinger2_R              rotation        53 keys  (0.00s - 19.93s)
+  MiddleFinger2_R              translation      1 keys  (0.00s - 0.00s)
+  MiddleFinger3_R              scale            1 keys  (0.00s - 0.00s)
+  MiddleFinger3_R              rotation        43 keys  (0.00s - 19.93s)
+  MiddleFinger3_R              translation      1 keys  (0.00s - 0.00s)
+  IndexFinger1_R               scale            1 keys  (0.00s - 0.00s)
+  IndexFinger1_R               rotation        73 keys  (0.00s - 19.93s)
+  IndexFinger1_R               translation      1 keys  (0.00s - 0.00s)
+  IndexFinger2_R               scale            1 keys  (0.00s - 0.00s)
+  IndexFinger2_R               rotation        48 keys  (0.00s - 19.93s)
+  IndexFinger2_R               translation      1 keys  (0.00s - 0.00s)
+  IndexFinger3_R               scale            1 keys  (0.00s - 0.00s)
+  IndexFinger3_R               rotation        52 keys  (0.00s - 19.93s)
+  IndexFinger3_R               translation      1 keys  (0.00s - 0.00s)
+  ThumbFinger1_R               scale            1 keys  (0.00s - 0.00s)
+  ThumbFinger1_R               rotation        56 keys  (0.00s - 19.93s)
+  ThumbFinger1_R               translation      1 keys  (0.00s - 0.00s)
+  ThumbFinger2_R               scale            1 keys  (0.00s - 0.00s)
+  ThumbFinger2_R               rotation        30 keys  (0.00s - 19.93s)
+  ThumbFinger2_R               translation      1 keys  (0.00s - 0.00s)
+  ThumbFinger3_R               scale            1 keys  (0.00s - 0.00s)
+  ThumbFinger3_R               rotation        33 keys  (0.00s - 19.93s)
+  ThumbFinger3_R               translation      1 keys  (0.00s - 0.00s)
+  Shoulder_R_Twist_01          scale            1 keys  (0.00s - 0.00s)
+  Shoulder_R_Twist_01          rotation       224 keys  (0.00s - 19.93s)
+  Shoulder_R_Twist_01          translation      1 keys  (0.00s - 0.00s)
+  Shoulder_R_Twist_02          scale            1 keys  (0.00s - 0.00s)
+  Shoulder_R_Twist_02          rotation       358 keys  (0.00s - 19.93s)
+  Shoulder_R_Twist_02          translation      1 keys  (0.00s - 0.00s)
+  Scapula_L                    scale            1 keys  (0.00s - 0.00s)
+  Scapula_L                    rotation       188 keys  (0.00s - 19.93s)
+  Scapula_L                    translation      1 keys  (0.00s - 0.00s)
+  Shoulder_L                   scale            1 keys  (0.00s - 0.00s)
+  Shoulder_L                   rotation       298 keys  (0.00s - 19.93s)
+  Shoulder_L                   translation      1 keys  (0.00s - 0.00s)
+  Elbow_L                      scale            1 keys  (0.00s - 0.00s)
+  Elbow_L                      rotation       238 keys  (0.00s - 19.93s)
+  Elbow_L                      translation      1 keys  (0.00s - 0.00s)
+  Elbow_Twist_L                scale            1 keys  (0.00s - 0.00s)
+  Elbow_Twist_L                rotation       177 keys  (0.00s - 19.93s)
+  Elbow_Twist_L                translation      1 keys  (0.00s - 0.00s)
+  Dummy_L_TentacleFX           scale            1 keys  (0.00s - 0.00s)
+  Dummy_L_TentacleFX           rotation         1 keys  (0.00s - 0.00s)
+  Dummy_L_TentacleFX           translation      1 keys  (0.00s - 0.00s)
+  Wrist_L                      scale            1 keys  (0.00s - 0.00s)
+  Wrist_L                      rotation       324 keys  (0.00s - 19.93s)
+  Wrist_L                      translation      1 keys  (0.00s - 0.00s)
+  Dummy_L_Hand                 scale            1 keys  (0.00s - 0.00s)
+  Dummy_L_Hand                 rotation         1 keys  (0.00s - 0.00s)
+  Dummy_L_Hand                 translation      1 keys  (0.00s - 0.00s)
+  Dummy_L_HandFX               scale            1 keys  (0.00s - 0.00s)
+  Dummy_L_HandFX               rotation         1 keys  (0.00s - 0.00s)
+  Dummy_L_HandFX               translation      1 keys  (0.00s - 0.00s)
+  RingFinger0_L                scale            1 keys  (0.00s - 0.00s)
+  RingFinger0_L                rotation        27 keys  (0.00s - 19.93s)
+  RingFinger0_L                translation      1 keys  (0.00s - 0.00s)
+  RingFinger1_L                scale            1 keys  (0.00s - 0.00s)
+  RingFinger1_L                rotation       110 keys  (0.00s - 19.93s)
+  RingFinger1_L                translation      1 keys  (0.00s - 0.00s)
+  RingFinger2_L                scale            1 keys  (0.00s - 0.00s)
+  RingFinger2_L                rotation        59 keys  (0.00s - 19.93s)
+  RingFinger2_L                translation      1 keys  (0.00s - 0.00s)
+  RingFinger3_L                scale            1 keys  (0.00s - 0.00s)
+  RingFinger3_L                rotation        69 keys  (0.00s - 19.93s)
+  RingFinger3_L                translation      1 keys  (0.00s - 0.00s)
+  PinkyFinger0_L               scale            1 keys  (0.00s - 0.00s)
+  PinkyFinger0_L               rotation        37 keys  (0.00s - 19.93s)
+  PinkyFinger0_L               translation      1 keys  (0.00s - 0.00s)
+  PinkyFinger1_L               scale            1 keys  (0.00s - 0.00s)
+  PinkyFinger1_L               rotation       114 keys  (0.00s - 19.93s)
+  PinkyFinger1_L               translation      1 keys  (0.00s - 0.00s)
+  PinkyFinger2_L               scale            1 keys  (0.00s - 0.00s)
+  PinkyFinger2_L               rotation        76 keys  (0.00s - 19.93s)
+  PinkyFinger2_L               translation      1 keys  (0.00s - 0.00s)
+  PinkyFinger3_L               scale            1 keys  (0.00s - 0.00s)
+  PinkyFinger3_L               rotation        65 keys  (0.00s - 19.93s)
+  PinkyFinger3_L               translation      1 keys  (0.00s - 0.00s)
+  MiddleFinger1_L              scale            1 keys  (0.00s - 0.00s)
+  MiddleFinger1_L              rotation        99 keys  (0.00s - 19.93s)
+  MiddleFinger1_L              translation      1 keys  (0.00s - 0.00s)
+  MiddleFinger2_L              scale            1 keys  (0.00s - 0.00s)
+  MiddleFinger2_L              rotation        57 keys  (0.00s - 19.93s)
+  MiddleFinger2_L              translation      1 keys  (0.00s - 0.00s)
+  MiddleFinger3_L              scale            1 keys  (0.00s - 0.00s)
+  MiddleFinger3_L              rotation        54 keys  (0.00s - 19.93s)
+  MiddleFinger3_L              translation      1 keys  (0.00s - 0.00s)
+  IndexFinger1_L               scale            1 keys  (0.00s - 0.00s)
+  IndexFinger1_L               rotation       112 keys  (0.00s - 19.93s)
+  IndexFinger1_L               translation      1 keys  (0.00s - 0.00s)
+  IndexFinger2_L               scale            1 keys  (0.00s - 0.00s)
+  IndexFinger2_L               rotation        63 keys  (0.00s - 19.93s)
+  IndexFinger2_L               translation      1 keys  (0.00s - 0.00s)
+  IndexFinger3_L               scale            1 keys  (0.00s - 0.00s)
+  IndexFinger3_L               rotation        65 keys  (0.00s - 19.93s)
+  IndexFinger3_L               translation      1 keys  (0.00s - 0.00s)
+  ThumbFinger1_L               scale            1 keys  (0.00s - 0.00s)
+  ThumbFinger1_L               rotation        97 keys  (0.00s - 19.93s)
+  ThumbFinger1_L               translation      1 keys  (0.00s - 0.00s)
+  ThumbFinger2_L               scale            1 keys  (0.00s - 0.00s)
+  ThumbFinger2_L               rotation        27 keys  (0.00s - 19.93s)
+  ThumbFinger2_L               translation      1 keys  (0.00s - 0.00s)
+  ThumbFinger3_L               scale            1 keys  (0.00s - 0.00s)
+  ThumbFinger3_L               rotation        87 keys  (0.00s - 19.93s)
+  ThumbFinger3_L               translation      1 keys  (0.00s - 0.00s)
+  Shoulder_L_Twist_01          scale            1 keys  (0.00s - 0.00s)
+  Shoulder_L_Twist_01          rotation       202 keys  (0.00s - 19.93s)
+  Shoulder_L_Twist_01          translation      1 keys  (0.00s - 0.00s)
+  Shoulder_L_Twist_02          scale            1 keys  (0.00s - 0.00s)
+  Shoulder_L_Twist_02          rotation       182 keys  (0.00s - 19.93s)
+  Shoulder_L_Twist_02          translation      1 keys  (0.00s - 0.00s)
+  Dummy_Sheath_Upper_R         scale            1 keys  (0.00s - 0.00s)
+  Dummy_Sheath_Upper_R         rotation         1 keys  (0.00s - 0.00s)
+  Dummy_Sheath_Upper_R         translation      1 keys  (0.00s - 0.00s)
+  Dummy_Sheath_Upper_L         scale            1 keys  (0.00s - 0.00s)
+  Dummy_Sheath_Upper_L         rotation         1 keys  (0.00s - 0.00s)
+  Dummy_Sheath_Upper_L         translation      1 keys  (0.00s - 0.00s)
+  Dummy_Sheath_Music           scale            1 keys  (0.00s - 0.00s)
+  Dummy_Sheath_Music           rotation         1 keys  (0.00s - 0.00s)
+  Dummy_Sheath_Music           translation      1 keys  (0.00s - 0.00s)
+  Dummy_WingFX                 scale            1 keys  (0.00s - 0.00s)
+  Dummy_WingFX                 rotation         1 keys  (0.00s - 0.00s)
+  Dummy_WingFX                 translation      1 keys  (0.00s - 0.00s)
+  Dummy_ChestFX                scale            1 keys  (0.00s - 0.00s)
+  Dummy_ChestFX                rotation         1 keys  (0.00s - 0.00s)
+  Dummy_ChestFX                translation      1 keys  (0.00s - 0.00s)
+  Neck_M                       scale            1 keys  (0.00s - 0.00s)
+  Neck_M                       rotation       220 keys  (0.00s - 19.93s)
+  Neck_M                       translation      1 keys  (0.00s - 0.00s)
+  Head_M                       scale            1 keys  (0.00s - 0.00s)
+  Head_M                       rotation       267 keys  (0.00s - 19.93s)
+  Head_M                       translation      1 keys  (0.00s - 0.00s)
+  Dummy_StatusFX               scale            1 keys  (0.00s - 0.00s)
+  Dummy_StatusFX               rotation         1 keys  (0.00s - 0.00s)
+  Dummy_StatusFX               translation      1 keys  (0.00s - 0.00s)
+  Dummy_HeadFX                 scale            1 keys  (0.00s - 0.00s)
+  Dummy_HeadFX                 rotation         1 keys  (0.00s - 0.00s)
+  Dummy_HeadFX                 translation      1 keys  (0.00s - 0.00s)
+  Dummy_MouthFX                scale            1 keys  (0.00s - 0.00s)
+  Dummy_MouthFX                rotation         1 keys  (0.00s - 0.00s)
+  Dummy_MouthFX                translation      1 keys  (0.00s - 0.00s)
+  Dummy_EyeFX_01               scale            1 keys  (0.00s - 0.00s)
+  Dummy_EyeFX_01               rotation         1 keys  (0.00s - 0.00s)
+  Dummy_EyeFX_01               translation      1 keys  (0.00s - 0.00s)
+  Dummy_EyeFX_02               scale            1 keys  (0.00s - 0.00s)
+  Dummy_EyeFX_02               rotation         1 keys  (0.00s - 0.00s)
+  Dummy_EyeFX_02               translation      1 keys  (0.00s - 0.00s)
+  Dummy_NeckFX                 scale            1 keys  (0.00s - 0.00s)
+  Dummy_NeckFX                 rotation         1 keys  (0.00s - 0.00s)
+  Dummy_NeckFX                 translation      1 keys  (0.00s - 0.00s)
+  Dummy_Sheath_Shield          scale            1 keys  (0.00s - 0.00s)
+  Dummy_Sheath_Shield          rotation         1 keys  (0.00s - 0.00s)
+  Dummy_Sheath_Shield          translation      1 keys  (0.00s - 0.00s)
+  Dummy_Sheath_Ranged          scale            1 keys  (0.00s - 0.00s)
+  Dummy_Sheath_Ranged          rotation         1 keys  (0.00s - 0.00s)
+  Dummy_Sheath_Ranged          translation      1 keys  (0.00s - 0.00s)
+  Dummy_Sheath_Lower_R         scale            1 keys  (0.00s - 0.00s)
+  Dummy_Sheath_Lower_R         rotation         1 keys  (0.00s - 0.00s)
+  Dummy_Sheath_Lower_R         translation      1 keys  (0.00s - 0.00s)
+  Dummy_Sheath_Lower_L         scale            1 keys  (0.00s - 0.00s)
+  Dummy_Sheath_Lower_L         rotation         1 keys  (0.00s - 0.00s)
+  Dummy_Sheath_Lower_L         translation      1 keys  (0.00s - 0.00s)
+  Dummy_BodyFX                 scale            1 keys  (0.00s - 0.00s)
+  Dummy_BodyFX                 rotation         1 keys  (0.00s - 0.00s)
+  Dummy_BodyFX                 translation      1 keys  (0.00s - 0.00s)
+  Dummy_Sheath_Hip_L           scale            1 keys  (0.00s - 0.00s)
+  Dummy_Sheath_Hip_L           rotation         1 keys  (0.00s - 0.00s)
+  Dummy_Sheath_Hip_L           translation      1 keys  (0.00s - 0.00s)
+  Dummy_Sheath_Hip_R           scale            1 keys  (0.00s - 0.00s)
+  Dummy_Sheath_Hip_R           rotation         1 keys  (0.00s - 0.00s)
+  Dummy_Sheath_Hip_R           translation      1 keys  (0.00s - 0.00s)
+
+
+=== DECODED GLB: TEST (blender.glb) ===
+File: blender.glb
+Nodes (bones): 118
+Meshes: 0  (0 = animation/skeleton only, no body mesh)
+Skins: 1
+Animations: 1
+
+BONE HIERARCHY (parent -> child):
+--------------------------------------------------
+  (root) -> Dummy_Root
+  Dummy_Root -> Dummy_CastFX
+  Dummy_Root -> Dummy_OverheadFX
+  Dummy_Root -> Dummy_Playerlight
+  Dummy_Root -> Dummy_Custom_Anim
+  Dummy_Root -> Dummy_FollowPhysics
+  Dummy_Root -> Dummy_L_Hand_IK
+  Dummy_Root -> Dummy_R_Hand_IK
+  Dummy_Root -> Dummy_L_Foot_IK
+  Dummy_Root -> Dummy_R_Foot_IK
+  Dummy_Root -> Dummy_HitImpactFX
+  Dummy_Root -> Root_M
+  Root_M -> Hip_R
+  Hip_R -> Knee_R
+  Knee_R -> Dummy_R_KneeFX_01
+  Knee_R -> Ankle_R
+  Ankle_R -> Toes_R
+  Toes_R -> ToesEnd_R_endBone
+  Toes_R -> Dummy_R_Foot_01
+  Hip_R -> Hip_R_Twist_01
+  Hip_R_Twist_01 -> Hip_R_Twist_02
+  Root_M -> Hip_L
+  Hip_L -> Knee_L
+  Knee_L -> Dummy_L_KneeFX_01
+  Knee_L -> Ankle_L
+  Ankle_L -> Toes_L
+  Toes_L -> Dummy_L_Foot_01
+  Toes_L -> ToesEnd_L_endBone
+  Hip_L -> Hip_L_Twist_01
+  Hip_L_Twist_01 -> Hip_L_Twist_02
+  Root_M -> Spine1_M
+  Spine1_M -> Spine2_M
+  Spine2_M -> Chest_M
+  Chest_M -> Scapula_R
+  Scapula_R -> Shoulder_R
+  Shoulder_R -> Elbow_R
+  Elbow_R -> Dummy_R_TentacleFX
+  Elbow_R -> Elbow_Twist_R
+  Elbow_R -> Wrist_R
+  Wrist_R -> Dummy_R_HandFX
+  Wrist_R -> Dummy_R_Hand
+  Wrist_R -> RingFinger0_R
+  RingFinger0_R -> RingFinger1_R
+  RingFinger1_R -> RingFinger2_R
+  RingFinger2_R -> RingFinger3_R
+  RingFinger3_R -> RingFinger4_R_endBone
+  Wrist_R -> PinkyFinger0_R
+  PinkyFinger0_R -> PinkyFinger1_R
+  PinkyFinger1_R -> PinkyFinger2_R
+  PinkyFinger2_R -> PinkyFinger3_R
+  PinkyFinger3_R -> PinkyFinger4_R_endBone
+  Wrist_R -> MiddleFinger1_R
+  MiddleFinger1_R -> MiddleFinger2_R
+  MiddleFinger2_R -> MiddleFinger3_R
+  MiddleFinger3_R -> MiddleFinger4_R_endBone
+  Wrist_R -> IndexFinger1_R
+  IndexFinger1_R -> IndexFinger2_R
+  IndexFinger2_R -> IndexFinger3_R
+  IndexFinger3_R -> IndexFinger4_R_endBone
+  Wrist_R -> ThumbFinger1_R
+  ThumbFinger1_R -> ThumbFinger2_R
+  ThumbFinger2_R -> ThumbFinger3_R
+  ThumbFinger3_R -> ThumbFinger4_R_endBone
+  Shoulder_R -> Shoulder_R_Twist_01
+  Shoulder_R_Twist_01 -> Shoulder_R_Twist_02
+  Chest_M -> Scapula_L
+  Scapula_L -> Shoulder_L
+  Shoulder_L -> Elbow_L
+  Elbow_L -> Elbow_Twist_L
+  Elbow_L -> Dummy_L_TentacleFX
+  Elbow_L -> Wrist_L
+  Wrist_L -> Dummy_L_Hand
+  Wrist_L -> Dummy_L_HandFX
+  Wrist_L -> RingFinger0_L
+  RingFinger0_L -> RingFinger1_L
+  RingFinger1_L -> RingFinger2_L
+  RingFinger2_L -> RingFinger3_L
+  RingFinger3_L -> RingFinger4_L_endBone
+  Wrist_L -> PinkyFinger0_L
+  PinkyFinger0_L -> PinkyFinger1_L
+  PinkyFinger1_L -> PinkyFinger2_L
+  PinkyFinger2_L -> PinkyFinger3_L
+  PinkyFinger3_L -> PinkyFinger4_L_endBone
+  Wrist_L -> MiddleFinger1_L
+  MiddleFinger1_L -> MiddleFinger2_L
+  MiddleFinger2_L -> MiddleFinger3_L
+  MiddleFinger3_L -> MiddleFinger4_L_endBone
+  Wrist_L -> IndexFinger1_L
+  IndexFinger1_L -> IndexFinger2_L
+  IndexFinger2_L -> IndexFinger3_L
+  IndexFinger3_L -> IndexFinger4_L_endBone
+  Wrist_L -> ThumbFinger1_L
+  ThumbFinger1_L -> ThumbFinger2_L
+  ThumbFinger2_L -> ThumbFinger3_L
+  ThumbFinger3_L -> ThumbFinger4_L_endBone
+  Shoulder_L -> Shoulder_L_Twist_01
+  Shoulder_L_Twist_01 -> Shoulder_L_Twist_02
+  Chest_M -> Dummy_Sheath_Upper_R
+  Chest_M -> Dummy_Sheath_Upper_L
+  Chest_M -> Dummy_Sheath_Music
+  Chest_M -> Dummy_WingFX
+  Chest_M -> Dummy_ChestFX
+  Chest_M -> Neck_M
+  Neck_M -> Head_M
+  Head_M -> Dummy_StatusFX
+  Head_M -> Dummy_HeadFX
+  Head_M -> Dummy_MouthFX
+  Head_M -> Dummy_EyeFX_01
+  Head_M -> Dummy_EyeFX_02
+  Head_M -> HeadEnd_M_endBone
+  Neck_M -> Dummy_NeckFX
+  Spine2_M -> Dummy_Sheath_Shield
+  Spine2_M -> Dummy_Sheath_Ranged
+  Spine1_M -> Dummy_Sheath_Lower_R
+  Spine1_M -> Dummy_Sheath_Lower_L
+  Spine1_M -> Dummy_BodyFX
+  Root_M -> Dummy_Sheath_Hip_L
+  Root_M -> Dummy_Sheath_Hip_R
+
+ANIMATION TRACKS (every channel in file):
+--------------------------------------------------
+  Dummy_Root                   scale            1 keys  (0.00s - 0.00s)
+  Dummy_Root                   rotation         1 keys  (0.00s - 0.00s)
+  Dummy_Root                   translation    599 keys  (0.00s - 19.93s)
+  Dummy_L_Hand_IK              scale            1 keys  (0.00s - 0.00s)
+  Dummy_L_Hand_IK              rotation       599 keys  (0.00s - 19.93s)
+  Dummy_L_Hand_IK              translation    599 keys  (0.00s - 19.93s)
+  Dummy_R_Hand_IK              scale            1 keys  (0.00s - 0.00s)
+  Dummy_R_Hand_IK              rotation       599 keys  (0.00s - 19.93s)
+  Dummy_R_Hand_IK              translation    599 keys  (0.00s - 19.93s)
+  Dummy_L_Foot_IK              scale            1 keys  (0.00s - 0.00s)
+  Dummy_L_Foot_IK              rotation       599 keys  (0.00s - 19.93s)
+  Dummy_L_Foot_IK              translation    599 keys  (0.00s - 19.93s)
+  Dummy_R_Foot_IK              scale            1 keys  (0.00s - 0.00s)
+  Dummy_R_Foot_IK              rotation       599 keys  (0.00s - 19.93s)
+  Dummy_R_Foot_IK              translation    599 keys  (0.00s - 19.93s)
+  Root_M                       scale            1 keys  (0.00s - 0.00s)
+  Root_M                       rotation       599 keys  (0.00s - 19.93s)
+  Root_M                       translation    599 keys  (0.00s - 19.93s)
+  Hip_R                        scale            1 keys  (0.00s - 0.00s)
+  Hip_R                        rotation       599 keys  (0.00s - 19.93s)
+  Hip_R                        translation      1 keys  (0.00s - 0.00s)
+  Knee_R                       scale            1 keys  (0.00s - 0.00s)
+  Knee_R                       rotation       599 keys  (0.00s - 19.93s)
+  Knee_R                       translation      1 keys  (0.00s - 0.00s)
+  Ankle_R                      scale            1 keys  (0.00s - 0.00s)
+  Ankle_R                      rotation       599 keys  (0.00s - 19.93s)
+  Ankle_R                      translation      1 keys  (0.00s - 0.00s)
+  Toes_R                       scale            1 keys  (0.00s - 0.00s)
+  Toes_R                       rotation       599 keys  (0.00s - 19.93s)
+  Toes_R                       translation      1 keys  (0.00s - 0.00s)
+  Hip_R_Twist_01               scale            1 keys  (0.00s - 0.00s)
+  Hip_R_Twist_01               rotation       599 keys  (0.00s - 19.93s)
+  Hip_R_Twist_01               translation      1 keys  (0.00s - 0.00s)
+  Hip_R_Twist_02               scale            1 keys  (0.00s - 0.00s)
+  Hip_R_Twist_02               rotation       599 keys  (0.00s - 19.93s)
+  Hip_R_Twist_02               translation      1 keys  (0.00s - 0.00s)
+  Hip_L                        scale            1 keys  (0.00s - 0.00s)
+  Hip_L                        rotation       599 keys  (0.00s - 19.93s)
+  Hip_L                        translation      1 keys  (0.00s - 0.00s)
+  Knee_L                       scale            1 keys  (0.00s - 0.00s)
+  Knee_L                       rotation       599 keys  (0.00s - 19.93s)
+  Knee_L                       translation      1 keys  (0.00s - 0.00s)
+  Ankle_L                      scale            1 keys  (0.00s - 0.00s)
+  Ankle_L                      rotation       599 keys  (0.00s - 19.93s)
+  Ankle_L                      translation      1 keys  (0.00s - 0.00s)
+  Toes_L                       scale            1 keys  (0.00s - 0.00s)
+  Toes_L                       rotation       599 keys  (0.00s - 19.93s)
+  Toes_L                       translation      1 keys  (0.00s - 0.00s)
+  Hip_L_Twist_01               scale            1 keys  (0.00s - 0.00s)
+  Hip_L_Twist_01               rotation       599 keys  (0.00s - 19.93s)
+  Hip_L_Twist_01               translation      1 keys  (0.00s - 0.00s)
+  Hip_L_Twist_02               scale            1 keys  (0.00s - 0.00s)
+  Hip_L_Twist_02               rotation       599 keys  (0.00s - 19.93s)
+  Hip_L_Twist_02               translation      1 keys  (0.00s - 0.00s)
+  Spine1_M                     scale            1 keys  (0.00s - 0.00s)
+  Spine1_M                     rotation       599 keys  (0.00s - 19.93s)
+  Spine1_M                     translation      1 keys  (0.00s - 0.00s)
+  Spine2_M                     scale            1 keys  (0.00s - 0.00s)
+  Spine2_M                     rotation       599 keys  (0.00s - 19.93s)
+  Spine2_M                     translation    599 keys  (0.00s - 19.93s)
+  Chest_M                      scale            1 keys  (0.00s - 0.00s)
+  Chest_M                      rotation       599 keys  (0.00s - 19.93s)
+  Chest_M                      translation    599 keys  (0.00s - 19.93s)
+  Scapula_R                    scale            1 keys  (0.00s - 0.00s)
+  Scapula_R                    rotation       599 keys  (0.00s - 19.93s)
+  Scapula_R                    translation      1 keys  (0.00s - 0.00s)
+  Shoulder_R                   scale            1 keys  (0.00s - 0.00s)
+  Shoulder_R                   rotation       599 keys  (0.00s - 19.93s)
+  Shoulder_R                   translation      1 keys  (0.00s - 0.00s)
+  Elbow_R                      scale            1 keys  (0.00s - 0.00s)
+  Elbow_R                      rotation       599 keys  (0.00s - 19.93s)
+  Elbow_R                      translation      1 keys  (0.00s - 0.00s)
+  Elbow_Twist_R                scale            1 keys  (0.00s - 0.00s)
+  Elbow_Twist_R                rotation       599 keys  (0.00s - 19.93s)
+  Elbow_Twist_R                translation      1 keys  (0.00s - 0.00s)
+  Wrist_R                      scale            1 keys  (0.00s - 0.00s)
+  Wrist_R                      rotation       599 keys  (0.00s - 19.93s)
+  Wrist_R                      translation      1 keys  (0.00s - 0.00s)
+  RingFinger0_R                scale            1 keys  (0.00s - 0.00s)
+  RingFinger0_R                rotation       599 keys  (0.00s - 19.93s)
+  RingFinger0_R                translation      1 keys  (0.00s - 0.00s)
+  RingFinger1_R                scale            1 keys  (0.00s - 0.00s)
+  RingFinger1_R                rotation       599 keys  (0.00s - 19.93s)
+  RingFinger1_R                translation      1 keys  (0.00s - 0.00s)
+  RingFinger2_R                scale            1 keys  (0.00s - 0.00s)
+  RingFinger2_R                rotation       599 keys  (0.00s - 19.93s)
+  RingFinger2_R                translation      1 keys  (0.00s - 0.00s)
+  RingFinger3_R                scale            1 keys  (0.00s - 0.00s)
+  RingFinger3_R                rotation       599 keys  (0.00s - 19.93s)
+  RingFinger3_R                translation      1 keys  (0.00s - 0.00s)
+  PinkyFinger0_R               scale            1 keys  (0.00s - 0.00s)
+  PinkyFinger0_R               rotation       599 keys  (0.00s - 19.93s)
+  PinkyFinger0_R               translation      1 keys  (0.00s - 0.00s)
+  PinkyFinger1_R               scale            1 keys  (0.00s - 0.00s)
+  PinkyFinger1_R               rotation       599 keys  (0.00s - 19.93s)
+  PinkyFinger1_R               translation      1 keys  (0.00s - 0.00s)
+  PinkyFinger2_R               scale            1 keys  (0.00s - 0.00s)
+  PinkyFinger2_R               rotation       599 keys  (0.00s - 19.93s)
+  PinkyFinger2_R               translation      1 keys  (0.00s - 0.00s)
+  PinkyFinger3_R               scale            1 keys  (0.00s - 0.00s)
+  PinkyFinger3_R               rotation       599 keys  (0.00s - 19.93s)
+  PinkyFinger3_R               translation      1 keys  (0.00s - 0.00s)
+  MiddleFinger1_R              scale            1 keys  (0.00s - 0.00s)
+  MiddleFinger1_R              rotation       599 keys  (0.00s - 19.93s)
+  MiddleFinger1_R              translation      1 keys  (0.00s - 0.00s)
+  MiddleFinger2_R              scale            1 keys  (0.00s - 0.00s)
+  MiddleFinger2_R              rotation       599 keys  (0.00s - 19.93s)
+  MiddleFinger2_R              translation      1 keys  (0.00s - 0.00s)
+  MiddleFinger3_R              scale            1 keys  (0.00s - 0.00s)
+  MiddleFinger3_R              rotation       599 keys  (0.00s - 19.93s)
+  MiddleFinger3_R              translation      1 keys  (0.00s - 0.00s)
+  IndexFinger1_R               scale            1 keys  (0.00s - 0.00s)
+  IndexFinger1_R               rotation       599 keys  (0.00s - 19.93s)
+  IndexFinger1_R               translation      1 keys  (0.00s - 0.00s)
+  IndexFinger2_R               scale            1 keys  (0.00s - 0.00s)
+  IndexFinger2_R               rotation       599 keys  (0.00s - 19.93s)
+  IndexFinger2_R               translation      1 keys  (0.00s - 0.00s)
+  IndexFinger3_R               scale            1 keys  (0.00s - 0.00s)
+  IndexFinger3_R               rotation       599 keys  (0.00s - 19.93s)
+  IndexFinger3_R               translation      1 keys  (0.00s - 0.00s)
+  ThumbFinger1_R               scale            1 keys  (0.00s - 0.00s)
+  ThumbFinger1_R               rotation       599 keys  (0.00s - 19.93s)
+  ThumbFinger1_R               translation      1 keys  (0.00s - 0.00s)
+  ThumbFinger2_R               scale            1 keys  (0.00s - 0.00s)
+  ThumbFinger2_R               rotation       599 keys  (0.00s - 19.93s)
+  ThumbFinger2_R               translation      1 keys  (0.00s - 0.00s)
+  ThumbFinger3_R               scale            1 keys  (0.00s - 0.00s)
+  ThumbFinger3_R               rotation       599 keys  (0.00s - 19.93s)
+  ThumbFinger3_R               translation      1 keys  (0.00s - 0.00s)
+  Shoulder_R_Twist_01          scale            1 keys  (0.00s - 0.00s)
+  Shoulder_R_Twist_01          rotation       599 keys  (0.00s - 19.93s)
+  Shoulder_R_Twist_01          translation      1 keys  (0.00s - 0.00s)
+  Shoulder_R_Twist_02          scale            1 keys  (0.00s - 0.00s)
+  Shoulder_R_Twist_02          rotation       599 keys  (0.00s - 19.93s)
+  Shoulder_R_Twist_02          translation      1 keys  (0.00s - 0.00s)
+  Scapula_L                    scale            1 keys  (0.00s - 0.00s)
+  Scapula_L                    rotation       599 keys  (0.00s - 19.93s)
+  Scapula_L                    translation      1 keys  (0.00s - 0.00s)
+  Shoulder_L                   scale            1 keys  (0.00s - 0.00s)
+  Shoulder_L                   rotation       599 keys  (0.00s - 19.93s)
+  Shoulder_L                   translation      1 keys  (0.00s - 0.00s)
+  Elbow_L                      scale            1 keys  (0.00s - 0.00s)
+  Elbow_L                      rotation       599 keys  (0.00s - 19.93s)
+  Elbow_L                      translation      1 keys  (0.00s - 0.00s)
+  Elbow_Twist_L                scale            1 keys  (0.00s - 0.00s)
+  Elbow_Twist_L                rotation       599 keys  (0.00s - 19.93s)
+  Elbow_Twist_L                translation      1 keys  (0.00s - 0.00s)
+  Wrist_L                      scale            1 keys  (0.00s - 0.00s)
+  Wrist_L                      rotation       599 keys  (0.00s - 19.93s)
+  Wrist_L                      translation      1 keys  (0.00s - 0.00s)
+  RingFinger0_L                scale            1 keys  (0.00s - 0.00s)
+  RingFinger0_L                rotation       599 keys  (0.00s - 19.93s)
+  RingFinger0_L                translation      1 keys  (0.00s - 0.00s)
+  RingFinger1_L                scale            1 keys  (0.00s - 0.00s)
+  RingFinger1_L                rotation       599 keys  (0.00s - 19.93s)
+  RingFinger1_L                translation      1 keys  (0.00s - 0.00s)
+  RingFinger2_L                scale            1 keys  (0.00s - 0.00s)
+  RingFinger2_L                rotation       599 keys  (0.00s - 19.93s)
+  RingFinger2_L                translation      1 keys  (0.00s - 0.00s)
+  RingFinger3_L                scale            1 keys  (0.00s - 0.00s)
+  RingFinger3_L                rotation       599 keys  (0.00s - 19.93s)
+  RingFinger3_L                translation      1 keys  (0.00s - 0.00s)
+  PinkyFinger0_L               scale            1 keys  (0.00s - 0.00s)
+  PinkyFinger0_L               rotation       599 keys  (0.00s - 19.93s)
+  PinkyFinger0_L               translation      1 keys  (0.00s - 0.00s)
+  PinkyFinger1_L               scale            1 keys  (0.00s - 0.00s)
+  PinkyFinger1_L               rotation       599 keys  (0.00s - 19.93s)
+  PinkyFinger1_L               translation      1 keys  (0.00s - 0.00s)
+  PinkyFinger2_L               scale            1 keys  (0.00s - 0.00s)
+  PinkyFinger2_L               rotation       599 keys  (0.00s - 19.93s)
+  PinkyFinger2_L               translation      1 keys  (0.00s - 0.00s)
+  PinkyFinger3_L               scale            1 keys  (0.00s - 0.00s)
+  PinkyFinger3_L               rotation       599 keys  (0.00s - 19.93s)
+  PinkyFinger3_L               translation      1 keys  (0.00s - 0.00s)
+  MiddleFinger1_L              scale            1 keys  (0.00s - 0.00s)
+  MiddleFinger1_L              rotation       599 keys  (0.00s - 19.93s)
+  MiddleFinger1_L              translation      1 keys  (0.00s - 0.00s)
+  MiddleFinger2_L              scale            1 keys  (0.00s - 0.00s)
+  MiddleFinger2_L              rotation       599 keys  (0.00s - 19.93s)
+  MiddleFinger2_L              translation      1 keys  (0.00s - 0.00s)
+  MiddleFinger3_L              scale            1 keys  (0.00s - 0.00s)
+  MiddleFinger3_L              rotation       599 keys  (0.00s - 19.93s)
+  MiddleFinger3_L              translation      1 keys  (0.00s - 0.00s)
+  IndexFinger1_L               scale            1 keys  (0.00s - 0.00s)
+  IndexFinger1_L               rotation       599 keys  (0.00s - 19.93s)
+  IndexFinger1_L               translation      1 keys  (0.00s - 0.00s)
+  IndexFinger2_L               scale            1 keys  (0.00s - 0.00s)
+  IndexFinger2_L               rotation       599 keys  (0.00s - 19.93s)
+  IndexFinger2_L               translation      1 keys  (0.00s - 0.00s)
+  IndexFinger3_L               scale            1 keys  (0.00s - 0.00s)
+  IndexFinger3_L               rotation       599 keys  (0.00s - 19.93s)
+  IndexFinger3_L               translation      1 keys  (0.00s - 0.00s)
+  ThumbFinger1_L               scale            1 keys  (0.00s - 0.00s)
+  ThumbFinger1_L               rotation       599 keys  (0.00s - 19.93s)
+  ThumbFinger1_L               translation      1 keys  (0.00s - 0.00s)
+  ThumbFinger2_L               scale            1 keys  (0.00s - 0.00s)
+  ThumbFinger2_L               rotation       599 keys  (0.00s - 19.93s)
+  ThumbFinger2_L               translation      1 keys  (0.00s - 0.00s)
+  ThumbFinger3_L               scale            1 keys  (0.00s - 0.00s)
+  ThumbFinger3_L               rotation       599 keys  (0.00s - 19.93s)
+  ThumbFinger3_L               translation      1 keys  (0.00s - 0.00s)
+  Shoulder_L_Twist_01          scale            1 keys  (0.00s - 0.00s)
+  Shoulder_L_Twist_01          rotation       599 keys  (0.00s - 19.93s)
+  Shoulder_L_Twist_01          translation      1 keys  (0.00s - 0.00s)
+  Shoulder_L_Twist_02          scale            1 keys  (0.00s - 0.00s)
+  Shoulder_L_Twist_02          rotation       599 keys  (0.00s - 19.93s)
+  Shoulder_L_Twist_02          translation      1 keys  (0.00s - 0.00s)
+  Dummy_Sheath_Upper_R         scale            1 keys  (0.00s - 0.00s)
+  Dummy_Sheath_Upper_R         rotation         1 keys  (0.00s - 0.00s)
+  Dummy_Sheath_Upper_R         translation      1 keys  (0.00s - 0.00s)
+  Dummy_Sheath_Upper_L         scale            1 keys  (0.00s - 0.00s)
+  Dummy_Sheath_Upper_L         rotation         1 keys  (0.00s - 0.00s)
+  Dummy_Sheath_Upper_L         translation      1 keys  (0.00s - 0.00s)
+  Dummy_Sheath_Music           scale            1 keys  (0.00s - 0.00s)
+  Dummy_Sheath_Music           rotation         1 keys  (0.00s - 0.00s)
+  Dummy_Sheath_Music           translation      1 keys  (0.00s - 0.00s)
+  Neck_M                       scale            1 keys  (0.00s - 0.00s)
+  Neck_M                       rotation       599 keys  (0.00s - 19.93s)
+  Neck_M                       translation      1 keys  (0.00s - 0.00s)
+  Head_M                       scale            1 keys  (0.00s - 0.00s)
+  Head_M                       rotation       599 keys  (0.00s - 19.93s)
+  Head_M                       translation      1 keys  (0.00s - 0.00s)
+  Dummy_EyeFX_01               scale            1 keys  (0.00s - 0.00s)
+  Dummy_EyeFX_01               rotation         1 keys  (0.00s - 0.00s)
+  Dummy_EyeFX_01               translation      1 keys  (0.00s - 0.00s)
+  Dummy_EyeFX_02               scale            1 keys  (0.00s - 0.00s)
+  Dummy_EyeFX_02               rotation         1 keys  (0.00s - 0.00s)
+  Dummy_EyeFX_02               translation      1 keys  (0.00s - 0.00s)
+  Dummy_Sheath_Shield          scale            1 keys  (0.00s - 0.00s)
+  Dummy_Sheath_Shield          rotation         1 keys  (0.00s - 0.00s)
+  Dummy_Sheath_Shield          translation      1 keys  (0.00s - 0.00s)
+  Dummy_Sheath_Ranged          scale            1 keys  (0.00s - 0.00s)
+  Dummy_Sheath_Ranged          rotation         1 keys  (0.00s - 0.00s)
+  Dummy_Sheath_Ranged          translation      1 keys  (0.00s - 0.00s)
+  Dummy_Sheath_Lower_R         scale            1 keys  (0.00s - 0.00s)
+  Dummy_Sheath_Lower_R         rotation         1 keys  (0.00s - 0.00s)
+  Dummy_Sheath_Lower_R         translation      1 keys  (0.00s - 0.00s)
+  Dummy_Sheath_Lower_L         scale            1 keys  (0.00s - 0.00s)
+  Dummy_Sheath_Lower_L         rotation         1 keys  (0.00s - 0.00s)
+  Dummy_Sheath_Lower_L         translation      1 keys  (0.00s - 0.00s)
+
