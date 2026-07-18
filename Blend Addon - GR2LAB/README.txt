@@ -1,0 +1,1 @@
+Does not work without server. If u downloaded this, it's too early, u could delete it yet XD
