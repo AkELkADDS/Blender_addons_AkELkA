@@ -1,0 +1,1 @@
+Needs Blender 5.2.0LTS or higher
