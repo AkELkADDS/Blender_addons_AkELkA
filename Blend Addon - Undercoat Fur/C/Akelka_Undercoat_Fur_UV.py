@@ -1,7 +1,7 @@
 bl_info = {
     "name": "Akelka Undercoat Fur UV",
     "author": "AkELkA",
-    "version": (1, 9, 1),
+    "version": (1, 13, 1),
     "blender": (4, 5, 0),
     "location": "View3D > Sidebar (N) > Akelka Tools > Undercoat Fur",
     "description": "Add UndercoatFurUV on fur/feather cards via body UV island projection (BG3 shared coloring)",
@@ -9,7 +9,7 @@ bl_info = {
 }
 
 import bpy
-from bpy.props import BoolProperty, PointerProperty, StringProperty
+from bpy.props import FloatProperty, PointerProperty, StringProperty
 from bpy.types import Operator, Panel, PropertyGroup
 from collections import defaultdict, deque
 from mathutils import Vector
@@ -202,8 +202,8 @@ class BodyUVProjector:
         _location, _normal, index, distance = hit
         return index, distance
 
-    def closest_in_island(self, point_world, island_id):
-        best_distance = float("inf")
+    def closest_in_island(self, point_world, island_id, anchor_uv=None):
+        best_score = float("inf")
         best_triangle = None
         best_bary = None
         for ti in self.island_triangles.get(island_id, []):
@@ -214,14 +214,22 @@ class BodyUVProjector:
                 tri["verts"][1],
                 tri["verts"][2],
             )
-            distance_sq = (point_world - location).length_squared
-            if distance_sq < best_distance:
-                best_distance = distance_sq
+            distance = (point_world - location).length
+            score = distance
+            if anchor_uv is not None:
+                uv = (
+                    tri["uv"][0] * bary[0]
+                    + tri["uv"][1] * bary[1]
+                    + tri["uv"][2] * bary[2]
+                )
+                score += (uv - anchor_uv).length * 0.12
+            if score < best_score:
+                best_score = score
                 best_triangle = ti
                 best_bary = bary
         if best_triangle is None:
             return None
-        return best_triangle, best_bary, best_distance ** 0.5
+        return best_triangle, best_bary, best_score
 
     def uv_from_triangle(self, tri_index, bary):
         tri = self.triangles[tri_index]
@@ -265,39 +273,82 @@ def _ensure_output_uv_layer(fur_mesh, name):
     return layer
 
 
-def _bake_reference_from_body(ref_obj, body_projector, props, depsgraph):
-    """Fill reference UndercoatFurUV from undercoat (per-vertex body sample)."""
-    eval_obj, _eval_me, is_temp = _get_evaluated_mesh(
-        ref_obj, depsgraph, props.use_evaluated_mesh
-    )
-    ref_mesh = ref_obj.data
-    fur_matrix = eval_obj.matrix_world
-    out_uv = _ensure_output_uv_layer(ref_mesh, props.uv_layer_name)
+def _point_in_uv_triangle(point, a, b, c, eps=1e-5):
+    v0 = c - a
+    v1 = b - a
+    v2 = point - a
+    dot00 = v0.dot(v0)
+    dot01 = v0.dot(v1)
+    dot02 = v0.dot(v2)
+    dot11 = v1.dot(v1)
+    dot12 = v1.dot(v2)
+    denom = dot00 * dot11 - dot01 * dot01
+    if abs(denom) < 1e-14:
+        return False
+    inv = 1.0 / denom
+    u = (dot11 * dot02 - dot01 * dot12) * inv
+    v = (dot00 * dot12 - dot01 * dot02) * inv
+    return u >= -eps and v >= -eps and (u + v) <= 1.0 + eps
 
-    for v in ref_mesh.vertices:
-        world = fur_matrix @ v.co
-        hit = body_projector.closest_body_triangle(world)
-        if hit is None:
-            continue
-        tri_index, _dist = hit
-        island = body_projector.triangle_island[tri_index]
-        result = body_projector.closest_in_island(world, island)
-        if result is None:
-            continue
-        tri_index, bary, _d = result
-        uv = body_projector.uv_from_triangle(tri_index, bary)
-        for loop in ref_mesh.loops:
-            if loop.vertex_index == v.index:
-                out_uv.data[loop.index].uv = uv
 
-    if is_temp:
-        eval_obj.to_mesh_clear()
+def _uv_inside_island(projector, island_id, uv):
+    px = uv.x
+    py = uv.y
+    for tri_index in projector.island_triangles.get(island_id, ()):
+        uvs = projector.triangles[tri_index]["uv"]
+        min_x = min(uvs[0].x, uvs[1].x, uvs[2].x) - 1e-5
+        if px < min_x:
+            continue
+        max_x = max(uvs[0].x, uvs[1].x, uvs[2].x) + 1e-5
+        if px > max_x:
+            continue
+        min_y = min(uvs[0].y, uvs[1].y, uvs[2].y) - 1e-5
+        if py < min_y:
+            continue
+        max_y = max(uvs[0].y, uvs[1].y, uvs[2].y) + 1e-5
+        if py > max_y:
+            continue
+        if _point_in_uv_triangle(uv, uvs[0], uvs[1], uvs[2]):
+            return True
+    return False
+
+
+def _contain_card_in_island(vertex_uv, group, anchor, projector, island_id, cross_scale):
+    """Shrink a rebuilt card toward its anchor until it sits on that chart.
+
+    The anchor stays where the card was sampled. The card is not slid across
+    the chart, so a neck feather cannot be moved onto the front of the head.
+    """
+    del cross_scale
+    base = {vi: vertex_uv[vi].copy() for vi in group}
+
+    def _inside(factor):
+        for vi in group:
+            point = anchor + (base[vi] - anchor) * factor
+            if not _uv_inside_island(projector, island_id, point):
+                return False
+        return True
+
+    if _inside(1.0):
+        return
+    low = 0.0
+    high = 1.0
+    best = 0.0
+    for _ in range(14):
+        mid = (low + high) * 0.5
+        if _inside(mid):
+            best = mid
+            low = mid
+        else:
+            high = mid
+    if best < 0.15:
+        best = 0.15
+    for vi in group:
+        vertex_uv[vi] = anchor + (base[vi] - anchor) * best
 
 
 def build_body_projector(source_obj, props, depsgraph):
-    eval_obj, body_mesh, is_temp = _get_evaluated_mesh(
-        source_obj, depsgraph, props.use_evaluated_mesh
-    )
+    eval_obj, body_mesh, is_temp = _get_evaluated_mesh(source_obj, depsgraph)
     if not body_mesh.uv_layers:
         if is_temp:
             eval_obj.to_mesh_clear()
@@ -358,17 +409,37 @@ def _uv_face_signs(fur_mesh, group_set, vertex_uv):
     return pos, neg, zero
 
 
-def _repair_bad_card(fur_mesh, vertex_uv, world_pos, component, projector, root_vertex, root_tri, island):
-    """Rebuild twisted, line, dot, or border-smeared cards as one planar island.
+def _edge_stretch_ratio(fur_mesh, component, vertex_uv, world_pos):
+    """Largest edge scale divided by the smallest. 1 means an even card."""
+    group = set(vi for vi in component if vi in vertex_uv and vi in world_pos)
+    ratios = []
+    seen = set()
+    for poly in fur_mesh.polygons:
+        verts = poly.vertices
+        if not all(vi in group for vi in verts):
+            continue
+        count = len(verts)
+        for i in range(count):
+            a = verts[i]
+            b = verts[(i + 1) % count]
+            key = (a, b) if a < b else (b, a)
+            if key in seen:
+                continue
+            seen.add(key)
+            world_len = (world_pos[a] - world_pos[b]).length
+            uv_len = (vertex_uv[a] - vertex_uv[b]).length
+            if world_len > 1e-6 and uv_len > 1e-8:
+                ratios.append(uv_len / world_len)
+    if len(ratios) < 4:
+        return None
+    ratios.sort()
+    return ratios[-1] / ratios[0]
 
-    Anchored at the root's projected UV so the card stays on the right part of the atlas.
-    """
-    if root_vertex not in vertex_uv or root_vertex not in world_pos or root_tri is None:
-        return False
-    group = [vi for vi in component if vi in vertex_uv and vi in world_pos]
+
+def _card_needs_repair(fur_mesh, vertex_uv, component, world_pos=None):
+    group = [vi for vi in component if vi in vertex_uv]
     if len(group) < 3:
         return False
-
     xs = [vertex_uv[vi].x for vi in group]
     ys = [vertex_uv[vi].y for vi in group]
     dx = max(xs) - min(xs)
@@ -378,18 +449,121 @@ def _repair_bad_card(fur_mesh, vertex_uv, world_pos, component, projector, root_
         u = vertex_uv[vi]
         if u.x <= 0.02 or u.x >= 0.98 or u.y <= 0.02 or u.y >= 0.98:
             border += 1
-
     pos, neg, zero = _uv_face_signs(fur_mesh, set(group), vertex_uv)
     signed = pos + neg
-    # One face wound the other way is enough to fold the island.
     twisted = pos > 0 and neg > 0
     collapsed = (min(dx, dy) < 0.012 and max(dx, dy) > 0.008) or max(dx, dy) < 0.01
     border_smear = border >= 3 and border >= 0.25 * len(group)
     flat_faces = zero >= 1 and (zero >= max(1, signed) or border_smear)
-    if not (twisted or collapsed or border_smear or flat_faces):
+    stretched = False
+    if world_pos is not None:
+        ratio = _edge_stretch_ratio(fur_mesh, component, vertex_uv, world_pos)
+        stretched = ratio is not None and ratio > 8.0
+    return twisted or collapsed or border_smear or flat_faces or stretched
+
+
+def _sample_surface_uv(projector, world):
+    hit = projector.closest_body_triangle(world)
+    if hit is None:
+        return None
+    tri_index, distance = hit
+    tri = projector.triangles[tri_index]
+    _location, bary = _closest_point_on_triangle(
+        world, tri["verts"][0], tri["verts"][1], tri["verts"][2]
+    )
+    uv = projector.uv_from_triangle(tri_index, bary)
+    return distance, tri_index, uv
+
+
+def _choose_card_anchor(projector, world_pos, component, band=0.003, bin_size=0.08):
+    """Lock the card to the chart most of its vertices actually touch.
+
+    A feather tip can be closer to a different body part than the base is to
+    the skin it grows from. The closest vertex alone would paint the whole
+    card with that other chart.
+    """
+    samples = []
+    for vi in component:
+        sampled = _sample_surface_uv(projector, world_pos[vi])
+        if sampled is None:
+            continue
+        distance, tri_index, uv = sampled
+        island = projector.triangle_island[tri_index]
+        samples.append((distance, vi, tri_index, uv, island))
+    if not samples:
+        return None
+
+    by_island = defaultdict(list)
+    for item in samples:
+        by_island[item[4]].append(item)
+
+    def _island_rank(items):
+        distances = sorted(item[0] for item in items)
+        median = distances[len(distances) // 2]
+        # Equal counts: keep the chart the card stands off, not the one a tip touches.
+        return (len(items), median)
+
+    home = max(by_island.values(), key=_island_rank)
+    home.sort(key=lambda item: item[0])
+    min_distance = home[0][0]
+    near = [item for item in home if item[0] <= min_distance + band]
+    if not near:
+        near = home[:1]
+
+    bins = defaultdict(list)
+    for item in near:
+        uv = item[3]
+        key = (int(uv.x / bin_size), int(uv.y / bin_size))
+        bins[key].append(item)
+
+    def _bin_rank(items):
+        return (len(items), -min(item[0] for item in items))
+
+    best = max(bins.values(), key=_bin_rank)
+    best.sort(key=lambda item: item[0])
+    _distance, vertex, tri_index, _uv, _island = best[0]
+    return vertex, tri_index
+
+
+def _median_uv_per_world(fur_mesh, component, vertex_uv, world_pos):
+    """Median UV length per world length on one card."""
+    group = set(vi for vi in component if vi in vertex_uv and vi in world_pos)
+    ratios = []
+    for poly in fur_mesh.polygons:
+        verts = poly.vertices
+        if not all(vi in group for vi in verts):
+            continue
+        count = len(verts)
+        for i in range(count):
+            a = verts[i]
+            b = verts[(i + 1) % count]
+            world_len = (world_pos[a] - world_pos[b]).length
+            uv_len = (vertex_uv[a] - vertex_uv[b]).length
+            if world_len > 1e-6 and uv_len > 1e-8:
+                ratios.append(uv_len / world_len)
+    if not ratios:
+        return None
+    ratios.sort()
+    return ratios[len(ratios) // 2]
+
+
+def _repair_bad_card(
+    fur_mesh, vertex_uv, world_pos, component, projector, root_vertex, root_tri, island,
+    target_uv_per_world=None, island_scale=1.0, cross_scale=1.0, force=False,
+):
+    """Rebuild twisted, line, dot, or border-smeared cards as one planar island.
+
+    Anchored at the root's projected UV. UV units per world unit follow the median
+    scale of cards that did not need a rebuild, times island_scale.
+    """
+    if root_vertex not in vertex_uv or root_vertex not in world_pos or root_tri is None:
+        return False
+    if not force and not _card_needs_repair(fur_mesh, vertex_uv, component, world_pos):
+        return False
+    group = [vi for vi in component if vi in vertex_uv and vi in world_pos]
+    if len(group) < 3:
         return False
 
-    root_w = world_pos[root_vertex]
     anchor = vertex_uv[root_vertex].copy()
     normal = Vector((0.0, 0.0, 0.0))
     for poly in fur_mesh.polygons:
@@ -406,12 +580,15 @@ def _repair_bad_card(fur_mesh, vertex_uv, world_pos, component, projector, root_
     else:
         normal.normalize()
 
+    center_w = Vector((0.0, 0.0, 0.0))
+    for vi in group:
+        center_w += world_pos[vi]
+    center_w /= len(group)
+
     longest = 0.0
     axis_u = None
     for vi in group:
-        if vi == root_vertex:
-            continue
-        delta = world_pos[vi] - root_w
+        delta = world_pos[vi] - center_w
         length = delta.length
         if length > longest:
             longest = length
@@ -428,43 +605,89 @@ def _repair_bad_card(fur_mesh, vertex_uv, world_pos, component, projector, root_
     axis_v.normalize()
 
     coords = []
-    max_r = 0.0
     for vi in group:
-        delta = world_pos[vi] - root_w
-        s = delta.dot(axis_u)
-        t = delta.dot(axis_v)
-        coords.append((vi, s, t))
-        radius = (s * s + t * t) ** 0.5
-        if radius > max_r:
-            max_r = radius
-    if max_r < 1e-8:
-        return False
+        delta = world_pos[vi] - center_w
+        coords.append((vi, delta.dot(axis_u), delta.dot(axis_v)))
 
-    natural = max_r / _triangle_texel(projector.triangles[root_tri])
-    radius_uv = min(0.05, max(0.02, natural * 0.65))
-    scale = radius_uv / max_r
+    local_uv_per_world = 1.0 / _triangle_texel(projector.triangles[root_tri])
+    uv_per_world = target_uv_per_world if target_uv_per_world else local_uv_per_world
+    if uv_per_world < local_uv_per_world * 0.35:
+        uv_per_world = local_uv_per_world * 0.35
+    elif uv_per_world > local_uv_per_world * 2.5:
+        uv_per_world = local_uv_per_world * 2.5
+    scale = uv_per_world * island_scale
 
-    inward = projector.island_uv_centroid(island) - anchor
-    if inward.length_squared < 1e-10:
-        inward = Vector((0.0, 1.0))
-    else:
-        inward.normalize()
-    tangent = Vector((-inward.y, inward.x))
+    uv_center = Vector((0.0, 0.0))
+    for vi in group:
+        uv_center += vertex_uv[vi]
+    uv_center /= len(group)
+    if not _uv_inside_island(projector, island, uv_center):
+        uv_center = anchor
 
     for vi, s, t in coords:
-        vertex_uv[vi] = anchor + tangent * (s * scale) + inward * (t * scale)
+        vertex_uv[vi] = Vector((uv_center.x + s * scale, uv_center.y + t * scale))
 
     pos2, neg2, _zero2 = _uv_face_signs(fur_mesh, set(group), vertex_uv)
     if neg2 > pos2:
         for vi, s, t in coords:
-            vertex_uv[vi] = anchor + tangent * (s * scale) - inward * (t * scale)
+            vertex_uv[vi] = Vector((uv_center.x + s * scale, uv_center.y - t * scale))
+    _contain_card_in_island(
+        vertex_uv, group, uv_center, projector, island, cross_scale
+    )
     return True
 
 
-def transfer_fur_object(fur_obj, projector, props, stats, depsgraph):
-    eval_obj, _eval_me, is_temp = _get_evaluated_mesh(
-        fur_obj, depsgraph, props.use_evaluated_mesh
-    )
+def _projection_already_placed(fur_mesh, vertex_uv, component, projector, island_id, world_pos=None):
+    """True when the body projection is already a solid, even card on its chart.
+
+    Twisted faces, line faces, and cards whose edges stretch far past each
+    other still need a rebuild.
+    """
+    group = [vi for vi in component if vi in vertex_uv]
+    if len(group) < 3:
+        return False
+    xs = [vertex_uv[vi].x for vi in group]
+    ys = [vertex_uv[vi].y for vi in group]
+    dx = max(xs) - min(xs)
+    dy = max(ys) - min(ys)
+    if max(dx, dy) < 0.02 or min(dx, dy) < 0.012:
+        return False
+    group_set = set(group)
+    pos, neg, zero = _uv_face_signs(fur_mesh, group_set, vertex_uv)
+    if (pos > 0 and neg > 0) or zero > 0:
+        return False
+    faces = 0
+    thin = 0
+    for poly in fur_mesh.polygons:
+        verts = poly.vertices
+        if not all(vi in group_set for vi in verts):
+            continue
+        faces += 1
+        uvs = [vertex_uv[vi] for vi in verts]
+        face_dx = max(u.x for u in uvs) - min(u.x for u in uvs)
+        face_dy = max(u.y for u in uvs) - min(u.y for u in uvs)
+        if min(face_dx, face_dy) < 0.004:
+            thin += 1
+    if faces and thin >= 2 and thin >= 0.2 * faces:
+        return False
+    if world_pos is not None:
+        ratio = _edge_stretch_ratio(fur_mesh, component, vertex_uv, world_pos)
+        if ratio is not None and ratio > 8.0:
+            return False
+    for vi in group:
+        if not _uv_inside_island(projector, island_id, vertex_uv[vi]):
+            return False
+    return True
+
+
+def _component_hits(component, selected_verts):
+    if selected_verts is None:
+        return True
+    return any(vi in selected_verts for vi in component)
+
+
+def transfer_fur_object(fur_obj, projector, props, stats, depsgraph, selected_verts=None, force_repair=False):
+    eval_obj, _eval_me, is_temp = _get_evaluated_mesh(fur_obj, depsgraph)
     fur_mesh = fur_obj.data
     fur_matrix = eval_obj.matrix_world
 
@@ -472,38 +695,65 @@ def transfer_fur_object(fur_obj, projector, props, stats, depsgraph):
 
     out_uv = _ensure_output_uv_layer(fur_mesh, props.uv_layer_name)
     components = _fur_vertex_components(fur_mesh)
-    stats["cards"] += len(components)
+    island_scale = props.island_scale
+    cross_scale = props.cross_scale
 
-    for component in components:
-        root_vertex = None
-        root_distance = float("inf")
-        root_tri = None
-
-        for vi in component:
-            hit = projector.closest_body_triangle(world_pos[vi])
-            if hit is None:
+    def _write_card(vertex_uv):
+        for poly in fur_mesh.polygons:
+            if not any(vi in vertex_uv for vi in poly.vertices):
                 continue
-            tri_index, distance = hit
-            if distance < root_distance:
-                root_distance = distance
-                root_vertex = vi
-                root_tri = tri_index
+            for loop_index in poly.loop_indices:
+                vi = fur_mesh.loops[loop_index].vertex_index
+                if vi in vertex_uv:
+                    out_uv.data[loop_index].uv = vertex_uv[vi]
 
-        if root_vertex is None:
+    projected = []
+    good_scales = []
+    for component in components:
+        anchor = _choose_card_anchor(projector, world_pos, component)
+        if anchor is None:
             stats["skipped"] += 1
             continue
+        root_vertex, root_tri = anchor
 
         chosen_island = projector.triangle_island[root_tri]
-
+        root_sample = _sample_surface_uv(projector, world_pos[root_vertex])
+        anchor_uv = root_sample[2] if root_sample is not None else None
         vertex_uv = {}
         for vi in component:
-            p = world_pos[vi]
-            result = projector.closest_in_island(p, chosen_island)
+            result = projector.closest_in_island(world_pos[vi], chosen_island, anchor_uv)
             if result is None:
                 continue
             tri_index, bary, _dist = result
             vertex_uv[vi] = projector.uv_from_triangle(tri_index, bary)
+        if anchor_uv is not None:
+            vertex_uv[root_vertex] = anchor_uv
 
+        projected.append((component, vertex_uv, root_vertex, root_tri, chosen_island))
+        chosen = _component_hits(component, selected_verts)
+        placed = _projection_already_placed(
+            fur_mesh, vertex_uv, component, projector, chosen_island, world_pos
+        )
+        if chosen and force_repair:
+            continue
+        if placed or not _card_needs_repair(fur_mesh, vertex_uv, component, world_pos):
+            scale = _median_uv_per_world(fur_mesh, component, vertex_uv, world_pos)
+            if scale:
+                good_scales.append(scale)
+
+    good_scales.sort()
+    target_scale = good_scales[len(good_scales) // 2] if good_scales else None
+
+    for component, vertex_uv, root_vertex, root_tri, chosen_island in projected:
+        if not _component_hits(component, selected_verts):
+            continue
+        stats["cards"] += 1
+        placed = _projection_already_placed(
+            fur_mesh, vertex_uv, component, projector, chosen_island, world_pos
+        )
+        if placed and not force_repair:
+            _write_card(vertex_uv)
+            continue
         if _repair_bad_card(
             fur_mesh,
             vertex_uv,
@@ -513,16 +763,13 @@ def transfer_fur_object(fur_obj, projector, props, stats, depsgraph):
             root_vertex,
             root_tri,
             chosen_island,
+            target_scale,
+            island_scale,
+            cross_scale,
+            force=force_repair,
         ):
             stats["repaired"] = stats.get("repaired", 0) + 1
-
-        for poly in fur_mesh.polygons:
-            if not any(vi in vertex_uv for vi in poly.vertices):
-                continue
-            for loop_index in poly.loop_indices:
-                vi = fur_mesh.loops[loop_index].vertex_index
-                if vi in vertex_uv:
-                    out_uv.data[loop_index].uv = vertex_uv[vi]
+        _write_card(vertex_uv)
 
     if is_temp:
         eval_obj.to_mesh_clear()
@@ -573,24 +820,32 @@ class AUF_Properties(PropertyGroup):
     uv_layer_name: StringProperty(
         name="New UV Layer",
         default=UNDERCOAT_UV_LAYER_NAME,
+        description="UV layer written on the feather cards. Other UV layers are left alone",
     )
     body_uv_name: StringProperty(
         name="Body UV",
         default="",
-        description="Undercoat UV layer to sample (empty = first layer)",
+        description="Which UV layer on the undercoat to copy from. Empty = the first UV layer",
     )
-    use_evaluated_mesh: BoolProperty(
-        name="Apply Modifiers",
-        default=True,
-    )
-    reference_object: PointerProperty(
-        name="UV Reference",
+    undercoat_object: PointerProperty(
+        name="Undercoat",
         type=bpy.types.Object,
         poll=_mesh_object_poll,
-        description=(
-            "Optional mesh (e.g. scalp): only its UndercoatFurUV is filled from the "
-            "undercoat. Feather cards always project from the undercoat (v1.1 behavior)"
-        ),
+        description="Skin mesh that owns the body UV. Transfer sets this from the active object",
+    )
+    island_scale: FloatProperty(
+        name="Island Scale",
+        default=1.0,
+        min=0.2,
+        max=2.0,
+        description="Size of rebuilt cards around their anchor. 1 = average of the clean islands. Lower pulls them back in",
+    )
+    cross_scale: FloatProperty(
+        name="Cross Scale",
+        default=1.0,
+        min=0.2,
+        max=1.0,
+        description="A rebuilt card is fitted just inside its own chart. Lowering this does not shrink that fit",
     )
 
 
@@ -612,18 +867,12 @@ class AUF_OT_transfer_undercoat_uv(Operator):
         source_obj = context.active_object
         targets = [o for o in context.selected_objects if o.type == "MESH" and o != source_obj]
 
-        reference = props.reference_object
-        if reference is not None:
-            if reference.type != "MESH":
-                self.report({"ERROR"}, "UV Reference must be a mesh")
-                return {"CANCELLED"}
-            if reference == source_obj:
-                reference = None
-
         before_hashes = {
             obj.name: _mesh_uv_hashes(obj.data, skip_name=props.uv_layer_name)
             for obj in targets
         }
+
+        props.undercoat_object = source_obj
 
         depsgraph = context.evaluated_depsgraph_get()
         body_projector = build_body_projector(source_obj, props, depsgraph)
@@ -631,19 +880,10 @@ class AUF_OT_transfer_undercoat_uv(Operator):
             self.report({"ERROR"}, "Could not build body UV projector")
             return {"CANCELLED"}
 
-        ref_label = ""
-        if reference is not None:
-            _bake_reference_from_body(reference, body_projector, props, depsgraph)
-            ref_label = reference.name
-
-        card_projector = body_projector
-
         stats = {"cards": 0, "skipped": 0}
         card_meshes = []
         for obj in targets:
-            if reference is not None and obj == reference:
-                continue
-            transfer_fur_object(obj, card_projector, props, stats, depsgraph)
+            transfer_fur_object(obj, body_projector, props, stats, depsgraph)
             card_meshes.append(obj)
 
         for obj in targets:
@@ -660,19 +900,84 @@ class AUF_OT_transfer_undercoat_uv(Operator):
             total += d["total_cards"]
 
         n_islands = len(body_projector.island_triangles)
-        if ref_label:
-            msg = (
-                f"{len(card_meshes)} card mesh(es), baked ref '{ref_label}', "
-                f"{stats['cards']} components, skipped {stats['skipped']}"
-            )
-        else:
-            msg = (
-                f"{len(card_meshes)} mesh(es), {stats['cards']} components, "
-                f"body islands {n_islands}, skipped {stats['skipped']}"
-            )
+        msg = (
+            f"{len(card_meshes)} mesh(es), {stats['cards']} components, "
+            f"body islands {n_islands}, skipped {stats['skipped']}"
+        )
         if total:
             msg += f", dot-cards {dots}/{total}"
         self.report({"INFO"}, msg)
+        return {"FINISHED"}
+
+
+class AUF_OT_reassemble_selected(Operator):
+    bl_idname = "akelka.reassemble_selected_fur_uv"
+    bl_label = "Reassemble Selected"
+    bl_description = "Rebuild UndercoatFurUV only on the faces selected in Edit Mode"
+    bl_options = {"REGISTER", "UNDO"}
+
+    @classmethod
+    def poll(cls, context):
+        obj = context.edit_object
+        if not obj or obj.type != "MESH" or context.mode != "EDIT_MESH":
+            return False
+        undercoat = context.scene.auf_props.undercoat_object
+        if not undercoat or undercoat.type != "MESH":
+            return False
+        import bmesh
+        bm = bmesh.from_edit_mesh(obj.data)
+        return any(face.select for face in bm.faces)
+
+    def execute(self, context):
+        import bmesh
+        props = context.scene.auf_props
+        obj = context.edit_object
+        undercoat = props.undercoat_object
+        if not undercoat or undercoat.type != "MESH":
+            self.report({"ERROR"}, "Set the Undercoat mesh first")
+            return {"CANCELLED"}
+
+        bm = bmesh.from_edit_mesh(obj.data)
+        selected_faces = {face.index for face in bm.faces if face.select}
+        selected_verts = {
+            vert.index
+            for face in bm.faces if face.select
+            for vert in face.verts
+        }
+        if not selected_verts:
+            self.report({"ERROR"}, "Select faces to reassemble")
+            return {"CANCELLED"}
+
+        before = _mesh_uv_hashes(obj.data, skip_name=props.uv_layer_name)
+        bpy.ops.object.mode_set(mode="OBJECT")
+        try:
+            depsgraph = context.evaluated_depsgraph_get()
+            projector = build_body_projector(undercoat, props, depsgraph)
+            if projector is None:
+                self.report({"ERROR"}, "Could not build undercoat UV projector")
+                return {"CANCELLED"}
+            stats = {"cards": 0, "skipped": 0, "repaired": 0}
+            transfer_fur_object(
+                obj, projector, props, stats, depsgraph,
+                selected_verts=selected_verts,
+                force_repair=True,
+            )
+            after = _mesh_uv_hashes(obj.data, skip_name=props.uv_layer_name)
+            if before != after:
+                self.report({"ERROR"}, f"Existing UV layers changed on {obj.name}")
+                return {"CANCELLED"}
+        finally:
+            if context.mode != "EDIT_MESH":
+                bpy.ops.object.mode_set(mode="EDIT")
+            bm = bmesh.from_edit_mesh(obj.data)
+            for face in bm.faces:
+                face.select = face.index in selected_faces
+            bmesh.update_edit_mesh(obj.data)
+
+        self.report(
+            {"INFO"},
+            f"Reassembled {stats['cards']} card(s) at scale {props.island_scale:.2f}",
+        )
         return {"FINISHED"}
 
 
@@ -691,21 +996,24 @@ class AUF_PT_undercoat_fur(Panel):
 
         box = layout.box()
         col = box.column(align=True)
-        col.label(text="Active: undercoat (body UV source)", icon="MESH_DATA")
-        col.label(text="Selected: fur / feather cards", icon="OUTLINER_OB_MESH")
+        col.label(text="Active: undercoat (skin UV source)", icon="MESH_DATA")
+        col.label(text="Selected objects: whole feather meshes", icon="OUTLINER_OB_MESH")
         col.operator("akelka.transfer_undercoat_fur_uv", icon="UV")
+        col.operator("akelka.reassemble_selected_fur_uv", icon="UV_SYNC_SELECT")
 
         settings = layout.box()
         scol = settings.column(align=True)
         scol.prop(props, "uv_layer_name")
         scol.prop(props, "body_uv_name")
-        scol.prop(props, "reference_object")
-        scol.prop(props, "use_evaluated_mesh")
+        scol.prop(props, "undercoat_object")
+        scol.prop(props, "island_scale")
+        scol.prop(props, "cross_scale")
 
 
 classes = (
     AUF_Properties,
     AUF_OT_transfer_undercoat_uv,
+    AUF_OT_reassemble_selected,
     AUF_PT_undercoat_fur,
 )
 
