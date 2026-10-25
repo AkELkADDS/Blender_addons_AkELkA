@@ -1,0 +1,29 @@
+---
+description: After GR2 LAB addon code changes, sync to Blender 5.2 and reload when possible
+globs: extracted/gr2lab_blender/**/*
+alwaysApply: true
+---
+
+# GR2 LAB → Blender 5.2 install
+
+Canonical **source**: `extracted/gr2lab_blender/` in this workspace (`Standalone\C2`).
+
+Canonical **install target** (same Blender as MCP / user sessions):
+
+`E:\Users\eloct\AppData\Roaming\Blender Foundation\Blender\5.2\scripts\addons\gr2lab_blender`
+
+## After editing addon Python (required)
+
+1. Run from workspace `Standalone\C2`:
+   `powershell -ExecutionPolicy Bypass -File install_to_blender.ps1`
+2. Tell the user to **Reload Scripts** in Blender, or run reload via Blender MCP when connected:
+   - `bpy.ops.script.reload()` then disable/enable **GR2 LAB** in Preferences, or
+   - `import importlib, gr2lab_blender; gr2lab_blender.unregister(); importlib.reload(gr2lab_blender); gr2lab_blender.register()`
+
+Do **not** skip install and only update the zip unless the user asked for a release zip only.
+
+`install_to_blender.ps1` also writes `GR2_LAB_<version>.zip` in `Standalone\C2` (same tree as `extracted/gr2lab_blender/`, no `__pycache__`).
+
+## Version
+
+Bump `bl_info["version"]` in `extracted/gr2lab_blender/__init__.py` when shipping meaningful changes; the install script names the zip from that version.

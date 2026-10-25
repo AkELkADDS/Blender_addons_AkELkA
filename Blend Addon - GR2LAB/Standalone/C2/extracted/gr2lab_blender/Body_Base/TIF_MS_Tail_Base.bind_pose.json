@@ -1,0 +1,348 @@
+{
+  "format": "gr2lab_bind",
+  "version": 1,
+  "source_gr2": "TIF_MS_Tail_Base.GR2",
+  "root": "Dummy_Root",
+  "bones": [
+    {
+      "name": "Dummy_Root",
+      "parent_name": null,
+      "bind_translation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "bind_rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "bind_scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "name": "Root_M",
+      "parent_name": "Dummy_Root",
+      "bind_translation": [
+        -0.0,
+        1.193711,
+        0.003497
+      ],
+      "bind_rotation": [
+        -0.5,
+        -0.5,
+        0.5,
+        0.5
+      ],
+      "bind_scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "name": "Tail0_M",
+      "parent_name": "Root_M",
+      "bind_translation": [
+        0.084795,
+        -0.103589,
+        -0.0
+      ],
+      "bind_rotation": [
+        -0.484486,
+        0.874799,
+        0.0,
+        0.0
+      ],
+      "bind_scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "name": "Tail1_M",
+      "parent_name": "Tail0_M",
+      "bind_translation": [
+        0.181221,
+        -0.0,
+        -0.0
+      ],
+      "bind_rotation": [
+        -0.0,
+        -0.0,
+        0.0,
+        1.0
+      ],
+      "bind_scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "name": "Tail2_M",
+      "parent_name": "Tail1_M",
+      "bind_translation": [
+        0.181221,
+        0.0,
+        -0.0
+      ],
+      "bind_rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "bind_scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "name": "Tail3_M",
+      "parent_name": "Tail2_M",
+      "bind_translation": [
+        0.181221,
+        0.0,
+        -0.0
+      ],
+      "bind_rotation": [
+        -0.0,
+        -0.0,
+        -0.0,
+        1.0
+      ],
+      "bind_scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "name": "Tail4_M",
+      "parent_name": "Tail3_M",
+      "bind_translation": [
+        0.181221,
+        -0.0,
+        -0.0
+      ],
+      "bind_rotation": [
+        -0.0,
+        -0.0,
+        -0.0,
+        1.0
+      ],
+      "bind_scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "name": "Tail5_M",
+      "parent_name": "Tail4_M",
+      "bind_translation": [
+        0.181221,
+        0.0,
+        -0.0
+      ],
+      "bind_rotation": [
+        -0.0,
+        -0.0,
+        -0.0,
+        1.0
+      ],
+      "bind_scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "name": "Tail6_M",
+      "parent_name": "Tail5_M",
+      "bind_translation": [
+        0.181221,
+        0.0,
+        -0.0
+      ],
+      "bind_rotation": [
+        0.0,
+        -0.0,
+        0.0,
+        1.0
+      ],
+      "bind_scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "name": "Tail7_M",
+      "parent_name": "Tail6_M",
+      "bind_translation": [
+        0.181221,
+        -0.0,
+        -0.0
+      ],
+      "bind_rotation": [
+        -0.0,
+        0.0,
+        -0.0,
+        1.0
+      ],
+      "bind_scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "name": "Tail8_endBone",
+      "parent_name": "Tail7_M",
+      "bind_translation": [
+        0.18122,
+        -0.0,
+        -0.0
+      ],
+      "bind_rotation": [
+        -0.0,
+        -0.0,
+        -0.0,
+        1.0
+      ],
+      "bind_scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "name": "Spine1_M",
+      "parent_name": "Root_M",
+      "bind_translation": [
+        0.093741,
+        0.003691,
+        -0.0
+      ],
+      "bind_rotation": [
+        -0.0,
+        -0.0,
+        0.029984,
+        0.99955
+      ],
+      "bind_scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "name": "Spine2_M",
+      "parent_name": "Spine1_M",
+      "bind_translation": [
+        0.11175,
+        -0.005855,
+        -0.0
+      ],
+      "bind_rotation": [
+        0.0,
+        -0.0,
+        -0.035573,
+        0.999367
+      ],
+      "bind_scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "name": "Hip_L",
+      "parent_name": "Root_M",
+      "bind_translation": [
+        -0.01924,
+        -0.02336,
+        -0.11056
+      ],
+      "bind_rotation": [
+        -0.0,
+        -0.0,
+        -0.009101,
+        0.999959
+      ],
+      "bind_scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "name": "Hip_L_Twist_01",
+      "parent_name": "Hip_L",
+      "bind_translation": [
+        -0.0,
+        -0.0,
+        -0.0
+      ],
+      "bind_rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "bind_scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "name": "Hip_R",
+      "parent_name": "Root_M",
+      "bind_translation": [
+        -0.01924,
+        -0.02336,
+        0.11056
+      ],
+      "bind_rotation": [
+        0.0,
+        -0.0,
+        0.999959,
+        0.009101
+      ],
+      "bind_scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "name": "Hip_R_Twist_01",
+      "parent_name": "Hip_R",
+      "bind_translation": [
+        -0.0,
+        0.0,
+        -0.0
+      ],
+      "bind_rotation": [
+        -0.0,
+        -0.0,
+        -0.0,
+        1.0
+      ],
+      "bind_scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    }
+  ]
+}

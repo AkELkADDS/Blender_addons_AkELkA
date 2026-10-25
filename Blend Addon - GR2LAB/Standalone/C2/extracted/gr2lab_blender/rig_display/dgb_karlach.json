@@ -1,0 +1,6222 @@
+{
+  "source_blend": "D:\\AkELkA_Mods\\BG3_Mods\\1_DGB_to_DGB_Anims\\Blen\\DGB_Karlach\\CAMP\\CAMP_Karlach_CRD_Date\\Karlach_CRD_Date_Sex\\test_2\\DGB_SCENE_CAMP_Karlach_CRD_Date_Sex_Karlach_NewRig_68.blend",
+  "armature_object": "Armature_KARLACH_DGB",
+  "armature_data": "Armature.004",
+  "display": {
+    "display_type": "OCTAHEDRAL",
+    "show_in_front": true,
+    "show_axes": false,
+    "show_names": false,
+    "show_bone_custom_shapes": true
+  },
+  "collections": [
+    {
+      "name": "Center",
+      "is_visible": true,
+      "is_solo": false,
+      "bones": [
+        "Dummy_Root",
+        "Root_M",
+        "Spine1_M",
+        "Spine2_M",
+        "Chest_M",
+        "IK_Head_Target"
+      ]
+    },
+    {
+      "name": "Right",
+      "is_visible": true,
+      "is_solo": false,
+      "bones": [
+        "Hip_R",
+        "Knee_R",
+        "Ankle_R",
+        "Toes_R",
+        "Hip_R_Twist_02",
+        "Scapula_R",
+        "Shoulder_R",
+        "Elbow_R",
+        "Elbow_Twist_R",
+        "Wrist_R",
+        "Shoulder_R_Twist_02"
+      ]
+    },
+    {
+      "name": "Left",
+      "is_visible": true,
+      "is_solo": false,
+      "bones": [
+        "Hip_L",
+        "Knee_L",
+        "Ankle_L",
+        "Toes_L",
+        "Hip_L_Twist_02",
+        "Scapula_L",
+        "Shoulder_L",
+        "Elbow_L",
+        "Elbow_Twist_L",
+        "Wrist_L",
+        "Shoulder_L_Twist_02"
+      ]
+    },
+    {
+      "name": "Hands",
+      "is_visible": true,
+      "is_solo": false,
+      "bones": [
+        "RingFinger0_R",
+        "RingFinger1_R",
+        "RingFinger2_R",
+        "RingFinger3_R",
+        "RingFinger4_R_endBone",
+        "PinkyFinger0_R",
+        "PinkyFinger1_R",
+        "PinkyFinger2_R",
+        "PinkyFinger3_R",
+        "PinkyFinger4_R_endBone",
+        "MiddleFinger1_R",
+        "MiddleFinger2_R",
+        "MiddleFinger3_R",
+        "MiddleFinger4_R_endBone",
+        "IndexFinger1_R",
+        "IndexFinger2_R",
+        "IndexFinger3_R",
+        "IndexFinger4_R_endBone",
+        "ThumbFinger1_R",
+        "ThumbFinger2_R",
+        "ThumbFinger3_R",
+        "ThumbFinger4_R_endBone",
+        "RingFinger0_L",
+        "RingFinger1_L",
+        "RingFinger2_L",
+        "RingFinger3_L",
+        "RingFinger4_L_endBone",
+        "PinkyFinger0_L",
+        "PinkyFinger1_L",
+        "PinkyFinger2_L",
+        "PinkyFinger3_L",
+        "PinkyFinger4_L_endBone",
+        "MiddleFinger1_L",
+        "MiddleFinger2_L",
+        "MiddleFinger3_L",
+        "MiddleFinger4_L_endBone",
+        "IndexFinger1_L",
+        "IndexFinger2_L",
+        "IndexFinger3_L",
+        "IndexFinger4_L_endBone",
+        "ThumbFinger1_L",
+        "ThumbFinger2_L",
+        "ThumbFinger3_L",
+        "ThumbFinger4_L_endBone"
+      ]
+    },
+    {
+      "name": "Head",
+      "is_visible": true,
+      "is_solo": false,
+      "bones": [
+        "Dummy_StatusFX",
+        "Dummy_HeadFX",
+        "Dummy_MouthFX",
+        "Dummy_EyeFX_02",
+        "Dummy_EyeFX_01",
+        "HeadEnd_M_endBone",
+        "Neck_M",
+        "Head_M"
+      ]
+    },
+    {
+      "name": "Hide",
+      "is_visible": true,
+      "is_solo": false,
+      "bones": [
+        "Dummy_Custom_Anim",
+        "Dummy_L_Hand_IK",
+        "Dummy_R_Hand_IK",
+        "Dummy_L_Foot_IK",
+        "Dummy_R_Foot_IK",
+        "ToesEnd_R_endBone",
+        "Dummy_R_Foot_01",
+        "Hip_R_Twist_01",
+        "Dummy_L_Foot_01",
+        "ToesEnd_L_endBone",
+        "Hip_L_Twist_01",
+        "Dummy_R_TentacleFX",
+        "Dummy_R_Hand",
+        "Shoulder_R_Twist_01",
+        "Dummy_L_TentacleFX",
+        "Dummy_L_Hand",
+        "Shoulder_L_Twist_01",
+        "Dummy_Sheath_Upper_R",
+        "Dummy_Sheath_Upper_L",
+        "Dummy_NeckFX",
+        "IK_Head",
+        "IK_Head.001",
+        "Dummy_Sheath_Shield",
+        "Dummy_Sheath_Ranged",
+        "Dummy_Sheath_Lower_R",
+        "Dummy_Sheath_Lower_L",
+        "Dummy_Sheath_Hip_L",
+        "Dummy_Sheath_Hip_R"
+      ]
+    },
+    {
+      "name": "IK",
+      "is_visible": true,
+      "is_solo": false,
+      "bones": []
+    },
+    {
+      "name": "IK HANDS",
+      "is_visible": true,
+      "is_solo": false,
+      "bones": [
+        "Dummy_L_Hand_IK",
+        "Dummy_R_Hand_IK"
+      ]
+    },
+    {
+      "name": "NewHeadIK",
+      "is_visible": true,
+      "is_solo": false,
+      "bones": []
+    },
+    {
+      "name": "Analyze_it",
+      "is_visible": true,
+      "is_solo": false,
+      "bones": [
+        "Control_Spine"
+      ]
+    },
+    {
+      "name": "SPINE",
+      "is_visible": true,
+      "is_solo": false,
+      "bones": [
+        "Root_M",
+        "Spine1_M",
+        "Spine2_M",
+        "Chest_M",
+        "Control_Spine"
+      ]
+    }
+  ],
+  "ik_constraints": [
+    {
+      "bone": "Ankle_R",
+      "name": "AAF_IK_Dummy_R_Foot_IK",
+      "target": "Armature_KARLACH_DGB",
+      "subtarget": "Dummy_R_Foot_IK",
+      "chain_count": 3,
+      "influence": 1.0,
+      "use_stretch": false,
+      "use_rotation": true,
+      "pole_target": null,
+      "pole_subtarget": "",
+      "pole_angle": 0.0,
+      "ik_type": "COPY_POSE",
+      "use_tail": true,
+      "mute": false
+    },
+    {
+      "bone": "Ankle_L",
+      "name": "AAF_IK_Dummy_L_Foot_IK",
+      "target": "Armature_KARLACH_DGB",
+      "subtarget": "Dummy_L_Foot_IK",
+      "chain_count": 3,
+      "influence": 1.0,
+      "use_stretch": false,
+      "use_rotation": true,
+      "pole_target": null,
+      "pole_subtarget": "",
+      "pole_angle": 0.0,
+      "ik_type": "COPY_POSE",
+      "use_tail": true,
+      "mute": false
+    },
+    {
+      "bone": "Wrist_R",
+      "name": "AAF_IK_Dummy_R_Hand_IK",
+      "target": "Armature_KARLACH_DGB",
+      "subtarget": "Dummy_R_Hand_IK",
+      "chain_count": 3,
+      "influence": 1.0,
+      "use_stretch": false,
+      "use_rotation": true,
+      "pole_target": null,
+      "pole_subtarget": "",
+      "pole_angle": 0.0,
+      "ik_type": "COPY_POSE",
+      "use_tail": true,
+      "mute": false
+    },
+    {
+      "bone": "Wrist_L",
+      "name": "AAF_IK_Dummy_L_Hand_IK",
+      "target": "Armature_KARLACH_DGB",
+      "subtarget": "Dummy_L_Hand_IK",
+      "chain_count": 3,
+      "influence": 1.0,
+      "use_stretch": false,
+      "use_rotation": true,
+      "pole_target": null,
+      "pole_subtarget": "",
+      "pole_angle": 0.0,
+      "ik_type": "COPY_POSE",
+      "use_tail": true,
+      "mute": false
+    },
+    {
+      "bone": "IK_Head",
+      "name": "IK",
+      "target": "Armature_KARLACH_DGB",
+      "subtarget": "IK_Head_Target",
+      "chain_count": 5,
+      "influence": 0.0,
+      "use_stretch": true,
+      "use_rotation": false,
+      "pole_target": null,
+      "pole_subtarget": "",
+      "pole_angle": 0.0,
+      "ik_type": "COPY_POSE",
+      "use_tail": true,
+      "mute": false
+    }
+  ],
+  "bones": [
+    {
+      "name": "Dummy_Root",
+      "parent": null,
+      "length": 0.14830409,
+      "hide": false,
+      "hide_select": false,
+      "show_wire": false,
+      "use_deform": true,
+      "bbone_x": 0.1,
+      "bbone_z": 0.1,
+      "color": {
+        "palette": "THEME06"
+      },
+      "collections": [
+        "Center"
+      ],
+      "custom_shape": "Bone_shape_1",
+      "custom_shape_translation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "custom_shape_rotation": [
+        1.570796,
+        0.0,
+        0.0
+      ],
+      "custom_shape_rotation_mode": null,
+      "custom_shape_scale_xyz": [
+        3.2,
+        3.2,
+        3.2
+      ],
+      "use_custom_shape_bone_size": true,
+      "custom_shape_wire": null,
+      "ik_constraints": []
+    },
+    {
+      "name": "Dummy_CastFX",
+      "parent": "Dummy_Root",
+      "length": 0.14830409,
+      "hide": false,
+      "hide_select": false,
+      "show_wire": false,
+      "use_deform": true,
+      "bbone_x": 0.1,
+      "bbone_z": 0.1,
+      "color": {
+        "palette": "THEME01"
+      },
+      "collections": [
+        "VFX"
+      ],
+      "custom_shape": "Bone_shape_1",
+      "custom_shape_translation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "custom_shape_rotation": [
+        1.570796,
+        0.0,
+        0.0
+      ],
+      "custom_shape_rotation_mode": null,
+      "custom_shape_scale_xyz": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "use_custom_shape_bone_size": true,
+      "custom_shape_wire": null,
+      "ik_constraints": []
+    },
+    {
+      "name": "Dummy_OverheadFX",
+      "parent": "Dummy_Root",
+      "length": 0.14830399,
+      "hide": false,
+      "hide_select": false,
+      "show_wire": false,
+      "use_deform": true,
+      "bbone_x": 0.1,
+      "bbone_z": 0.1,
+      "color": {
+        "palette": "THEME01"
+      },
+      "collections": [
+        "VFX"
+      ],
+      "custom_shape": "Bone_shape_1",
+      "custom_shape_translation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "custom_shape_rotation": [
+        1.570796,
+        0.0,
+        0.0
+      ],
+      "custom_shape_rotation_mode": null,
+      "custom_shape_scale_xyz": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "use_custom_shape_bone_size": true,
+      "custom_shape_wire": null,
+      "ik_constraints": []
+    },
+    {
+      "name": "Dummy_Playerlight",
+      "parent": "Dummy_Root",
+      "length": 0.14830399,
+      "hide": false,
+      "hide_select": false,
+      "show_wire": false,
+      "use_deform": true,
+      "bbone_x": 0.1,
+      "bbone_z": 0.1,
+      "color": {
+        "palette": "THEME01"
+      },
+      "collections": [
+        "VFX"
+      ],
+      "custom_shape": "Bone_shape_1",
+      "custom_shape_translation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "custom_shape_rotation": [
+        1.570796,
+        0.0,
+        0.0
+      ],
+      "custom_shape_rotation_mode": null,
+      "custom_shape_scale_xyz": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "use_custom_shape_bone_size": true,
+      "custom_shape_wire": null,
+      "ik_constraints": []
+    },
+    {
+      "name": "Dummy_Custom_Anim",
+      "parent": "Dummy_Root",
+      "length": 0.14830409,
+      "hide": false,
+      "hide_select": false,
+      "show_wire": false,
+      "use_deform": true,
+      "bbone_x": 0.1,
+      "bbone_z": 0.1,
+      "color": {
+        "palette": "THEME06"
+      },
+      "collections": [
+        "Hide"
+      ],
+      "custom_shape": "Bone_shape_1",
+      "custom_shape_translation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "custom_shape_rotation": [
+        1.570796,
+        0.0,
+        0.0
+      ],
+      "custom_shape_rotation_mode": null,
+      "custom_shape_scale_xyz": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "use_custom_shape_bone_size": true,
+      "custom_shape_wire": null,
+      "ik_constraints": []
+    },
+    {
+      "name": "Dummy_FollowPhysics",
+      "parent": "Dummy_Root",
+      "length": 0.14830409,
+      "hide": false,
+      "hide_select": false,
+      "show_wire": false,
+      "use_deform": true,
+      "bbone_x": 0.1,
+      "bbone_z": 0.1,
+      "color": {
+        "palette": "THEME01"
+      },
+      "collections": [
+        "VFX"
+      ],
+      "custom_shape": "Bone_shape_1",
+      "custom_shape_translation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "custom_shape_rotation": [
+        1.570796,
+        0.0,
+        0.0
+      ],
+      "custom_shape_rotation_mode": null,
+      "custom_shape_scale_xyz": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "use_custom_shape_bone_size": true,
+      "custom_shape_wire": null,
+      "ik_constraints": []
+    },
+    {
+      "name": "Dummy_L_Hand_IK",
+      "parent": "Dummy_Root",
+      "length": 0.1483041,
+      "hide": false,
+      "hide_select": false,
+      "show_wire": false,
+      "use_deform": true,
+      "bbone_x": 0.1,
+      "bbone_z": 0.1,
+      "color": {
+        "palette": "THEME02"
+      },
+      "collections": [
+        "Hide",
+        "IK HANDS"
+      ],
+      "custom_shape": "Bone_shape_1",
+      "custom_shape_translation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "custom_shape_rotation": [
+        1.570796,
+        1.570796,
+        0.0
+      ],
+      "custom_shape_rotation_mode": null,
+      "custom_shape_scale_xyz": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "use_custom_shape_bone_size": true,
+      "custom_shape_wire": null,
+      "ik_constraints": []
+    },
+    {
+      "name": "Dummy_R_Hand_IK",
+      "parent": "Dummy_Root",
+      "length": 0.14830412,
+      "hide": false,
+      "hide_select": false,
+      "show_wire": false,
+      "use_deform": true,
+      "bbone_x": 0.1,
+      "bbone_z": 0.1,
+      "color": {
+        "palette": "THEME02"
+      },
+      "collections": [
+        "Hide",
+        "IK HANDS"
+      ],
+      "custom_shape": "Bone_shape_1",
+      "custom_shape_translation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "custom_shape_rotation": [
+        -1.570796,
+        1.570796,
+        0.0
+      ],
+      "custom_shape_rotation_mode": null,
+      "custom_shape_scale_xyz": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "use_custom_shape_bone_size": true,
+      "custom_shape_wire": null,
+      "ik_constraints": []
+    },
+    {
+      "name": "Dummy_L_Foot_IK",
+      "parent": "Dummy_Root",
+      "length": 0.14830409,
+      "hide": false,
+      "hide_select": false,
+      "show_wire": false,
+      "use_deform": true,
+      "bbone_x": 0.1,
+      "bbone_z": 0.1,
+      "color": {
+        "palette": "THEME03"
+      },
+      "collections": [
+        "Hide"
+      ],
+      "custom_shape": "Bone_shape_1",
+      "custom_shape_translation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "custom_shape_rotation": [
+        1.570796,
+        1.570796,
+        0.0
+      ],
+      "custom_shape_rotation_mode": null,
+      "custom_shape_scale_xyz": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "use_custom_shape_bone_size": true,
+      "custom_shape_wire": null,
+      "ik_constraints": []
+    },
+    {
+      "name": "Dummy_R_Foot_IK",
+      "parent": "Dummy_Root",
+      "length": 0.14830409,
+      "hide": false,
+      "hide_select": false,
+      "show_wire": false,
+      "use_deform": true,
+      "bbone_x": 0.1,
+      "bbone_z": 0.1,
+      "color": {
+        "palette": "THEME04"
+      },
+      "collections": [
+        "Hide"
+      ],
+      "custom_shape": "Bone_shape_1",
+      "custom_shape_translation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "custom_shape_rotation": [
+        1.570796,
+        -1.570796,
+        0.0
+      ],
+      "custom_shape_rotation_mode": null,
+      "custom_shape_scale_xyz": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "use_custom_shape_bone_size": true,
+      "custom_shape_wire": null,
+      "ik_constraints": []
+    },
+    {
+      "name": "Dummy_HitImpactFX",
+      "parent": "Dummy_Root",
+      "length": 0.14830409,
+      "hide": false,
+      "hide_select": false,
+      "show_wire": false,
+      "use_deform": true,
+      "bbone_x": 0.1,
+      "bbone_z": 0.1,
+      "color": {
+        "palette": "THEME01"
+      },
+      "collections": [
+        "VFX"
+      ],
+      "custom_shape": "Bone_shape_1",
+      "custom_shape_translation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "custom_shape_rotation": [
+        1.570796,
+        0.0,
+        0.0
+      ],
+      "custom_shape_rotation_mode": null,
+      "custom_shape_scale_xyz": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "use_custom_shape_bone_size": true,
+      "custom_shape_wire": null,
+      "ik_constraints": []
+    },
+    {
+      "name": "Root_M",
+      "parent": "Dummy_Root",
+      "length": 0.10044531,
+      "hide": false,
+      "hide_select": false,
+      "show_wire": false,
+      "use_deform": true,
+      "bbone_x": 0.1,
+      "bbone_z": 0.1,
+      "color": {
+        "palette": "THEME06"
+      },
+      "collections": [
+        "Center",
+        "SPINE"
+      ],
+      "custom_shape": "Bone_shape_1",
+      "custom_shape_translation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "custom_shape_rotation": [
+        1.570796,
+        -1.570796,
+        0.0
+      ],
+      "custom_shape_rotation_mode": null,
+      "custom_shape_scale_xyz": [
+        1.45,
+        1.45,
+        1.45
+      ],
+      "use_custom_shape_bone_size": true,
+      "custom_shape_wire": null,
+      "ik_constraints": []
+    },
+    {
+      "name": "Hip_R",
+      "parent": "Root_M",
+      "length": 0.49832198,
+      "hide": false,
+      "hide_select": false,
+      "show_wire": false,
+      "use_deform": true,
+      "bbone_x": 0.1,
+      "bbone_z": 0.1,
+      "color": {
+        "palette": "THEME04"
+      },
+      "collections": [
+        "Right"
+      ],
+      "custom_shape": "Bone_shape_1",
+      "custom_shape_translation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "custom_shape_rotation": [
+        1.466077,
+        -1.570796,
+        0.0
+      ],
+      "custom_shape_rotation_mode": null,
+      "custom_shape_scale_xyz": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "use_custom_shape_bone_size": true,
+      "custom_shape_wire": null,
+      "ik_constraints": []
+    },
+    {
+      "name": "Knee_R",
+      "parent": "Hip_R",
+      "length": 0.51247483,
+      "hide": false,
+      "hide_select": false,
+      "show_wire": false,
+      "use_deform": true,
+      "bbone_x": 0.1,
+      "bbone_z": 0.1,
+      "color": {
+        "palette": "THEME04"
+      },
+      "collections": [
+        "Right"
+      ],
+      "custom_shape": "Bone_shape_1",
+      "custom_shape_translation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "custom_shape_rotation": [
+        1.836086,
+        -1.570796,
+        0.0
+      ],
+      "custom_shape_rotation_mode": null,
+      "custom_shape_scale_xyz": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "use_custom_shape_bone_size": true,
+      "custom_shape_wire": null,
+      "ik_constraints": []
+    },
+    {
+      "name": "Dummy_R_KneeFX_01",
+      "parent": "Knee_R",
+      "length": 0.51247108,
+      "hide": false,
+      "hide_select": false,
+      "show_wire": false,
+      "use_deform": true,
+      "bbone_x": 0.1,
+      "bbone_z": 0.1,
+      "color": {
+        "palette": "THEME04"
+      },
+      "collections": [
+        "VFX"
+      ],
+      "custom_shape": "Bone_shape_1",
+      "custom_shape_translation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "custom_shape_rotation": [
+        1.570796,
+        0.0,
+        0.0
+      ],
+      "custom_shape_rotation_mode": null,
+      "custom_shape_scale_xyz": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "use_custom_shape_bone_size": true,
+      "custom_shape_wire": null,
+      "ik_constraints": []
+    },
+    {
+      "name": "Ankle_R",
+      "parent": "Knee_R",
+      "length": 0.00086056,
+      "hide": false,
+      "hide_select": false,
+      "show_wire": false,
+      "use_deform": true,
+      "bbone_x": 0.1,
+      "bbone_z": 0.1,
+      "color": {
+        "palette": "THEME04"
+      },
+      "collections": [
+        "Right"
+      ],
+      "custom_shape": "Bone_shape_1",
+      "custom_shape_translation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "custom_shape_rotation": [
+        1.815142,
+        -1.570796,
+        0.0
+      ],
+      "custom_shape_rotation_mode": null,
+      "custom_shape_scale_xyz": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "use_custom_shape_bone_size": true,
+      "custom_shape_wire": null,
+      "ik_constraints": [
+        {
+          "name": "AAF_IK_Dummy_R_Foot_IK",
+          "target": "Armature_KARLACH_DGB",
+          "subtarget": "Dummy_R_Foot_IK",
+          "chain_count": 3,
+          "influence": 1.0,
+          "use_stretch": false,
+          "use_rotation": true,
+          "pole_target": null,
+          "pole_subtarget": "",
+          "pole_angle": 0.0,
+          "ik_type": "COPY_POSE",
+          "use_tail": true,
+          "mute": false
+        }
+      ]
+    },
+    {
+      "name": "Toes_R",
+      "parent": "Ankle_R",
+      "length": 0.01811863,
+      "hide": false,
+      "hide_select": false,
+      "show_wire": false,
+      "use_deform": true,
+      "bbone_x": 0.1,
+      "bbone_z": 0.1,
+      "color": {
+        "palette": "THEME04"
+      },
+      "collections": [
+        "Right"
+      ],
+      "custom_shape": "Bone_shape_1",
+      "custom_shape_translation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "custom_shape_rotation": [
+        1.570796,
+        -1.570796,
+        0.0
+      ],
+      "custom_shape_rotation_mode": null,
+      "custom_shape_scale_xyz": [
+        8.9,
+        8.9,
+        8.9
+      ],
+      "use_custom_shape_bone_size": true,
+      "custom_shape_wire": null,
+      "ik_constraints": []
+    },
+    {
+      "name": "ToesEnd_R_endBone",
+      "parent": "Toes_R",
+      "length": 0.01811862,
+      "hide": false,
+      "hide_select": false,
+      "show_wire": false,
+      "use_deform": true,
+      "bbone_x": 0.1,
+      "bbone_z": 0.1,
+      "color": {
+        "palette": "THEME04"
+      },
+      "collections": [
+        "Hide"
+      ],
+      "custom_shape": "Bone_shape_1",
+      "custom_shape_translation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "custom_shape_rotation": [
+        1.570796,
+        -1.570796,
+        0.0
+      ],
+      "custom_shape_rotation_mode": null,
+      "custom_shape_scale_xyz": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "use_custom_shape_bone_size": true,
+      "custom_shape_wire": null,
+      "ik_constraints": []
+    },
+    {
+      "name": "Dummy_R_Foot_01",
+      "parent": "Toes_R",
+      "length": 0.01811862,
+      "hide": false,
+      "hide_select": false,
+      "show_wire": false,
+      "use_deform": true,
+      "bbone_x": 0.1,
+      "bbone_z": 0.1,
+      "color": {
+        "palette": "THEME04"
+      },
+      "collections": [
+        "Hide"
+      ],
+      "custom_shape": "Bone_shape_1",
+      "custom_shape_translation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "custom_shape_rotation": [
+        1.570796,
+        -1.570796,
+        0.0
+      ],
+      "custom_shape_rotation_mode": null,
+      "custom_shape_scale_xyz": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "use_custom_shape_bone_size": true,
+      "custom_shape_wire": null,
+      "ik_constraints": []
+    },
+    {
+      "name": "Hip_R_Twist_01",
+      "parent": "Hip_R",
+      "length": 0.24916099,
+      "hide": false,
+      "hide_select": false,
+      "show_wire": false,
+      "use_deform": true,
+      "bbone_x": 0.1,
+      "bbone_z": 0.1,
+      "color": {
+        "palette": "THEME04"
+      },
+      "collections": [
+        "Hide"
+      ],
+      "custom_shape": "Bone_shape_1",
+      "custom_shape_translation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "custom_shape_rotation": [
+        1.570796,
+        -1.570796,
+        0.0
+      ],
+      "custom_shape_rotation_mode": null,
+      "custom_shape_scale_xyz": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "use_custom_shape_bone_size": true,
+      "custom_shape_wire": null,
+      "ik_constraints": []
+    },
+    {
+      "name": "Hip_R_Twist_02",
+      "parent": "Hip_R_Twist_01",
+      "length": 0.24916103,
+      "hide": false,
+      "hide_select": false,
+      "show_wire": false,
+      "use_deform": true,
+      "bbone_x": 0.1,
+      "bbone_z": 0.1,
+      "color": {
+        "palette": "THEME04"
+      },
+      "collections": [
+        "Right"
+      ],
+      "custom_shape": "Bone_shape_2",
+      "custom_shape_translation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "custom_shape_rotation": [
+        1.570796,
+        -1.570796,
+        0.0
+      ],
+      "custom_shape_rotation_mode": null,
+      "custom_shape_scale_xyz": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "use_custom_shape_bone_size": true,
+      "custom_shape_wire": null,
+      "ik_constraints": []
+    },
+    {
+      "name": "Hip_L",
+      "parent": "Root_M",
+      "length": 0.49831796,
+      "hide": false,
+      "hide_select": false,
+      "show_wire": false,
+      "use_deform": true,
+      "bbone_x": 0.1,
+      "bbone_z": 0.1,
+      "color": {
+        "palette": "THEME03"
+      },
+      "collections": [
+        "Left"
+      ],
+      "custom_shape": "Bone_shape_1",
+      "custom_shape_translation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "custom_shape_rotation": [
+        1.675516,
+        1.570796,
+        0.0
+      ],
+      "custom_shape_rotation_mode": null,
+      "custom_shape_scale_xyz": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "use_custom_shape_bone_size": true,
+      "custom_shape_wire": null,
+      "ik_constraints": []
+    },
+    {
+      "name": "Knee_L",
+      "parent": "Hip_L",
+      "length": 0.51247483,
+      "hide": false,
+      "hide_select": false,
+      "show_wire": false,
+      "use_deform": true,
+      "bbone_x": 0.1,
+      "bbone_z": 0.1,
+      "color": {
+        "palette": "THEME03"
+      },
+      "collections": [
+        "Left"
+      ],
+      "custom_shape": "Bone_shape_1",
+      "custom_shape_translation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "custom_shape_rotation": [
+        1.305506,
+        1.570796,
+        0.0
+      ],
+      "custom_shape_rotation_mode": null,
+      "custom_shape_scale_xyz": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "use_custom_shape_bone_size": true,
+      "custom_shape_wire": null,
+      "ik_constraints": []
+    },
+    {
+      "name": "Dummy_L_KneeFX_01",
+      "parent": "Knee_L",
+      "length": 0.51247483,
+      "hide": false,
+      "hide_select": false,
+      "show_wire": false,
+      "use_deform": true,
+      "bbone_x": 0.1,
+      "bbone_z": 0.1,
+      "color": {
+        "palette": "THEME03"
+      },
+      "collections": [
+        "VFX"
+      ],
+      "custom_shape": "Bone_shape_1",
+      "custom_shape_translation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "custom_shape_rotation": [
+        1.570796,
+        0.0,
+        0.0
+      ],
+      "custom_shape_rotation_mode": null,
+      "custom_shape_scale_xyz": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "use_custom_shape_bone_size": true,
+      "custom_shape_wire": null,
+      "ik_constraints": []
+    },
+    {
+      "name": "Ankle_L",
+      "parent": "Knee_L",
+      "length": 0.00086056,
+      "hide": false,
+      "hide_select": false,
+      "show_wire": false,
+      "use_deform": true,
+      "bbone_x": 0.1,
+      "bbone_z": 0.1,
+      "color": {
+        "palette": "THEME03"
+      },
+      "collections": [
+        "Left"
+      ],
+      "custom_shape": "Bone_shape_1",
+      "custom_shape_translation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "custom_shape_rotation": [
+        1.32645,
+        1.570796,
+        0.0
+      ],
+      "custom_shape_rotation_mode": null,
+      "custom_shape_scale_xyz": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "use_custom_shape_bone_size": true,
+      "custom_shape_wire": null,
+      "ik_constraints": [
+        {
+          "name": "AAF_IK_Dummy_L_Foot_IK",
+          "target": "Armature_KARLACH_DGB",
+          "subtarget": "Dummy_L_Foot_IK",
+          "chain_count": 3,
+          "influence": 1.0,
+          "use_stretch": false,
+          "use_rotation": true,
+          "pole_target": null,
+          "pole_subtarget": "",
+          "pole_angle": 0.0,
+          "ik_type": "COPY_POSE",
+          "use_tail": true,
+          "mute": false
+        }
+      ]
+    },
+    {
+      "name": "Toes_L",
+      "parent": "Ankle_L",
+      "length": 0.01811869,
+      "hide": false,
+      "hide_select": false,
+      "show_wire": false,
+      "use_deform": true,
+      "bbone_x": 0.1,
+      "bbone_z": 0.1,
+      "color": {
+        "palette": "THEME03"
+      },
+      "collections": [
+        "Left"
+      ],
+      "custom_shape": "Bone_shape_1",
+      "custom_shape_translation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "custom_shape_rotation": [
+        1.570796,
+        1.570796,
+        0.0
+      ],
+      "custom_shape_rotation_mode": null,
+      "custom_shape_scale_xyz": [
+        8.9,
+        8.9,
+        8.9
+      ],
+      "use_custom_shape_bone_size": true,
+      "custom_shape_wire": null,
+      "ik_constraints": []
+    },
+    {
+      "name": "Dummy_L_Foot_01",
+      "parent": "Toes_L",
+      "length": 0.0181187,
+      "hide": false,
+      "hide_select": false,
+      "show_wire": false,
+      "use_deform": true,
+      "bbone_x": 0.1,
+      "bbone_z": 0.1,
+      "color": {
+        "palette": "THEME03"
+      },
+      "collections": [
+        "Hide"
+      ],
+      "custom_shape": "Bone_shape_1",
+      "custom_shape_translation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "custom_shape_rotation": [
+        1.570796,
+        1.570796,
+        0.0
+      ],
+      "custom_shape_rotation_mode": null,
+      "custom_shape_scale_xyz": [
+        8.9,
+        8.9,
+        8.9
+      ],
+      "use_custom_shape_bone_size": true,
+      "custom_shape_wire": null,
+      "ik_constraints": []
+    },
+    {
+      "name": "ToesEnd_L_endBone",
+      "parent": "Toes_L",
+      "length": 0.0181187,
+      "hide": false,
+      "hide_select": false,
+      "show_wire": false,
+      "use_deform": true,
+      "bbone_x": 0.1,
+      "bbone_z": 0.1,
+      "color": {
+        "palette": "THEME03"
+      },
+      "collections": [
+        "Hide"
+      ],
+      "custom_shape": "Bone_shape_1",
+      "custom_shape_translation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "custom_shape_rotation": [
+        1.570796,
+        1.570796,
+        0.0
+      ],
+      "custom_shape_rotation_mode": null,
+      "custom_shape_scale_xyz": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "use_custom_shape_bone_size": true,
+      "custom_shape_wire": null,
+      "ik_constraints": []
+    },
+    {
+      "name": "Hip_L_Twist_01",
+      "parent": "Hip_L",
+      "length": 0.24915695,
+      "hide": false,
+      "hide_select": false,
+      "show_wire": false,
+      "use_deform": true,
+      "bbone_x": 0.1,
+      "bbone_z": 0.1,
+      "color": {
+        "palette": "THEME03"
+      },
+      "collections": [
+        "Hide"
+      ],
+      "custom_shape": "Bone_shape_1",
+      "custom_shape_translation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "custom_shape_rotation": [
+        1.570796,
+        1.570796,
+        0.0
+      ],
+      "custom_shape_rotation_mode": null,
+      "custom_shape_scale_xyz": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "use_custom_shape_bone_size": true,
+      "custom_shape_wire": null,
+      "ik_constraints": []
+    },
+    {
+      "name": "Hip_L_Twist_02",
+      "parent": "Hip_L_Twist_01",
+      "length": 0.24915703,
+      "hide": false,
+      "hide_select": false,
+      "show_wire": false,
+      "use_deform": true,
+      "bbone_x": 0.1,
+      "bbone_z": 0.1,
+      "color": {
+        "palette": "THEME03"
+      },
+      "collections": [
+        "Left"
+      ],
+      "custom_shape": "Bone_shape_2",
+      "custom_shape_translation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "custom_shape_rotation": [
+        1.570796,
+        1.570796,
+        0.0
+      ],
+      "custom_shape_rotation_mode": null,
+      "custom_shape_scale_xyz": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "use_custom_shape_bone_size": true,
+      "custom_shape_wire": null,
+      "ik_constraints": []
+    },
+    {
+      "name": "Spine1_M",
+      "parent": "Root_M",
+      "length": 0.07395814,
+      "hide": false,
+      "hide_select": false,
+      "show_wire": false,
+      "use_deform": true,
+      "bbone_x": 0.1,
+      "bbone_z": 0.1,
+      "color": {
+        "palette": "THEME06"
+      },
+      "collections": [
+        "Center",
+        "SPINE"
+      ],
+      "custom_shape": "Bone_shape_1",
+      "custom_shape_translation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "custom_shape_rotation": [
+        1.570796,
+        -1.570796,
+        0.0
+      ],
+      "custom_shape_rotation_mode": null,
+      "custom_shape_scale_xyz": [
+        1.93,
+        1.93,
+        1.93
+      ],
+      "use_custom_shape_bone_size": true,
+      "custom_shape_wire": null,
+      "ik_constraints": []
+    },
+    {
+      "name": "Spine2_M",
+      "parent": "Spine1_M",
+      "length": 0.09088295,
+      "hide": false,
+      "hide_select": false,
+      "show_wire": false,
+      "use_deform": true,
+      "bbone_x": 0.1,
+      "bbone_z": 0.1,
+      "color": {
+        "palette": "THEME06"
+      },
+      "collections": [
+        "Center",
+        "SPINE"
+      ],
+      "custom_shape": "Bone_shape_1",
+      "custom_shape_translation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "custom_shape_rotation": [
+        1.570796,
+        -1.570796,
+        0.0
+      ],
+      "custom_shape_rotation_mode": null,
+      "custom_shape_scale_xyz": [
+        1.7,
+        1.7,
+        1.7
+      ],
+      "use_custom_shape_bone_size": true,
+      "custom_shape_wire": null,
+      "ik_constraints": []
+    },
+    {
+      "name": "Chest_M",
+      "parent": "Spine2_M",
+      "length": 0.25019476,
+      "hide": false,
+      "hide_select": false,
+      "show_wire": false,
+      "use_deform": true,
+      "bbone_x": 0.1,
+      "bbone_z": 0.1,
+      "color": {
+        "palette": "THEME06"
+      },
+      "collections": [
+        "Center",
+        "SPINE"
+      ],
+      "custom_shape": "Bone_shape_1",
+      "custom_shape_translation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "custom_shape_rotation": [
+        1.570796,
+        -1.570796,
+        0.0
+      ],
+      "custom_shape_rotation_mode": null,
+      "custom_shape_scale_xyz": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "use_custom_shape_bone_size": true,
+      "custom_shape_wire": null,
+      "ik_constraints": []
+    },
+    {
+      "name": "Scapula_R",
+      "parent": "Chest_M",
+      "length": 0.20257872,
+      "hide": false,
+      "hide_select": false,
+      "show_wire": false,
+      "use_deform": true,
+      "bbone_x": 0.1,
+      "bbone_z": 0.1,
+      "color": {
+        "palette": "THEME04"
+      },
+      "collections": [
+        "Right"
+      ],
+      "custom_shape": "Bone_shape_1",
+      "custom_shape_translation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "custom_shape_rotation": [
+        1.570796,
+        -1.570796,
+        0.0
+      ],
+      "custom_shape_rotation_mode": null,
+      "custom_shape_scale_xyz": [
+        1.4,
+        1.4,
+        1.4
+      ],
+      "use_custom_shape_bone_size": true,
+      "custom_shape_wire": null,
+      "ik_constraints": []
+    },
+    {
+      "name": "Shoulder_R",
+      "parent": "Scapula_R",
+      "length": 0.31156597,
+      "hide": false,
+      "hide_select": false,
+      "show_wire": false,
+      "use_deform": true,
+      "bbone_x": 0.1,
+      "bbone_z": 0.1,
+      "color": {
+        "palette": "THEME04"
+      },
+      "collections": [
+        "Right"
+      ],
+      "custom_shape": "Bone_shape_1",
+      "custom_shape_translation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "custom_shape_rotation": [
+        -1.570796,
+        1.570796,
+        0.0
+      ],
+      "custom_shape_rotation_mode": null,
+      "custom_shape_scale_xyz": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "use_custom_shape_bone_size": true,
+      "custom_shape_wire": null,
+      "ik_constraints": []
+    },
+    {
+      "name": "Elbow_R",
+      "parent": "Shoulder_R",
+      "length": 0.13891661,
+      "hide": false,
+      "hide_select": false,
+      "show_wire": false,
+      "use_deform": true,
+      "bbone_x": 0.1,
+      "bbone_z": 0.1,
+      "color": {
+        "palette": "THEME04"
+      },
+      "collections": [
+        "Right"
+      ],
+      "custom_shape": "Bone_shape_1",
+      "custom_shape_translation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "custom_shape_rotation": [
+        -1.570796,
+        1.570796,
+        0.0
+      ],
+      "custom_shape_rotation_mode": null,
+      "custom_shape_scale_xyz": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "use_custom_shape_bone_size": true,
+      "custom_shape_wire": null,
+      "ik_constraints": []
+    },
+    {
+      "name": "Dummy_R_TentacleFX",
+      "parent": "Elbow_R",
+      "length": 0.13891667,
+      "hide": false,
+      "hide_select": false,
+      "show_wire": false,
+      "use_deform": true,
+      "bbone_x": 0.1,
+      "bbone_z": 0.1,
+      "color": {
+        "palette": "THEME04"
+      },
+      "collections": [
+        "Hide"
+      ],
+      "custom_shape": "Bone_shape_1",
+      "custom_shape_translation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "custom_shape_rotation": [
+        -1.570796,
+        1.570796,
+        0.0
+      ],
+      "custom_shape_rotation_mode": null,
+      "custom_shape_scale_xyz": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "use_custom_shape_bone_size": true,
+      "custom_shape_wire": null,
+      "ik_constraints": []
+    },
+    {
+      "name": "Elbow_Twist_R",
+      "parent": "Elbow_R",
+      "length": 0.13891664,
+      "hide": false,
+      "hide_select": false,
+      "show_wire": false,
+      "use_deform": true,
+      "bbone_x": 0.1,
+      "bbone_z": 0.1,
+      "color": {
+        "palette": "THEME04"
+      },
+      "collections": [
+        "Right"
+      ],
+      "custom_shape": "Bone_shape_2",
+      "custom_shape_translation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "custom_shape_rotation": [
+        -1.570796,
+        1.570796,
+        0.0
+      ],
+      "custom_shape_rotation_mode": null,
+      "custom_shape_scale_xyz": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "use_custom_shape_bone_size": true,
+      "custom_shape_wire": null,
+      "ik_constraints": []
+    },
+    {
+      "name": "Wrist_R",
+      "parent": "Elbow_R",
+      "length": 0.00031008,
+      "hide": false,
+      "hide_select": false,
+      "show_wire": false,
+      "use_deform": true,
+      "bbone_x": 0.1,
+      "bbone_z": 0.1,
+      "color": {
+        "palette": "THEME04"
+      },
+      "collections": [
+        "Right"
+      ],
+      "custom_shape": "Bone_shape_1",
+      "custom_shape_translation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "custom_shape_rotation": [
+        -1.570796,
+        1.570796,
+        0.0
+      ],
+      "custom_shape_rotation_mode": null,
+      "custom_shape_scale_xyz": [
+        2.2,
+        2.2,
+        2.2
+      ],
+      "use_custom_shape_bone_size": true,
+      "custom_shape_wire": null,
+      "ik_constraints": [
+        {
+          "name": "AAF_IK_Dummy_R_Hand_IK",
+          "target": "Armature_KARLACH_DGB",
+          "subtarget": "Dummy_R_Hand_IK",
+          "chain_count": 3,
+          "influence": 1.0,
+          "use_stretch": false,
+          "use_rotation": true,
+          "pole_target": null,
+          "pole_subtarget": "",
+          "pole_angle": 0.0,
+          "ik_type": "COPY_POSE",
+          "use_tail": true,
+          "mute": false
+        }
+      ]
+    },
+    {
+      "name": "Dummy_R_HandFX",
+      "parent": "Wrist_R",
+      "length": 0.06201807,
+      "hide": false,
+      "hide_select": false,
+      "show_wire": false,
+      "use_deform": true,
+      "bbone_x": 0.1,
+      "bbone_z": 0.1,
+      "color": {
+        "palette": "THEME04"
+      },
+      "collections": [
+        "VFX"
+      ],
+      "custom_shape": "Bone_shape_1",
+      "custom_shape_translation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "custom_shape_rotation": [
+        1.570796,
+        1.570796,
+        0.0
+      ],
+      "custom_shape_rotation_mode": null,
+      "custom_shape_scale_xyz": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "use_custom_shape_bone_size": true,
+      "custom_shape_wire": null,
+      "ik_constraints": []
+    },
+    {
+      "name": "Dummy_R_Hand",
+      "parent": "Wrist_R",
+      "length": 0.06201807,
+      "hide": false,
+      "hide_select": false,
+      "show_wire": false,
+      "use_deform": true,
+      "bbone_x": 0.1,
+      "bbone_z": 0.1,
+      "color": {
+        "palette": "THEME04"
+      },
+      "collections": [
+        "Hide"
+      ],
+      "custom_shape": "Bone_shape_1",
+      "custom_shape_translation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "custom_shape_rotation": [
+        1.570796,
+        1.570796,
+        0.0
+      ],
+      "custom_shape_rotation_mode": null,
+      "custom_shape_scale_xyz": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "use_custom_shape_bone_size": true,
+      "custom_shape_wire": null,
+      "ik_constraints": []
+    },
+    {
+      "name": "RingFinger0_R",
+      "parent": "Wrist_R",
+      "length": 0.05710817,
+      "hide": false,
+      "hide_select": false,
+      "show_wire": false,
+      "use_deform": true,
+      "bbone_x": 0.1,
+      "bbone_z": 0.1,
+      "color": {
+        "palette": "THEME04"
+      },
+      "collections": [
+        "Hands"
+      ],
+      "custom_shape": "Bone_shape_1",
+      "custom_shape_translation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "custom_shape_rotation": [
+        1.570796,
+        1.570796,
+        0.0
+      ],
+      "custom_shape_rotation_mode": null,
+      "custom_shape_scale_xyz": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "use_custom_shape_bone_size": true,
+      "custom_shape_wire": null,
+      "ik_constraints": []
+    },
+    {
+      "name": "RingFinger1_R",
+      "parent": "RingFinger0_R",
+      "length": 0.04737501,
+      "hide": false,
+      "hide_select": false,
+      "show_wire": false,
+      "use_deform": true,
+      "bbone_x": 0.1,
+      "bbone_z": 0.1,
+      "color": {
+        "palette": "THEME04"
+      },
+      "collections": [
+        "Hands"
+      ],
+      "custom_shape": "Bone_shape_1",
+      "custom_shape_translation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "custom_shape_rotation": [
+        1.570796,
+        1.570796,
+        0.0
+      ],
+      "custom_shape_rotation_mode": null,
+      "custom_shape_scale_xyz": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "use_custom_shape_bone_size": true,
+      "custom_shape_wire": null,
+      "ik_constraints": []
+    },
+    {
+      "name": "RingFinger2_R",
+      "parent": "RingFinger1_R",
+      "length": 0.03267133,
+      "hide": false,
+      "hide_select": false,
+      "show_wire": false,
+      "use_deform": true,
+      "bbone_x": 0.1,
+      "bbone_z": 0.1,
+      "color": {
+        "palette": "THEME04"
+      },
+      "collections": [
+        "Hands"
+      ],
+      "custom_shape": "Bone_shape_1",
+      "custom_shape_translation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "custom_shape_rotation": [
+        1.570796,
+        1.570796,
+        0.0
+      ],
+      "custom_shape_rotation_mode": null,
+      "custom_shape_scale_xyz": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "use_custom_shape_bone_size": true,
+      "custom_shape_wire": null,
+      "ik_constraints": []
+    },
+    {
+      "name": "RingFinger3_R",
+      "parent": "RingFinger2_R",
+      "length": 0.03393152,
+      "hide": false,
+      "hide_select": false,
+      "show_wire": false,
+      "use_deform": true,
+      "bbone_x": 0.1,
+      "bbone_z": 0.1,
+      "color": {
+        "palette": "THEME04"
+      },
+      "collections": [
+        "Hands"
+      ],
+      "custom_shape": "Bone_shape_1",
+      "custom_shape_translation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "custom_shape_rotation": [
+        1.570796,
+        1.570796,
+        0.0
+      ],
+      "custom_shape_rotation_mode": null,
+      "custom_shape_scale_xyz": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "use_custom_shape_bone_size": true,
+      "custom_shape_wire": null,
+      "ik_constraints": []
+    },
+    {
+      "name": "RingFinger4_R_endBone",
+      "parent": "RingFinger3_R",
+      "length": 0.03393152,
+      "hide": false,
+      "hide_select": false,
+      "show_wire": false,
+      "use_deform": true,
+      "bbone_x": 0.1,
+      "bbone_z": 0.1,
+      "color": {
+        "palette": "THEME04"
+      },
+      "collections": [
+        "Hands"
+      ],
+      "custom_shape": "Bone_shape_1",
+      "custom_shape_translation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "custom_shape_rotation": [
+        1.570796,
+        1.570796,
+        0.0
+      ],
+      "custom_shape_rotation_mode": null,
+      "custom_shape_scale_xyz": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "use_custom_shape_bone_size": true,
+      "custom_shape_wire": null,
+      "ik_constraints": []
+    },
+    {
+      "name": "PinkyFinger0_R",
+      "parent": "Wrist_R",
+      "length": 0.05180733,
+      "hide": false,
+      "hide_select": false,
+      "show_wire": false,
+      "use_deform": true,
+      "bbone_x": 0.1,
+      "bbone_z": 0.1,
+      "color": {
+        "palette": "THEME04"
+      },
+      "collections": [
+        "Hands"
+      ],
+      "custom_shape": "Bone_shape_1",
+      "custom_shape_translation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "custom_shape_rotation": [
+        1.570796,
+        1.570796,
+        0.0
+      ],
+      "custom_shape_rotation_mode": null,
+      "custom_shape_scale_xyz": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "use_custom_shape_bone_size": true,
+      "custom_shape_wire": null,
+      "ik_constraints": []
+    },
+    {
+      "name": "PinkyFinger1_R",
+      "parent": "PinkyFinger0_R",
+      "length": 0.03269069,
+      "hide": false,
+      "hide_select": false,
+      "show_wire": false,
+      "use_deform": true,
+      "bbone_x": 0.1,
+      "bbone_z": 0.1,
+      "color": {
+        "palette": "THEME04"
+      },
+      "collections": [
+        "Hands"
+      ],
+      "custom_shape": "Bone_shape_1",
+      "custom_shape_translation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "custom_shape_rotation": [
+        1.570796,
+        1.570796,
+        0.0
+      ],
+      "custom_shape_rotation_mode": null,
+      "custom_shape_scale_xyz": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "use_custom_shape_bone_size": true,
+      "custom_shape_wire": null,
+      "ik_constraints": []
+    },
+    {
+      "name": "PinkyFinger2_R",
+      "parent": "PinkyFinger1_R",
+      "length": 0.02113125,
+      "hide": false,
+      "hide_select": false,
+      "show_wire": false,
+      "use_deform": true,
+      "bbone_x": 0.1,
+      "bbone_z": 0.1,
+      "color": {
+        "palette": "THEME04"
+      },
+      "collections": [
+        "Hands"
+      ],
+      "custom_shape": "Bone_shape_1",
+      "custom_shape_translation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "custom_shape_rotation": [
+        1.570796,
+        1.570796,
+        0.0
+      ],
+      "custom_shape_rotation_mode": null,
+      "custom_shape_scale_xyz": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "use_custom_shape_bone_size": true,
+      "custom_shape_wire": null,
+      "ik_constraints": []
+    },
+    {
+      "name": "PinkyFinger3_R",
+      "parent": "PinkyFinger2_R",
+      "length": 0.02988188,
+      "hide": false,
+      "hide_select": false,
+      "show_wire": false,
+      "use_deform": true,
+      "bbone_x": 0.1,
+      "bbone_z": 0.1,
+      "color": {
+        "palette": "THEME04"
+      },
+      "collections": [
+        "Hands"
+      ],
+      "custom_shape": "Bone_shape_1",
+      "custom_shape_translation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "custom_shape_rotation": [
+        1.570796,
+        1.570796,
+        0.0
+      ],
+      "custom_shape_rotation_mode": null,
+      "custom_shape_scale_xyz": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "use_custom_shape_bone_size": true,
+      "custom_shape_wire": null,
+      "ik_constraints": []
+    },
+    {
+      "name": "PinkyFinger4_R_endBone",
+      "parent": "PinkyFinger3_R",
+      "length": 0.02988188,
+      "hide": false,
+      "hide_select": false,
+      "show_wire": false,
+      "use_deform": true,
+      "bbone_x": 0.1,
+      "bbone_z": 0.1,
+      "color": {
+        "palette": "THEME04"
+      },
+      "collections": [
+        "Hands"
+      ],
+      "custom_shape": "Bone_shape_1",
+      "custom_shape_translation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "custom_shape_rotation": [
+        1.570796,
+        1.570796,
+        0.0
+      ],
+      "custom_shape_rotation_mode": null,
+      "custom_shape_scale_xyz": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "use_custom_shape_bone_size": true,
+      "custom_shape_wire": null,
+      "ik_constraints": []
+    },
+    {
+      "name": "MiddleFinger1_R",
+      "parent": "Wrist_R",
+      "length": 0.05033578,
+      "hide": false,
+      "hide_select": false,
+      "show_wire": false,
+      "use_deform": true,
+      "bbone_x": 0.1,
+      "bbone_z": 0.1,
+      "color": {
+        "palette": "THEME04"
+      },
+      "collections": [
+        "Hands"
+      ],
+      "custom_shape": "Bone_shape_1",
+      "custom_shape_translation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "custom_shape_rotation": [
+        1.570796,
+        1.570796,
+        0.0
+      ],
+      "custom_shape_rotation_mode": null,
+      "custom_shape_scale_xyz": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "use_custom_shape_bone_size": true,
+      "custom_shape_wire": null,
+      "ik_constraints": []
+    },
+    {
+      "name": "MiddleFinger2_R",
+      "parent": "MiddleFinger1_R",
+      "length": 0.03347196,
+      "hide": false,
+      "hide_select": false,
+      "show_wire": false,
+      "use_deform": true,
+      "bbone_x": 0.1,
+      "bbone_z": 0.1,
+      "color": {
+        "palette": "THEME04"
+      },
+      "collections": [
+        "Hands"
+      ],
+      "custom_shape": "Bone_shape_1",
+      "custom_shape_translation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "custom_shape_rotation": [
+        1.570796,
+        1.570796,
+        0.0
+      ],
+      "custom_shape_rotation_mode": null,
+      "custom_shape_scale_xyz": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "use_custom_shape_bone_size": true,
+      "custom_shape_wire": null,
+      "ik_constraints": []
+    },
+    {
+      "name": "MiddleFinger3_R",
+      "parent": "MiddleFinger2_R",
+      "length": 0.0372755,
+      "hide": false,
+      "hide_select": false,
+      "show_wire": false,
+      "use_deform": true,
+      "bbone_x": 0.1,
+      "bbone_z": 0.1,
+      "color": {
+        "palette": "THEME04"
+      },
+      "collections": [
+        "Hands"
+      ],
+      "custom_shape": "Bone_shape_1",
+      "custom_shape_translation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "custom_shape_rotation": [
+        1.570796,
+        1.570796,
+        0.0
+      ],
+      "custom_shape_rotation_mode": null,
+      "custom_shape_scale_xyz": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "use_custom_shape_bone_size": true,
+      "custom_shape_wire": null,
+      "ik_constraints": []
+    },
+    {
+      "name": "MiddleFinger4_R_endBone",
+      "parent": "MiddleFinger3_R",
+      "length": 0.0372755,
+      "hide": false,
+      "hide_select": false,
+      "show_wire": false,
+      "use_deform": true,
+      "bbone_x": 0.1,
+      "bbone_z": 0.1,
+      "color": {
+        "palette": "THEME04"
+      },
+      "collections": [
+        "Hands"
+      ],
+      "custom_shape": "Bone_shape_1",
+      "custom_shape_translation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "custom_shape_rotation": [
+        1.570796,
+        1.570796,
+        0.0
+      ],
+      "custom_shape_rotation_mode": null,
+      "custom_shape_scale_xyz": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "use_custom_shape_bone_size": true,
+      "custom_shape_wire": null,
+      "ik_constraints": []
+    },
+    {
+      "name": "IndexFinger1_R",
+      "parent": "Wrist_R",
+      "length": 0.04696573,
+      "hide": false,
+      "hide_select": false,
+      "show_wire": false,
+      "use_deform": true,
+      "bbone_x": 0.1,
+      "bbone_z": 0.1,
+      "color": {
+        "palette": "THEME04"
+      },
+      "collections": [
+        "Hands"
+      ],
+      "custom_shape": "Bone_shape_1",
+      "custom_shape_translation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "custom_shape_rotation": [
+        1.570796,
+        1.570796,
+        0.0
+      ],
+      "custom_shape_rotation_mode": null,
+      "custom_shape_scale_xyz": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "use_custom_shape_bone_size": true,
+      "custom_shape_wire": null,
+      "ik_constraints": []
+    },
+    {
+      "name": "IndexFinger2_R",
+      "parent": "IndexFinger1_R",
+      "length": 0.02699691,
+      "hide": false,
+      "hide_select": false,
+      "show_wire": false,
+      "use_deform": true,
+      "bbone_x": 0.1,
+      "bbone_z": 0.1,
+      "color": {
+        "palette": "THEME04"
+      },
+      "collections": [
+        "Hands"
+      ],
+      "custom_shape": "Bone_shape_1",
+      "custom_shape_translation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "custom_shape_rotation": [
+        1.570796,
+        1.570796,
+        0.0
+      ],
+      "custom_shape_rotation_mode": null,
+      "custom_shape_scale_xyz": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "use_custom_shape_bone_size": true,
+      "custom_shape_wire": null,
+      "ik_constraints": []
+    },
+    {
+      "name": "IndexFinger3_R",
+      "parent": "IndexFinger2_R",
+      "length": 0.03516128,
+      "hide": false,
+      "hide_select": false,
+      "show_wire": false,
+      "use_deform": true,
+      "bbone_x": 0.1,
+      "bbone_z": 0.1,
+      "color": {
+        "palette": "THEME04"
+      },
+      "collections": [
+        "Hands"
+      ],
+      "custom_shape": "Bone_shape_1",
+      "custom_shape_translation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "custom_shape_rotation": [
+        1.570796,
+        1.570796,
+        0.0
+      ],
+      "custom_shape_rotation_mode": null,
+      "custom_shape_scale_xyz": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "use_custom_shape_bone_size": true,
+      "custom_shape_wire": null,
+      "ik_constraints": []
+    },
+    {
+      "name": "IndexFinger4_R_endBone",
+      "parent": "IndexFinger3_R",
+      "length": 0.03516128,
+      "hide": false,
+      "hide_select": false,
+      "show_wire": false,
+      "use_deform": true,
+      "bbone_x": 0.1,
+      "bbone_z": 0.1,
+      "color": {
+        "palette": "THEME04"
+      },
+      "collections": [
+        "Hands"
+      ],
+      "custom_shape": "Bone_shape_1",
+      "custom_shape_translation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "custom_shape_rotation": [
+        1.570796,
+        1.570796,
+        0.0
+      ],
+      "custom_shape_rotation_mode": null,
+      "custom_shape_scale_xyz": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "use_custom_shape_bone_size": true,
+      "custom_shape_wire": null,
+      "ik_constraints": []
+    },
+    {
+      "name": "ThumbFinger1_R",
+      "parent": "Wrist_R",
+      "length": 0.04420485,
+      "hide": false,
+      "hide_select": false,
+      "show_wire": false,
+      "use_deform": true,
+      "bbone_x": 0.1,
+      "bbone_z": 0.1,
+      "color": {
+        "palette": "THEME04"
+      },
+      "collections": [
+        "Hands"
+      ],
+      "custom_shape": "Bone_shape_1",
+      "custom_shape_translation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "custom_shape_rotation": [
+        1.570796,
+        1.570796,
+        0.0
+      ],
+      "custom_shape_rotation_mode": null,
+      "custom_shape_scale_xyz": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "use_custom_shape_bone_size": true,
+      "custom_shape_wire": null,
+      "ik_constraints": []
+    },
+    {
+      "name": "ThumbFinger2_R",
+      "parent": "ThumbFinger1_R",
+      "length": 0.02498622,
+      "hide": false,
+      "hide_select": false,
+      "show_wire": false,
+      "use_deform": true,
+      "bbone_x": 0.1,
+      "bbone_z": 0.1,
+      "color": {
+        "palette": "THEME04"
+      },
+      "collections": [
+        "Hands"
+      ],
+      "custom_shape": "Bone_shape_1",
+      "custom_shape_translation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "custom_shape_rotation": [
+        1.570796,
+        1.570796,
+        0.0
+      ],
+      "custom_shape_rotation_mode": null,
+      "custom_shape_scale_xyz": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "use_custom_shape_bone_size": true,
+      "custom_shape_wire": null,
+      "ik_constraints": []
+    },
+    {
+      "name": "ThumbFinger3_R",
+      "parent": "ThumbFinger2_R",
+      "length": 0.0371292,
+      "hide": false,
+      "hide_select": false,
+      "show_wire": false,
+      "use_deform": true,
+      "bbone_x": 0.1,
+      "bbone_z": 0.1,
+      "color": {
+        "palette": "THEME04"
+      },
+      "collections": [
+        "Hands"
+      ],
+      "custom_shape": "Bone_shape_1",
+      "custom_shape_translation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "custom_shape_rotation": [
+        1.570796,
+        1.570796,
+        0.0
+      ],
+      "custom_shape_rotation_mode": null,
+      "custom_shape_scale_xyz": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "use_custom_shape_bone_size": true,
+      "custom_shape_wire": null,
+      "ik_constraints": []
+    },
+    {
+      "name": "ThumbFinger4_R_endBone",
+      "parent": "ThumbFinger3_R",
+      "length": 0.03712919,
+      "hide": false,
+      "hide_select": false,
+      "show_wire": false,
+      "use_deform": true,
+      "bbone_x": 0.1,
+      "bbone_z": 0.1,
+      "color": {
+        "palette": "THEME04"
+      },
+      "collections": [
+        "Hands"
+      ],
+      "custom_shape": "Bone_shape_1",
+      "custom_shape_translation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "custom_shape_rotation": [
+        1.570796,
+        1.570796,
+        0.0
+      ],
+      "custom_shape_rotation_mode": null,
+      "custom_shape_scale_xyz": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "use_custom_shape_bone_size": true,
+      "custom_shape_wire": null,
+      "ik_constraints": []
+    },
+    {
+      "name": "Shoulder_R_Twist_01",
+      "parent": "Shoulder_R",
+      "length": 0.15578298,
+      "hide": false,
+      "hide_select": false,
+      "show_wire": false,
+      "use_deform": true,
+      "bbone_x": 0.1,
+      "bbone_z": 0.1,
+      "color": {
+        "palette": "THEME04"
+      },
+      "collections": [
+        "Hide"
+      ],
+      "custom_shape": "Bone_shape_1",
+      "custom_shape_translation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "custom_shape_rotation": [
+        -1.570796,
+        1.570796,
+        0.0
+      ],
+      "custom_shape_rotation_mode": null,
+      "custom_shape_scale_xyz": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "use_custom_shape_bone_size": true,
+      "custom_shape_wire": null,
+      "ik_constraints": []
+    },
+    {
+      "name": "Shoulder_R_Twist_02",
+      "parent": "Shoulder_R_Twist_01",
+      "length": 0.15578298,
+      "hide": false,
+      "hide_select": false,
+      "show_wire": false,
+      "use_deform": true,
+      "bbone_x": 0.1,
+      "bbone_z": 0.1,
+      "color": {
+        "palette": "THEME04"
+      },
+      "collections": [
+        "Right"
+      ],
+      "custom_shape": "Bone_shape_2",
+      "custom_shape_translation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "custom_shape_rotation": [
+        -1.570796,
+        1.570796,
+        0.0
+      ],
+      "custom_shape_rotation_mode": null,
+      "custom_shape_scale_xyz": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "use_custom_shape_bone_size": true,
+      "custom_shape_wire": null,
+      "ik_constraints": []
+    },
+    {
+      "name": "Scapula_L",
+      "parent": "Chest_M",
+      "length": 0.20257972,
+      "hide": false,
+      "hide_select": false,
+      "show_wire": false,
+      "use_deform": true,
+      "bbone_x": 0.1,
+      "bbone_z": 0.1,
+      "color": {
+        "palette": "THEME03"
+      },
+      "collections": [
+        "Left"
+      ],
+      "custom_shape": "Bone_shape_1",
+      "custom_shape_translation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "custom_shape_rotation": [
+        1.570796,
+        1.570796,
+        0.0
+      ],
+      "custom_shape_rotation_mode": null,
+      "custom_shape_scale_xyz": [
+        1.4,
+        1.4,
+        1.4
+      ],
+      "use_custom_shape_bone_size": true,
+      "custom_shape_wire": null,
+      "ik_constraints": []
+    },
+    {
+      "name": "Shoulder_L",
+      "parent": "Scapula_L",
+      "length": 0.31156456,
+      "hide": false,
+      "hide_select": false,
+      "show_wire": false,
+      "use_deform": true,
+      "bbone_x": 0.1,
+      "bbone_z": 0.1,
+      "color": {
+        "palette": "THEME03"
+      },
+      "collections": [
+        "Left"
+      ],
+      "custom_shape": "Bone_shape_1",
+      "custom_shape_translation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "custom_shape_rotation": [
+        1.570796,
+        1.570796,
+        0.0
+      ],
+      "custom_shape_rotation_mode": null,
+      "custom_shape_scale_xyz": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "use_custom_shape_bone_size": true,
+      "custom_shape_wire": null,
+      "ik_constraints": []
+    },
+    {
+      "name": "Elbow_L",
+      "parent": "Shoulder_L",
+      "length": 0.13891546,
+      "hide": false,
+      "hide_select": false,
+      "show_wire": false,
+      "use_deform": true,
+      "bbone_x": 0.1,
+      "bbone_z": 0.1,
+      "color": {
+        "palette": "THEME03"
+      },
+      "collections": [
+        "Left"
+      ],
+      "custom_shape": "Bone_shape_1",
+      "custom_shape_translation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "custom_shape_rotation": [
+        1.570796,
+        1.570796,
+        0.0
+      ],
+      "custom_shape_rotation_mode": null,
+      "custom_shape_scale_xyz": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "use_custom_shape_bone_size": true,
+      "custom_shape_wire": null,
+      "ik_constraints": []
+    },
+    {
+      "name": "Elbow_Twist_L",
+      "parent": "Elbow_L",
+      "length": 0.13891549,
+      "hide": false,
+      "hide_select": false,
+      "show_wire": false,
+      "use_deform": true,
+      "bbone_x": 0.1,
+      "bbone_z": 0.1,
+      "color": {
+        "palette": "THEME03"
+      },
+      "collections": [
+        "Left"
+      ],
+      "custom_shape": "Bone_shape_2",
+      "custom_shape_translation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "custom_shape_rotation": [
+        1.570796,
+        1.570796,
+        0.0
+      ],
+      "custom_shape_rotation_mode": null,
+      "custom_shape_scale_xyz": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "use_custom_shape_bone_size": true,
+      "custom_shape_wire": null,
+      "ik_constraints": []
+    },
+    {
+      "name": "Dummy_L_TentacleFX",
+      "parent": "Elbow_L",
+      "length": 0.13891548,
+      "hide": false,
+      "hide_select": false,
+      "show_wire": false,
+      "use_deform": true,
+      "bbone_x": 0.1,
+      "bbone_z": 0.1,
+      "color": {
+        "palette": "THEME03"
+      },
+      "collections": [
+        "Hide"
+      ],
+      "custom_shape": "Bone_shape_1",
+      "custom_shape_translation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "custom_shape_rotation": [
+        1.570796,
+        1.570796,
+        0.0
+      ],
+      "custom_shape_rotation_mode": null,
+      "custom_shape_scale_xyz": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "use_custom_shape_bone_size": true,
+      "custom_shape_wire": null,
+      "ik_constraints": []
+    },
+    {
+      "name": "Wrist_L",
+      "parent": "Elbow_L",
+      "length": 0.00031008,
+      "hide": false,
+      "hide_select": false,
+      "show_wire": false,
+      "use_deform": true,
+      "bbone_x": 0.1,
+      "bbone_z": 0.1,
+      "color": {
+        "palette": "THEME03"
+      },
+      "collections": [
+        "Left"
+      ],
+      "custom_shape": "Bone_shape_1",
+      "custom_shape_translation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "custom_shape_rotation": [
+        1.570796,
+        1.570796,
+        0.0
+      ],
+      "custom_shape_rotation_mode": null,
+      "custom_shape_scale_xyz": [
+        2.2,
+        2.2,
+        2.2
+      ],
+      "use_custom_shape_bone_size": true,
+      "custom_shape_wire": null,
+      "ik_constraints": [
+        {
+          "name": "AAF_IK_Dummy_L_Hand_IK",
+          "target": "Armature_KARLACH_DGB",
+          "subtarget": "Dummy_L_Hand_IK",
+          "chain_count": 3,
+          "influence": 1.0,
+          "use_stretch": false,
+          "use_rotation": true,
+          "pole_target": null,
+          "pole_subtarget": "",
+          "pole_angle": 0.0,
+          "ik_type": "COPY_POSE",
+          "use_tail": true,
+          "mute": false
+        }
+      ]
+    },
+    {
+      "name": "Dummy_L_Hand",
+      "parent": "Wrist_L",
+      "length": 0.0620168,
+      "hide": false,
+      "hide_select": false,
+      "show_wire": false,
+      "use_deform": true,
+      "bbone_x": 0.1,
+      "bbone_z": 0.1,
+      "color": {
+        "palette": "THEME03"
+      },
+      "collections": [
+        "Hide"
+      ],
+      "custom_shape": "Bone_shape_1",
+      "custom_shape_translation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "custom_shape_rotation": [
+        1.570796,
+        0.0,
+        0.0
+      ],
+      "custom_shape_rotation_mode": null,
+      "custom_shape_scale_xyz": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "use_custom_shape_bone_size": true,
+      "custom_shape_wire": null,
+      "ik_constraints": []
+    },
+    {
+      "name": "Dummy_L_HandFX",
+      "parent": "Wrist_L",
+      "length": 0.0620168,
+      "hide": false,
+      "hide_select": false,
+      "show_wire": false,
+      "use_deform": true,
+      "bbone_x": 0.1,
+      "bbone_z": 0.1,
+      "color": {
+        "palette": "THEME03"
+      },
+      "collections": [
+        "VFX"
+      ],
+      "custom_shape": "Bone_shape_1",
+      "custom_shape_translation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "custom_shape_rotation": [
+        1.570796,
+        0.0,
+        0.0
+      ],
+      "custom_shape_rotation_mode": null,
+      "custom_shape_scale_xyz": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "use_custom_shape_bone_size": true,
+      "custom_shape_wire": null,
+      "ik_constraints": []
+    },
+    {
+      "name": "RingFinger0_L",
+      "parent": "Wrist_L",
+      "length": 0.0571086,
+      "hide": false,
+      "hide_select": false,
+      "show_wire": false,
+      "use_deform": true,
+      "bbone_x": 0.1,
+      "bbone_z": 0.1,
+      "color": {
+        "palette": "THEME03"
+      },
+      "collections": [
+        "Hands"
+      ],
+      "custom_shape": "Bone_shape_1",
+      "custom_shape_translation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "custom_shape_rotation": [
+        1.570796,
+        0.0,
+        0.0
+      ],
+      "custom_shape_rotation_mode": null,
+      "custom_shape_scale_xyz": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "use_custom_shape_bone_size": true,
+      "custom_shape_wire": null,
+      "ik_constraints": []
+    },
+    {
+      "name": "RingFinger1_L",
+      "parent": "RingFinger0_L",
+      "length": 0.04737563,
+      "hide": false,
+      "hide_select": false,
+      "show_wire": false,
+      "use_deform": true,
+      "bbone_x": 0.1,
+      "bbone_z": 0.1,
+      "color": {
+        "palette": "THEME03"
+      },
+      "collections": [
+        "Hands"
+      ],
+      "custom_shape": "Bone_shape_1",
+      "custom_shape_translation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "custom_shape_rotation": [
+        1.570796,
+        0.0,
+        0.0
+      ],
+      "custom_shape_rotation_mode": null,
+      "custom_shape_scale_xyz": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "use_custom_shape_bone_size": true,
+      "custom_shape_wire": null,
+      "ik_constraints": []
+    },
+    {
+      "name": "RingFinger2_L",
+      "parent": "RingFinger1_L",
+      "length": 0.03267348,
+      "hide": false,
+      "hide_select": false,
+      "show_wire": false,
+      "use_deform": true,
+      "bbone_x": 0.1,
+      "bbone_z": 0.1,
+      "color": {
+        "palette": "THEME03"
+      },
+      "collections": [
+        "Hands"
+      ],
+      "custom_shape": "Bone_shape_1",
+      "custom_shape_translation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "custom_shape_rotation": [
+        1.570796,
+        0.0,
+        0.0
+      ],
+      "custom_shape_rotation_mode": null,
+      "custom_shape_scale_xyz": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "use_custom_shape_bone_size": true,
+      "custom_shape_wire": null,
+      "ik_constraints": []
+    },
+    {
+      "name": "RingFinger3_L",
+      "parent": "RingFinger2_L",
+      "length": 0.03393274,
+      "hide": false,
+      "hide_select": false,
+      "show_wire": false,
+      "use_deform": true,
+      "bbone_x": 0.1,
+      "bbone_z": 0.1,
+      "color": {
+        "palette": "THEME03"
+      },
+      "collections": [
+        "Hands"
+      ],
+      "custom_shape": "Bone_shape_1",
+      "custom_shape_translation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "custom_shape_rotation": [
+        1.570796,
+        0.0,
+        0.0
+      ],
+      "custom_shape_rotation_mode": null,
+      "custom_shape_scale_xyz": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "use_custom_shape_bone_size": true,
+      "custom_shape_wire": null,
+      "ik_constraints": []
+    },
+    {
+      "name": "RingFinger4_L_endBone",
+      "parent": "RingFinger3_L",
+      "length": 0.03393273,
+      "hide": false,
+      "hide_select": false,
+      "show_wire": false,
+      "use_deform": true,
+      "bbone_x": 0.1,
+      "bbone_z": 0.1,
+      "color": {
+        "palette": "THEME03"
+      },
+      "collections": [
+        "Hands"
+      ],
+      "custom_shape": "Bone_shape_1",
+      "custom_shape_translation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "custom_shape_rotation": [
+        1.570796,
+        0.0,
+        0.0
+      ],
+      "custom_shape_rotation_mode": null,
+      "custom_shape_scale_xyz": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "use_custom_shape_bone_size": true,
+      "custom_shape_wire": null,
+      "ik_constraints": []
+    },
+    {
+      "name": "PinkyFinger0_L",
+      "parent": "Wrist_L",
+      "length": 0.05181032,
+      "hide": false,
+      "hide_select": false,
+      "show_wire": false,
+      "use_deform": true,
+      "bbone_x": 0.1,
+      "bbone_z": 0.1,
+      "color": {
+        "palette": "THEME03"
+      },
+      "collections": [
+        "Hands"
+      ],
+      "custom_shape": "Bone_shape_1",
+      "custom_shape_translation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "custom_shape_rotation": [
+        1.570796,
+        0.0,
+        0.0
+      ],
+      "custom_shape_rotation_mode": null,
+      "custom_shape_scale_xyz": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "use_custom_shape_bone_size": true,
+      "custom_shape_wire": null,
+      "ik_constraints": []
+    },
+    {
+      "name": "PinkyFinger1_L",
+      "parent": "PinkyFinger0_L",
+      "length": 0.0326892,
+      "hide": false,
+      "hide_select": false,
+      "show_wire": false,
+      "use_deform": true,
+      "bbone_x": 0.1,
+      "bbone_z": 0.1,
+      "color": {
+        "palette": "THEME03"
+      },
+      "collections": [
+        "Hands"
+      ],
+      "custom_shape": "Bone_shape_1",
+      "custom_shape_translation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "custom_shape_rotation": [
+        1.570796,
+        0.0,
+        0.0
+      ],
+      "custom_shape_rotation_mode": null,
+      "custom_shape_scale_xyz": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "use_custom_shape_bone_size": true,
+      "custom_shape_wire": null,
+      "ik_constraints": []
+    },
+    {
+      "name": "PinkyFinger2_L",
+      "parent": "PinkyFinger1_L",
+      "length": 0.02113206,
+      "hide": false,
+      "hide_select": false,
+      "show_wire": false,
+      "use_deform": true,
+      "bbone_x": 0.1,
+      "bbone_z": 0.1,
+      "color": {
+        "palette": "THEME03"
+      },
+      "collections": [
+        "Hands"
+      ],
+      "custom_shape": "Bone_shape_1",
+      "custom_shape_translation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "custom_shape_rotation": [
+        1.570796,
+        0.0,
+        0.0
+      ],
+      "custom_shape_rotation_mode": null,
+      "custom_shape_scale_xyz": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "use_custom_shape_bone_size": true,
+      "custom_shape_wire": null,
+      "ik_constraints": []
+    },
+    {
+      "name": "PinkyFinger3_L",
+      "parent": "PinkyFinger2_L",
+      "length": 0.02988132,
+      "hide": false,
+      "hide_select": false,
+      "show_wire": false,
+      "use_deform": true,
+      "bbone_x": 0.1,
+      "bbone_z": 0.1,
+      "color": {
+        "palette": "THEME03"
+      },
+      "collections": [
+        "Hands"
+      ],
+      "custom_shape": "Bone_shape_1",
+      "custom_shape_translation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "custom_shape_rotation": [
+        1.570796,
+        0.0,
+        0.0
+      ],
+      "custom_shape_rotation_mode": null,
+      "custom_shape_scale_xyz": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "use_custom_shape_bone_size": true,
+      "custom_shape_wire": null,
+      "ik_constraints": []
+    },
+    {
+      "name": "PinkyFinger4_L_endBone",
+      "parent": "PinkyFinger3_L",
+      "length": 0.02988132,
+      "hide": false,
+      "hide_select": false,
+      "show_wire": false,
+      "use_deform": true,
+      "bbone_x": 0.1,
+      "bbone_z": 0.1,
+      "color": {
+        "palette": "THEME03"
+      },
+      "collections": [
+        "Hands"
+      ],
+      "custom_shape": "Bone_shape_1",
+      "custom_shape_translation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "custom_shape_rotation": [
+        1.570796,
+        0.0,
+        0.0
+      ],
+      "custom_shape_rotation_mode": null,
+      "custom_shape_scale_xyz": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "use_custom_shape_bone_size": true,
+      "custom_shape_wire": null,
+      "ik_constraints": []
+    },
+    {
+      "name": "MiddleFinger1_L",
+      "parent": "Wrist_L",
+      "length": 0.05033726,
+      "hide": false,
+      "hide_select": false,
+      "show_wire": false,
+      "use_deform": true,
+      "bbone_x": 0.1,
+      "bbone_z": 0.1,
+      "color": {
+        "palette": "THEME03"
+      },
+      "collections": [
+        "Hands"
+      ],
+      "custom_shape": "Bone_shape_1",
+      "custom_shape_translation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "custom_shape_rotation": [
+        1.570796,
+        0.0,
+        0.0
+      ],
+      "custom_shape_rotation_mode": null,
+      "custom_shape_scale_xyz": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "use_custom_shape_bone_size": true,
+      "custom_shape_wire": null,
+      "ik_constraints": []
+    },
+    {
+      "name": "MiddleFinger2_L",
+      "parent": "MiddleFinger1_L",
+      "length": 0.03347617,
+      "hide": false,
+      "hide_select": false,
+      "show_wire": false,
+      "use_deform": true,
+      "bbone_x": 0.1,
+      "bbone_z": 0.1,
+      "color": {
+        "palette": "THEME03"
+      },
+      "collections": [
+        "Hands"
+      ],
+      "custom_shape": "Bone_shape_1",
+      "custom_shape_translation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "custom_shape_rotation": [
+        1.570796,
+        0.0,
+        0.0
+      ],
+      "custom_shape_rotation_mode": null,
+      "custom_shape_scale_xyz": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "use_custom_shape_bone_size": true,
+      "custom_shape_wire": null,
+      "ik_constraints": []
+    },
+    {
+      "name": "MiddleFinger3_L",
+      "parent": "MiddleFinger2_L",
+      "length": 0.03727291,
+      "hide": false,
+      "hide_select": false,
+      "show_wire": false,
+      "use_deform": true,
+      "bbone_x": 0.1,
+      "bbone_z": 0.1,
+      "color": {
+        "palette": "THEME03"
+      },
+      "collections": [
+        "Hands"
+      ],
+      "custom_shape": "Bone_shape_1",
+      "custom_shape_translation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "custom_shape_rotation": [
+        1.570796,
+        0.0,
+        0.0
+      ],
+      "custom_shape_rotation_mode": null,
+      "custom_shape_scale_xyz": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "use_custom_shape_bone_size": true,
+      "custom_shape_wire": null,
+      "ik_constraints": []
+    },
+    {
+      "name": "MiddleFinger4_L_endBone",
+      "parent": "MiddleFinger3_L",
+      "length": 0.03727291,
+      "hide": false,
+      "hide_select": false,
+      "show_wire": false,
+      "use_deform": true,
+      "bbone_x": 0.1,
+      "bbone_z": 0.1,
+      "color": {
+        "palette": "THEME03"
+      },
+      "collections": [
+        "Hands"
+      ],
+      "custom_shape": "Bone_shape_1",
+      "custom_shape_translation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "custom_shape_rotation": [
+        1.570796,
+        0.0,
+        0.0
+      ],
+      "custom_shape_rotation_mode": null,
+      "custom_shape_scale_xyz": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "use_custom_shape_bone_size": true,
+      "custom_shape_wire": null,
+      "ik_constraints": []
+    },
+    {
+      "name": "IndexFinger1_L",
+      "parent": "Wrist_L",
+      "length": 0.04696881,
+      "hide": false,
+      "hide_select": false,
+      "show_wire": false,
+      "use_deform": true,
+      "bbone_x": 0.1,
+      "bbone_z": 0.1,
+      "color": {
+        "palette": "THEME03"
+      },
+      "collections": [
+        "Hands"
+      ],
+      "custom_shape": "Bone_shape_1",
+      "custom_shape_translation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "custom_shape_rotation": [
+        1.570796,
+        0.0,
+        0.0
+      ],
+      "custom_shape_rotation_mode": null,
+      "custom_shape_scale_xyz": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "use_custom_shape_bone_size": true,
+      "custom_shape_wire": null,
+      "ik_constraints": []
+    },
+    {
+      "name": "IndexFinger2_L",
+      "parent": "IndexFinger1_L",
+      "length": 0.02699659,
+      "hide": false,
+      "hide_select": false,
+      "show_wire": false,
+      "use_deform": true,
+      "bbone_x": 0.1,
+      "bbone_z": 0.1,
+      "color": {
+        "palette": "THEME03"
+      },
+      "collections": [
+        "Hands"
+      ],
+      "custom_shape": "Bone_shape_1",
+      "custom_shape_translation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "custom_shape_rotation": [
+        1.570796,
+        0.0,
+        0.0
+      ],
+      "custom_shape_rotation_mode": null,
+      "custom_shape_scale_xyz": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "use_custom_shape_bone_size": true,
+      "custom_shape_wire": null,
+      "ik_constraints": []
+    },
+    {
+      "name": "IndexFinger3_L",
+      "parent": "IndexFinger2_L",
+      "length": 0.03515904,
+      "hide": false,
+      "hide_select": false,
+      "show_wire": false,
+      "use_deform": true,
+      "bbone_x": 0.1,
+      "bbone_z": 0.1,
+      "color": {
+        "palette": "THEME03"
+      },
+      "collections": [
+        "Hands"
+      ],
+      "custom_shape": "Bone_shape_1",
+      "custom_shape_translation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "custom_shape_rotation": [
+        1.570796,
+        0.0,
+        0.0
+      ],
+      "custom_shape_rotation_mode": null,
+      "custom_shape_scale_xyz": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "use_custom_shape_bone_size": true,
+      "custom_shape_wire": null,
+      "ik_constraints": []
+    },
+    {
+      "name": "IndexFinger4_L_endBone",
+      "parent": "IndexFinger3_L",
+      "length": 0.03515904,
+      "hide": false,
+      "hide_select": false,
+      "show_wire": false,
+      "use_deform": true,
+      "bbone_x": 0.1,
+      "bbone_z": 0.1,
+      "color": {
+        "palette": "THEME03"
+      },
+      "collections": [
+        "Hands"
+      ],
+      "custom_shape": "Bone_shape_1",
+      "custom_shape_translation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "custom_shape_rotation": [
+        1.570796,
+        0.0,
+        0.0
+      ],
+      "custom_shape_rotation_mode": null,
+      "custom_shape_scale_xyz": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "use_custom_shape_bone_size": true,
+      "custom_shape_wire": null,
+      "ik_constraints": []
+    },
+    {
+      "name": "ThumbFinger1_L",
+      "parent": "Wrist_L",
+      "length": 0.04420538,
+      "hide": false,
+      "hide_select": false,
+      "show_wire": false,
+      "use_deform": true,
+      "bbone_x": 0.1,
+      "bbone_z": 0.1,
+      "color": {
+        "palette": "THEME03"
+      },
+      "collections": [
+        "Hands"
+      ],
+      "custom_shape": "Bone_shape_1",
+      "custom_shape_translation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "custom_shape_rotation": [
+        1.570796,
+        0.0,
+        0.0
+      ],
+      "custom_shape_rotation_mode": null,
+      "custom_shape_scale_xyz": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "use_custom_shape_bone_size": true,
+      "custom_shape_wire": null,
+      "ik_constraints": []
+    },
+    {
+      "name": "ThumbFinger2_L",
+      "parent": "ThumbFinger1_L",
+      "length": 0.02498267,
+      "hide": false,
+      "hide_select": false,
+      "show_wire": false,
+      "use_deform": true,
+      "bbone_x": 0.1,
+      "bbone_z": 0.1,
+      "color": {
+        "palette": "THEME03"
+      },
+      "collections": [
+        "Hands"
+      ],
+      "custom_shape": "Bone_shape_1",
+      "custom_shape_translation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "custom_shape_rotation": [
+        1.570796,
+        0.0,
+        0.0
+      ],
+      "custom_shape_rotation_mode": null,
+      "custom_shape_scale_xyz": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "use_custom_shape_bone_size": true,
+      "custom_shape_wire": null,
+      "ik_constraints": []
+    },
+    {
+      "name": "ThumbFinger3_L",
+      "parent": "ThumbFinger2_L",
+      "length": 0.03713125,
+      "hide": false,
+      "hide_select": false,
+      "show_wire": false,
+      "use_deform": true,
+      "bbone_x": 0.1,
+      "bbone_z": 0.1,
+      "color": {
+        "palette": "THEME03"
+      },
+      "collections": [
+        "Hands"
+      ],
+      "custom_shape": "Bone_shape_1",
+      "custom_shape_translation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "custom_shape_rotation": [
+        1.570796,
+        0.0,
+        0.0
+      ],
+      "custom_shape_rotation_mode": null,
+      "custom_shape_scale_xyz": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "use_custom_shape_bone_size": true,
+      "custom_shape_wire": null,
+      "ik_constraints": []
+    },
+    {
+      "name": "ThumbFinger4_L_endBone",
+      "parent": "ThumbFinger3_L",
+      "length": 0.03713125,
+      "hide": false,
+      "hide_select": false,
+      "show_wire": false,
+      "use_deform": true,
+      "bbone_x": 0.1,
+      "bbone_z": 0.1,
+      "color": {
+        "palette": "THEME03"
+      },
+      "collections": [
+        "Hands"
+      ],
+      "custom_shape": "Bone_shape_1",
+      "custom_shape_translation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "custom_shape_rotation": [
+        1.570796,
+        0.0,
+        0.0
+      ],
+      "custom_shape_rotation_mode": null,
+      "custom_shape_scale_xyz": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "use_custom_shape_bone_size": true,
+      "custom_shape_wire": null,
+      "ik_constraints": []
+    },
+    {
+      "name": "Shoulder_L_Twist_01",
+      "parent": "Shoulder_L",
+      "length": 0.1557824,
+      "hide": false,
+      "hide_select": false,
+      "show_wire": false,
+      "use_deform": true,
+      "bbone_x": 0.1,
+      "bbone_z": 0.1,
+      "color": {
+        "palette": "THEME03"
+      },
+      "collections": [
+        "Hide"
+      ],
+      "custom_shape": "Bone_shape_1",
+      "custom_shape_translation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "custom_shape_rotation": [
+        1.570796,
+        1.570796,
+        0.0
+      ],
+      "custom_shape_rotation_mode": null,
+      "custom_shape_scale_xyz": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "use_custom_shape_bone_size": true,
+      "custom_shape_wire": null,
+      "ik_constraints": []
+    },
+    {
+      "name": "Shoulder_L_Twist_02",
+      "parent": "Shoulder_L_Twist_01",
+      "length": 0.15578239,
+      "hide": false,
+      "hide_select": false,
+      "show_wire": false,
+      "use_deform": true,
+      "bbone_x": 0.1,
+      "bbone_z": 0.1,
+      "color": {
+        "palette": "THEME03"
+      },
+      "collections": [
+        "Left"
+      ],
+      "custom_shape": "Bone_shape_2",
+      "custom_shape_translation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "custom_shape_rotation": [
+        1.570796,
+        1.570796,
+        0.0
+      ],
+      "custom_shape_rotation_mode": null,
+      "custom_shape_scale_xyz": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "use_custom_shape_bone_size": true,
+      "custom_shape_wire": null,
+      "ik_constraints": []
+    },
+    {
+      "name": "Dummy_Sheath_Music",
+      "parent": "Chest_M",
+      "length": 0.25019479,
+      "hide": false,
+      "hide_select": false,
+      "show_wire": false,
+      "use_deform": true,
+      "bbone_x": 0.1,
+      "bbone_z": 0.1,
+      "color": {
+        "palette": "THEME01"
+      },
+      "collections": [
+        "VFX"
+      ],
+      "custom_shape": "Bone_shape_1",
+      "custom_shape_translation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "custom_shape_rotation": [
+        1.570796,
+        0.0,
+        0.0
+      ],
+      "custom_shape_rotation_mode": null,
+      "custom_shape_scale_xyz": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "use_custom_shape_bone_size": true,
+      "custom_shape_wire": null,
+      "ik_constraints": []
+    },
+    {
+      "name": "Dummy_WingFX",
+      "parent": "Chest_M",
+      "length": 0.25019467,
+      "hide": false,
+      "hide_select": false,
+      "show_wire": false,
+      "use_deform": true,
+      "bbone_x": 0.1,
+      "bbone_z": 0.1,
+      "color": {
+        "palette": "THEME01"
+      },
+      "collections": [
+        "VFX"
+      ],
+      "custom_shape": "Bone_shape_1",
+      "custom_shape_translation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "custom_shape_rotation": [
+        1.570796,
+        0.0,
+        0.0
+      ],
+      "custom_shape_rotation_mode": null,
+      "custom_shape_scale_xyz": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "use_custom_shape_bone_size": true,
+      "custom_shape_wire": null,
+      "ik_constraints": []
+    },
+    {
+      "name": "Dummy_Sheath_Upper_R",
+      "parent": "Chest_M",
+      "length": 0.25019476,
+      "hide": false,
+      "hide_select": false,
+      "show_wire": false,
+      "use_deform": true,
+      "bbone_x": 0.1,
+      "bbone_z": 0.1,
+      "color": {
+        "palette": "THEME04"
+      },
+      "collections": [
+        "Hide"
+      ],
+      "custom_shape": "Bone_shape_1",
+      "custom_shape_translation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "custom_shape_rotation": [
+        1.570796,
+        -1.570796,
+        0.0
+      ],
+      "custom_shape_rotation_mode": null,
+      "custom_shape_scale_xyz": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "use_custom_shape_bone_size": true,
+      "custom_shape_wire": null,
+      "ik_constraints": []
+    },
+    {
+      "name": "Dummy_Sheath_Upper_L",
+      "parent": "Chest_M",
+      "length": 0.25019479,
+      "hide": false,
+      "hide_select": false,
+      "show_wire": false,
+      "use_deform": true,
+      "bbone_x": 0.1,
+      "bbone_z": 0.1,
+      "color": {
+        "palette": "THEME03"
+      },
+      "collections": [
+        "Hide"
+      ],
+      "custom_shape": "Bone_shape_1",
+      "custom_shape_translation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "custom_shape_rotation": [
+        1.570796,
+        -1.570796,
+        0.0
+      ],
+      "custom_shape_rotation_mode": null,
+      "custom_shape_scale_xyz": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "use_custom_shape_bone_size": true,
+      "custom_shape_wire": null,
+      "ik_constraints": []
+    },
+    {
+      "name": "Dummy_ChestFX",
+      "parent": "Chest_M",
+      "length": 0.2501947,
+      "hide": false,
+      "hide_select": false,
+      "show_wire": false,
+      "use_deform": true,
+      "bbone_x": 0.1,
+      "bbone_z": 0.1,
+      "color": {
+        "palette": "THEME01"
+      },
+      "collections": [
+        "VFX"
+      ],
+      "custom_shape": "Bone_shape_1",
+      "custom_shape_translation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "custom_shape_rotation": [
+        1.570796,
+        0.0,
+        0.0
+      ],
+      "custom_shape_rotation_mode": null,
+      "custom_shape_scale_xyz": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "use_custom_shape_bone_size": true,
+      "custom_shape_wire": null,
+      "ik_constraints": []
+    },
+    {
+      "name": "Neck_M",
+      "parent": "Chest_M",
+      "length": 0.03566042,
+      "hide": false,
+      "hide_select": false,
+      "show_wire": false,
+      "use_deform": true,
+      "bbone_x": 0.1,
+      "bbone_z": 0.1,
+      "color": {
+        "palette": "THEME05"
+      },
+      "collections": [
+        "Head"
+      ],
+      "custom_shape": "Bone_shape_1",
+      "custom_shape_translation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "custom_shape_rotation": [
+        3.141593,
+        0.0,
+        -1.570796
+      ],
+      "custom_shape_rotation_mode": null,
+      "custom_shape_scale_xyz": [
+        4.8,
+        4.8,
+        4.8
+      ],
+      "use_custom_shape_bone_size": true,
+      "custom_shape_wire": null,
+      "ik_constraints": []
+    },
+    {
+      "name": "Head_M",
+      "parent": "Neck_M",
+      "length": 0.0986966,
+      "hide": false,
+      "hide_select": false,
+      "show_wire": false,
+      "use_deform": true,
+      "bbone_x": 0.1,
+      "bbone_z": 0.1,
+      "color": {
+        "palette": "THEME05"
+      },
+      "collections": [
+        "Head"
+      ],
+      "custom_shape": "Bone_shape_1",
+      "custom_shape_translation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "custom_shape_rotation": [
+        1.570796,
+        -1.570796,
+        0.0
+      ],
+      "custom_shape_rotation_mode": null,
+      "custom_shape_scale_xyz": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "use_custom_shape_bone_size": true,
+      "custom_shape_wire": null,
+      "ik_constraints": []
+    },
+    {
+      "name": "Dummy_StatusFX",
+      "parent": "Head_M",
+      "length": 0.09869659,
+      "hide": false,
+      "hide_select": false,
+      "show_wire": false,
+      "use_deform": true,
+      "bbone_x": 0.1,
+      "bbone_z": 0.1,
+      "color": {
+        "palette": "THEME05"
+      },
+      "collections": [
+        "Head"
+      ],
+      "custom_shape": "Bone_shape_1",
+      "custom_shape_translation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "custom_shape_rotation": [
+        1.570796,
+        0.0,
+        0.0
+      ],
+      "custom_shape_rotation_mode": null,
+      "custom_shape_scale_xyz": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "use_custom_shape_bone_size": true,
+      "custom_shape_wire": null,
+      "ik_constraints": []
+    },
+    {
+      "name": "Dummy_HeadFX",
+      "parent": "Head_M",
+      "length": 0.09869648,
+      "hide": false,
+      "hide_select": false,
+      "show_wire": false,
+      "use_deform": true,
+      "bbone_x": 0.1,
+      "bbone_z": 0.1,
+      "color": {
+        "palette": "THEME05"
+      },
+      "collections": [
+        "Head"
+      ],
+      "custom_shape": "Bone_shape_1",
+      "custom_shape_translation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "custom_shape_rotation": [
+        1.570796,
+        0.0,
+        0.0
+      ],
+      "custom_shape_rotation_mode": null,
+      "custom_shape_scale_xyz": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "use_custom_shape_bone_size": true,
+      "custom_shape_wire": null,
+      "ik_constraints": []
+    },
+    {
+      "name": "Dummy_MouthFX",
+      "parent": "Head_M",
+      "length": 0.09869659,
+      "hide": false,
+      "hide_select": false,
+      "show_wire": false,
+      "use_deform": true,
+      "bbone_x": 0.1,
+      "bbone_z": 0.1,
+      "color": {
+        "palette": "THEME05"
+      },
+      "collections": [
+        "Head"
+      ],
+      "custom_shape": "Bone_shape_1",
+      "custom_shape_translation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "custom_shape_rotation": [
+        1.570796,
+        0.0,
+        0.0
+      ],
+      "custom_shape_rotation_mode": null,
+      "custom_shape_scale_xyz": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "use_custom_shape_bone_size": true,
+      "custom_shape_wire": null,
+      "ik_constraints": []
+    },
+    {
+      "name": "Dummy_EyeFX_02",
+      "parent": "Head_M",
+      "length": 0.0986966,
+      "hide": false,
+      "hide_select": false,
+      "show_wire": false,
+      "use_deform": true,
+      "bbone_x": 0.1,
+      "bbone_z": 0.1,
+      "color": {
+        "palette": "THEME05"
+      },
+      "collections": [
+        "Head"
+      ],
+      "custom_shape": "Bone_shape_1",
+      "custom_shape_translation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "custom_shape_rotation": [
+        1.570796,
+        0.0,
+        0.0
+      ],
+      "custom_shape_rotation_mode": null,
+      "custom_shape_scale_xyz": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "use_custom_shape_bone_size": true,
+      "custom_shape_wire": null,
+      "ik_constraints": []
+    },
+    {
+      "name": "Dummy_EyeFX_01",
+      "parent": "Head_M",
+      "length": 0.0986966,
+      "hide": false,
+      "hide_select": false,
+      "show_wire": false,
+      "use_deform": true,
+      "bbone_x": 0.1,
+      "bbone_z": 0.1,
+      "color": {
+        "palette": "THEME05"
+      },
+      "collections": [
+        "Head"
+      ],
+      "custom_shape": "Bone_shape_1",
+      "custom_shape_translation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "custom_shape_rotation": [
+        1.570796,
+        0.0,
+        0.0
+      ],
+      "custom_shape_rotation_mode": null,
+      "custom_shape_scale_xyz": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "use_custom_shape_bone_size": true,
+      "custom_shape_wire": null,
+      "ik_constraints": []
+    },
+    {
+      "name": "HeadEnd_M_endBone",
+      "parent": "Head_M",
+      "length": 0.09869659,
+      "hide": false,
+      "hide_select": false,
+      "show_wire": false,
+      "use_deform": true,
+      "bbone_x": 0.1,
+      "bbone_z": 0.1,
+      "color": {
+        "palette": "THEME05"
+      },
+      "collections": [
+        "Head"
+      ],
+      "custom_shape": "Bone_shape_1",
+      "custom_shape_translation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "custom_shape_rotation": [
+        1.570796,
+        -1.570796,
+        0.0
+      ],
+      "custom_shape_rotation_mode": null,
+      "custom_shape_scale_xyz": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "use_custom_shape_bone_size": true,
+      "custom_shape_wire": null,
+      "ik_constraints": []
+    },
+    {
+      "name": "Dummy_NeckFX",
+      "parent": "Neck_M",
+      "length": 0.03566039,
+      "hide": false,
+      "hide_select": false,
+      "show_wire": false,
+      "use_deform": true,
+      "bbone_x": 0.1,
+      "bbone_z": 0.1,
+      "color": {
+        "palette": "THEME05"
+      },
+      "collections": [
+        "Hide"
+      ],
+      "custom_shape": "Bone_shape_1",
+      "custom_shape_translation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "custom_shape_rotation": [
+        3.141593,
+        0.0,
+        0.0
+      ],
+      "custom_shape_rotation_mode": null,
+      "custom_shape_scale_xyz": [
+        1.7,
+        1.7,
+        1.7
+      ],
+      "use_custom_shape_bone_size": true,
+      "custom_shape_wire": null,
+      "ik_constraints": []
+    },
+    {
+      "name": "IK_Head",
+      "parent": "Neck_M",
+      "length": 0.22060753,
+      "hide": false,
+      "hide_select": false,
+      "show_wire": false,
+      "use_deform": false,
+      "bbone_x": 0.1,
+      "bbone_z": 0.1,
+      "color": {
+        "palette": "DEFAULT"
+      },
+      "collections": [
+        "Hide"
+      ],
+      "custom_shape": null,
+      "custom_shape_translation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "custom_shape_rotation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "custom_shape_rotation_mode": null,
+      "custom_shape_scale_xyz": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "use_custom_shape_bone_size": true,
+      "custom_shape_wire": null,
+      "ik_constraints": [
+        {
+          "name": "IK",
+          "target": "Armature_KARLACH_DGB",
+          "subtarget": "IK_Head_Target",
+          "chain_count": 5,
+          "influence": 0.0,
+          "use_stretch": true,
+          "use_rotation": false,
+          "pole_target": null,
+          "pole_subtarget": "",
+          "pole_angle": 0.0,
+          "ik_type": "COPY_POSE",
+          "use_tail": true,
+          "mute": false
+        }
+      ]
+    },
+    {
+      "name": "IK_Head.001",
+      "parent": "IK_Head",
+      "length": 0.08286357,
+      "hide": false,
+      "hide_select": false,
+      "show_wire": false,
+      "use_deform": true,
+      "bbone_x": 0.1,
+      "bbone_z": 0.1,
+      "color": {
+        "palette": "DEFAULT"
+      },
+      "collections": [
+        "Hide"
+      ],
+      "custom_shape": null,
+      "custom_shape_translation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "custom_shape_rotation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "custom_shape_rotation_mode": null,
+      "custom_shape_scale_xyz": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "use_custom_shape_bone_size": true,
+      "custom_shape_wire": null,
+      "ik_constraints": []
+    },
+    {
+      "name": "Dummy_Sheath_Shield",
+      "parent": "Spine2_M",
+      "length": 0.09088298,
+      "hide": false,
+      "hide_select": false,
+      "show_wire": false,
+      "use_deform": true,
+      "bbone_x": 0.1,
+      "bbone_z": 0.1,
+      "color": {
+        "palette": "THEME05"
+      },
+      "collections": [
+        "Hide"
+      ],
+      "custom_shape": "Bone_shape_1",
+      "custom_shape_translation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "custom_shape_rotation": [
+        1.570796,
+        1.570796,
+        0.0
+      ],
+      "custom_shape_rotation_mode": null,
+      "custom_shape_scale_xyz": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "use_custom_shape_bone_size": true,
+      "custom_shape_wire": null,
+      "ik_constraints": []
+    },
+    {
+      "name": "Dummy_Sheath_Ranged",
+      "parent": "Spine2_M",
+      "length": 0.09088295,
+      "hide": false,
+      "hide_select": false,
+      "show_wire": false,
+      "use_deform": true,
+      "bbone_x": 0.1,
+      "bbone_z": 0.1,
+      "color": {
+        "palette": "THEME06"
+      },
+      "collections": [
+        "Hide"
+      ],
+      "custom_shape": "Bone_shape_1",
+      "custom_shape_translation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "custom_shape_rotation": [
+        1.570796,
+        0.0,
+        0.0
+      ],
+      "custom_shape_rotation_mode": null,
+      "custom_shape_scale_xyz": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "use_custom_shape_bone_size": true,
+      "custom_shape_wire": null,
+      "ik_constraints": []
+    },
+    {
+      "name": "Dummy_Sheath_Lower_R",
+      "parent": "Spine1_M",
+      "length": 0.07395814,
+      "hide": false,
+      "hide_select": false,
+      "show_wire": false,
+      "use_deform": true,
+      "bbone_x": 0.1,
+      "bbone_z": 0.1,
+      "color": {
+        "palette": "THEME04"
+      },
+      "collections": [
+        "Hide"
+      ],
+      "custom_shape": "Bone_shape_1",
+      "custom_shape_translation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "custom_shape_rotation": [
+        1.570796,
+        1.570796,
+        0.0
+      ],
+      "custom_shape_rotation_mode": null,
+      "custom_shape_scale_xyz": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "use_custom_shape_bone_size": true,
+      "custom_shape_wire": null,
+      "ik_constraints": []
+    },
+    {
+      "name": "Dummy_Sheath_Lower_L",
+      "parent": "Spine1_M",
+      "length": 0.07395816,
+      "hide": false,
+      "hide_select": false,
+      "show_wire": false,
+      "use_deform": true,
+      "bbone_x": 0.1,
+      "bbone_z": 0.1,
+      "color": {
+        "palette": "THEME03"
+      },
+      "collections": [
+        "Hide"
+      ],
+      "custom_shape": "Bone_shape_1",
+      "custom_shape_translation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "custom_shape_rotation": [
+        1.570796,
+        1.570796,
+        0.0
+      ],
+      "custom_shape_rotation_mode": null,
+      "custom_shape_scale_xyz": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "use_custom_shape_bone_size": true,
+      "custom_shape_wire": null,
+      "ik_constraints": []
+    },
+    {
+      "name": "Dummy_BodyFX",
+      "parent": "Spine1_M",
+      "length": 0.07395816,
+      "hide": false,
+      "hide_select": false,
+      "show_wire": false,
+      "use_deform": true,
+      "bbone_x": 0.1,
+      "bbone_z": 0.1,
+      "color": {
+        "palette": "THEME01"
+      },
+      "collections": [
+        "VFX"
+      ],
+      "custom_shape": "Bone_shape_1",
+      "custom_shape_translation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "custom_shape_rotation": [
+        1.570796,
+        0.0,
+        0.0
+      ],
+      "custom_shape_rotation_mode": null,
+      "custom_shape_scale_xyz": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "use_custom_shape_bone_size": true,
+      "custom_shape_wire": null,
+      "ik_constraints": []
+    },
+    {
+      "name": "Dummy_Sheath_Hip_L",
+      "parent": "Root_M",
+      "length": 0.10044532,
+      "hide": false,
+      "hide_select": false,
+      "show_wire": false,
+      "use_deform": true,
+      "bbone_x": 0.1,
+      "bbone_z": 0.1,
+      "color": {
+        "palette": "THEME03"
+      },
+      "collections": [
+        "Hide"
+      ],
+      "custom_shape": "Bone_shape_1",
+      "custom_shape_translation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "custom_shape_rotation": [
+        1.570796,
+        0.0,
+        0.0
+      ],
+      "custom_shape_rotation_mode": null,
+      "custom_shape_scale_xyz": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "use_custom_shape_bone_size": true,
+      "custom_shape_wire": null,
+      "ik_constraints": []
+    },
+    {
+      "name": "Dummy_Sheath_Hip_R",
+      "parent": "Root_M",
+      "length": 0.10044532,
+      "hide": false,
+      "hide_select": false,
+      "show_wire": false,
+      "use_deform": true,
+      "bbone_x": 0.1,
+      "bbone_z": 0.1,
+      "color": {
+        "palette": "THEME04"
+      },
+      "collections": [
+        "Hide"
+      ],
+      "custom_shape": "Bone_shape_1",
+      "custom_shape_translation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "custom_shape_rotation": [
+        1.570796,
+        1.570796,
+        0.0
+      ],
+      "custom_shape_rotation_mode": null,
+      "custom_shape_scale_xyz": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "use_custom_shape_bone_size": true,
+      "custom_shape_wire": null,
+      "ik_constraints": []
+    },
+    {
+      "name": "IK_Head_Target",
+      "parent": "Dummy_Root",
+      "length": 0.09172967,
+      "hide": false,
+      "hide_select": false,
+      "show_wire": false,
+      "use_deform": false,
+      "bbone_x": 0.1,
+      "bbone_z": 0.1,
+      "color": {
+        "palette": "DEFAULT"
+      },
+      "collections": [
+        "Center"
+      ],
+      "custom_shape": null,
+      "custom_shape_translation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "custom_shape_rotation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "custom_shape_rotation_mode": null,
+      "custom_shape_scale_xyz": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "use_custom_shape_bone_size": true,
+      "custom_shape_wire": null,
+      "ik_constraints": []
+    },
+    {
+      "name": "Control_Spine",
+      "parent": null,
+      "length": 0.06946039,
+      "hide": false,
+      "hide_select": false,
+      "show_wire": false,
+      "use_deform": true,
+      "bbone_x": 0.1,
+      "bbone_z": 0.1,
+      "color": {
+        "palette": "DEFAULT"
+      },
+      "collections": [
+        "Analyze_it",
+        "SPINE"
+      ],
+      "custom_shape": "Bone_shape_2",
+      "custom_shape_translation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "custom_shape_rotation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "custom_shape_rotation_mode": null,
+      "custom_shape_scale_xyz": [
+        6.13,
+        6.13,
+        6.13
+      ],
+      "use_custom_shape_bone_size": true,
+      "custom_shape_wire": null,
+      "ik_constraints": []
+    }
+  ],
+  "widgets": {
+    "Bone_shape_1": {
+      "name": "Bone_shape_1",
+      "mesh_name": "Plane.010",
+      "verts": [
+        [
+          -0.019033,
+          -0.038065,
+          -0.019033
+        ],
+        [
+          -0.019033,
+          -0.038065,
+          0.019033
+        ],
+        [
+          -0.019033,
+          0.0,
+          -0.019033
+        ],
+        [
+          -0.019033,
+          0.0,
+          0.019033
+        ],
+        [
+          0.019033,
+          -0.038065,
+          -0.019033
+        ],
+        [
+          0.019033,
+          -0.038065,
+          0.019033
+        ],
+        [
+          0.019033,
+          0.0,
+          -0.019033
+        ],
+        [
+          0.019033,
+          0.0,
+          0.019033
+        ],
+        [
+          -0.013474,
+          -0.038065,
+          -0.013474
+        ],
+        [
+          -0.013474,
+          -0.038065,
+          0.013474
+        ],
+        [
+          0.013474,
+          -0.038065,
+          -0.013474
+        ],
+        [
+          0.013474,
+          -0.038065,
+          0.013474
+        ],
+        [
+          -0.003197,
+          -0.550342,
+          -0.003197
+        ],
+        [
+          -0.003197,
+          -0.550342,
+          0.003197
+        ],
+        [
+          0.003198,
+          -0.550342,
+          -0.003197
+        ],
+        [
+          0.003198,
+          -0.550342,
+          0.003197
+        ],
+        [
+          -0.004314,
+          -0.550342,
+          -0.004314
+        ],
+        [
+          -0.004314,
+          -0.550342,
+          0.004314
+        ],
+        [
+          0.004314,
+          -0.550342,
+          -0.004314
+        ],
+        [
+          0.004314,
+          -0.550342,
+          0.004314
+        ],
+        [
+          -0.004314,
+          -0.559835,
+          -0.004314
+        ],
+        [
+          -0.004314,
+          -0.559835,
+          0.004314
+        ],
+        [
+          0.004314,
+          -0.559835,
+          -0.004314
+        ],
+        [
+          0.004314,
+          -0.559835,
+          0.004314
+        ]
+      ],
+      "edges": [
+        [
+          2,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          3
+        ],
+        [
+          3,
+          2
+        ],
+        [
+          6,
+          2
+        ],
+        [
+          3,
+          7
+        ],
+        [
+          7,
+          6
+        ],
+        [
+          4,
+          6
+        ],
+        [
+          7,
+          5
+        ],
+        [
+          5,
+          4
+        ],
+        [
+          0,
+          4
+        ],
+        [
+          5,
+          1
+        ],
+        [
+          8,
+          9
+        ],
+        [
+          11,
+          10
+        ],
+        [
+          8,
+          10
+        ],
+        [
+          11,
+          9
+        ],
+        [
+          1,
+          9
+        ],
+        [
+          11,
+          5
+        ],
+        [
+          10,
+          4
+        ],
+        [
+          0,
+          8
+        ],
+        [
+          12,
+          13
+        ],
+        [
+          15,
+          14
+        ],
+        [
+          12,
+          14
+        ],
+        [
+          15,
+          13
+        ],
+        [
+          10,
+          14
+        ],
+        [
+          12,
+          8
+        ],
+        [
+          13,
+          9
+        ],
+        [
+          15,
+          11
+        ],
+        [
+          16,
+          17
+        ],
+        [
+          19,
+          18
+        ],
+        [
+          16,
+          18
+        ],
+        [
+          19,
+          17
+        ],
+        [
+          14,
+          18
+        ],
+        [
+          16,
+          12
+        ],
+        [
+          17,
+          13
+        ],
+        [
+          19,
+          15
+        ],
+        [
+          20,
+          21
+        ],
+        [
+          23,
+          22
+        ],
+        [
+          20,
+          22
+        ],
+        [
+          23,
+          21
+        ],
+        [
+          17,
+          21
+        ],
+        [
+          23,
+          19
+        ],
+        [
+          22,
+          18
+        ],
+        [
+          20,
+          16
+        ]
+      ],
+      "faces": [
+        [
+          0,
+          1,
+          3,
+          2
+        ],
+        [
+          2,
+          3,
+          7,
+          6
+        ],
+        [
+          6,
+          7,
+          5,
+          4
+        ],
+        [
+          5,
+          1,
+          9,
+          11
+        ],
+        [
+          2,
+          6,
+          4,
+          0
+        ],
+        [
+          7,
+          3,
+          1,
+          5
+        ],
+        [
+          8,
+          10,
+          14,
+          12
+        ],
+        [
+          4,
+          5,
+          11,
+          10
+        ],
+        [
+          1,
+          0,
+          8,
+          9
+        ],
+        [
+          0,
+          4,
+          10,
+          8
+        ],
+        [
+          12,
+          14,
+          18,
+          16
+        ],
+        [
+          9,
+          8,
+          12,
+          13
+        ],
+        [
+          11,
+          9,
+          13,
+          15
+        ],
+        [
+          10,
+          11,
+          15,
+          14
+        ],
+        [
+          19,
+          17,
+          21,
+          23
+        ],
+        [
+          13,
+          12,
+          16,
+          17
+        ],
+        [
+          15,
+          13,
+          17,
+          19
+        ],
+        [
+          14,
+          15,
+          19,
+          18
+        ],
+        [
+          22,
+          23,
+          21,
+          20
+        ],
+        [
+          18,
+          19,
+          23,
+          22
+        ],
+        [
+          16,
+          18,
+          22,
+          20
+        ],
+        [
+          17,
+          16,
+          20,
+          21
+        ]
+      ],
+      "n_verts": 24,
+      "n_edges": 44,
+      "n_faces": 22,
+      "display_type": "TEXTURED",
+      "hide_viewport": false,
+      "hide_render": false
+    },
+    "Bone_shape_2": {
+      "name": "Bone_shape_2",
+      "mesh_name": "Circle",
+      "verts": [
+        [
+          -1e-06,
+          0.109738,
+          0.0
+        ],
+        [
+          -0.021409,
+          0.107629,
+          0.0
+        ],
+        [
+          -0.041995,
+          0.101384,
+          0.0
+        ],
+        [
+          -0.060968,
+          0.091244,
+          0.0
+        ],
+        [
+          -0.077597,
+          0.077596,
+          0.0
+        ],
+        [
+          -0.091244,
+          0.060967,
+          0.0
+        ],
+        [
+          -0.101385,
+          0.041995,
+          0.0
+        ],
+        [
+          -0.10763,
+          0.021409,
+          0.0
+        ],
+        [
+          -0.109738,
+          0.0,
+          0.0
+        ],
+        [
+          -0.10763,
+          -0.021409,
+          0.0
+        ],
+        [
+          -0.101385,
+          -0.041995,
+          0.0
+        ],
+        [
+          -0.091244,
+          -0.060967,
+          0.0
+        ],
+        [
+          -0.077597,
+          -0.077596,
+          0.0
+        ],
+        [
+          -0.060968,
+          -0.091243,
+          0.0
+        ],
+        [
+          -0.041995,
+          -0.101384,
+          0.0
+        ],
+        [
+          -0.021409,
+          -0.107629,
+          0.0
+        ],
+        [
+          -1e-06,
+          -0.109738,
+          0.0
+        ],
+        [
+          0.021408,
+          -0.107629,
+          0.0
+        ],
+        [
+          0.041994,
+          -0.101384,
+          0.0
+        ],
+        [
+          0.060966,
+          -0.091243,
+          0.0
+        ],
+        [
+          0.077596,
+          -0.077596,
+          0.0
+        ],
+        [
+          0.091243,
+          -0.060967,
+          0.0
+        ],
+        [
+          0.101384,
+          -0.041995,
+          0.0
+        ],
+        [
+          0.107628,
+          -0.021409,
+          0.0
+        ],
+        [
+          0.109737,
+          0.0,
+          0.0
+        ],
+        [
+          0.107628,
+          0.021409,
+          0.0
+        ],
+        [
+          0.101384,
+          0.041995,
+          0.0
+        ],
+        [
+          0.091243,
+          0.060967,
+          0.0
+        ],
+        [
+          0.077596,
+          0.077596,
+          0.0
+        ],
+        [
+          0.060966,
+          0.091244,
+          0.0
+        ],
+        [
+          0.041994,
+          0.101384,
+          0.0
+        ],
+        [
+          0.021408,
+          0.107629,
+          0.0
+        ],
+        [
+          -1e-06,
+          0.0,
+          0.109738
+        ],
+        [
+          -0.021409,
+          0.0,
+          0.107629
+        ],
+        [
+          -0.041995,
+          0.0,
+          0.101384
+        ],
+        [
+          -0.060968,
+          0.0,
+          0.091243
+        ],
+        [
+          -0.077597,
+          0.0,
+          0.077596
+        ],
+        [
+          -0.091244,
+          0.0,
+          0.060967
+        ],
+        [
+          -0.101385,
+          0.0,
+          0.041995
+        ],
+        [
+          -0.10763,
+          0.0,
+          0.021409
+        ],
+        [
+          -0.109738,
+          0.0,
+          -0.0
+        ],
+        [
+          -0.10763,
+          0.0,
+          -0.021409
+        ],
+        [
+          -0.101385,
+          0.0,
+          -0.041995
+        ],
+        [
+          -0.091244,
+          0.0,
+          -0.060967
+        ],
+        [
+          -0.077597,
+          0.0,
+          -0.077596
+        ],
+        [
+          -0.060968,
+          0.0,
+          -0.091243
+        ],
+        [
+          -0.041995,
+          0.0,
+          -0.101384
+        ],
+        [
+          -0.021409,
+          0.0,
+          -0.107629
+        ],
+        [
+          -1e-06,
+          0.0,
+          -0.109738
+        ],
+        [
+          0.021408,
+          0.0,
+          -0.107629
+        ],
+        [
+          0.041994,
+          0.0,
+          -0.101384
+        ],
+        [
+          0.060966,
+          0.0,
+          -0.091243
+        ],
+        [
+          0.077596,
+          0.0,
+          -0.077596
+        ],
+        [
+          0.091243,
+          0.0,
+          -0.060967
+        ],
+        [
+          0.101384,
+          0.0,
+          -0.041995
+        ],
+        [
+          0.107628,
+          0.0,
+          -0.021409
+        ],
+        [
+          0.109737,
+          0.0,
+          -0.0
+        ],
+        [
+          0.107628,
+          0.0,
+          0.021409
+        ],
+        [
+          0.101384,
+          0.0,
+          0.041995
+        ],
+        [
+          0.091243,
+          0.0,
+          0.060967
+        ],
+        [
+          0.077596,
+          0.0,
+          0.077596
+        ],
+        [
+          0.060966,
+          0.0,
+          0.091243
+        ],
+        [
+          0.041994,
+          0.0,
+          0.101384
+        ],
+        [
+          0.021408,
+          0.0,
+          0.107629
+        ],
+        [
+          -1e-06,
+          0.0,
+          0.109738
+        ],
+        [
+          -1e-06,
+          -0.021409,
+          0.107629
+        ],
+        [
+          -1e-06,
+          -0.041995,
+          0.101384
+        ],
+        [
+          -1e-06,
+          -0.060967,
+          0.091243
+        ],
+        [
+          -1e-06,
+          -0.077596,
+          0.077596
+        ],
+        [
+          -1e-06,
+          -0.091243,
+          0.060967
+        ],
+        [
+          -1e-06,
+          -0.101384,
+          0.041995
+        ],
+        [
+          -1e-06,
+          -0.107629,
+          0.021409
+        ],
+        [
+          -1e-06,
+          -0.109737,
+          -0.0
+        ],
+        [
+          -1e-06,
+          -0.107629,
+          -0.021409
+        ],
+        [
+          -1e-06,
+          -0.101384,
+          -0.041995
+        ],
+        [
+          -1e-06,
+          -0.091243,
+          -0.060967
+        ],
+        [
+          -1e-06,
+          -0.077596,
+          -0.077596
+        ],
+        [
+          -1e-06,
+          -0.060967,
+          -0.091243
+        ],
+        [
+          -1e-06,
+          -0.041995,
+          -0.101384
+        ],
+        [
+          -1e-06,
+          -0.021409,
+          -0.107629
+        ],
+        [
+          -1e-06,
+          0.0,
+          -0.109738
+        ],
+        [
+          -1e-06,
+          0.021409,
+          -0.107629
+        ],
+        [
+          -1e-06,
+          0.041995,
+          -0.101384
+        ],
+        [
+          -1e-06,
+          0.060967,
+          -0.091243
+        ],
+        [
+          -1e-06,
+          0.077596,
+          -0.077596
+        ],
+        [
+          -1e-06,
+          0.091244,
+          -0.060967
+        ],
+        [
+          -1e-06,
+          0.101384,
+          -0.041995
+        ],
+        [
+          -1e-06,
+          0.107629,
+          -0.021409
+        ],
+        [
+          -1e-06,
+          0.109738,
+          -0.0
+        ],
+        [
+          -1e-06,
+          0.107629,
+          0.021409
+        ],
+        [
+          -1e-06,
+          0.101384,
+          0.041995
+        ],
+        [
+          -1e-06,
+          0.091244,
+          0.060967
+        ],
+        [
+          -1e-06,
+          0.077596,
+          0.077596
+        ],
+        [
+          -1e-06,
+          0.060967,
+          0.091243
+        ],
+        [
+          -1e-06,
+          0.041995,
+          0.101384
+        ],
+        [
+          -1e-06,
+          0.021409,
+          0.107629
+        ]
+      ],
+      "edges": [
+        [
+          1,
+          0
+        ],
+        [
+          2,
+          1
+        ],
+        [
+          3,
+          2
+        ],
+        [
+          4,
+          3
+        ],
+        [
+          5,
+          4
+        ],
+        [
+          6,
+          5
+        ],
+        [
+          7,
+          6
+        ],
+        [
+          8,
+          7
+        ],
+        [
+          9,
+          8
+        ],
+        [
+          10,
+          9
+        ],
+        [
+          11,
+          10
+        ],
+        [
+          12,
+          11
+        ],
+        [
+          13,
+          12
+        ],
+        [
+          14,
+          13
+        ],
+        [
+          15,
+          14
+        ],
+        [
+          16,
+          15
+        ],
+        [
+          17,
+          16
+        ],
+        [
+          18,
+          17
+        ],
+        [
+          19,
+          18
+        ],
+        [
+          20,
+          19
+        ],
+        [
+          21,
+          20
+        ],
+        [
+          22,
+          21
+        ],
+        [
+          23,
+          22
+        ],
+        [
+          24,
+          23
+        ],
+        [
+          25,
+          24
+        ],
+        [
+          26,
+          25
+        ],
+        [
+          27,
+          26
+        ],
+        [
+          28,
+          27
+        ],
+        [
+          29,
+          28
+        ],
+        [
+          30,
+          29
+        ],
+        [
+          31,
+          30
+        ],
+        [
+          0,
+          31
+        ],
+        [
+          33,
+          32
+        ],
+        [
+          34,
+          33
+        ],
+        [
+          35,
+          34
+        ],
+        [
+          36,
+          35
+        ],
+        [
+          37,
+          36
+        ],
+        [
+          38,
+          37
+        ],
+        [
+          39,
+          38
+        ],
+        [
+          40,
+          39
+        ],
+        [
+          41,
+          40
+        ],
+        [
+          42,
+          41
+        ],
+        [
+          43,
+          42
+        ],
+        [
+          44,
+          43
+        ],
+        [
+          45,
+          44
+        ],
+        [
+          46,
+          45
+        ],
+        [
+          47,
+          46
+        ],
+        [
+          48,
+          47
+        ],
+        [
+          49,
+          48
+        ],
+        [
+          50,
+          49
+        ],
+        [
+          51,
+          50
+        ],
+        [
+          52,
+          51
+        ],
+        [
+          53,
+          52
+        ],
+        [
+          54,
+          53
+        ],
+        [
+          55,
+          54
+        ],
+        [
+          56,
+          55
+        ],
+        [
+          57,
+          56
+        ],
+        [
+          58,
+          57
+        ],
+        [
+          59,
+          58
+        ],
+        [
+          60,
+          59
+        ],
+        [
+          61,
+          60
+        ],
+        [
+          62,
+          61
+        ],
+        [
+          63,
+          62
+        ],
+        [
+          32,
+          63
+        ],
+        [
+          65,
+          64
+        ],
+        [
+          66,
+          65
+        ],
+        [
+          67,
+          66
+        ],
+        [
+          68,
+          67
+        ],
+        [
+          69,
+          68
+        ],
+        [
+          70,
+          69
+        ],
+        [
+          71,
+          70
+        ],
+        [
+          72,
+          71
+        ],
+        [
+          73,
+          72
+        ],
+        [
+          74,
+          73
+        ],
+        [
+          75,
+          74
+        ],
+        [
+          76,
+          75
+        ],
+        [
+          77,
+          76
+        ],
+        [
+          78,
+          77
+        ],
+        [
+          79,
+          78
+        ],
+        [
+          80,
+          79
+        ],
+        [
+          81,
+          80
+        ],
+        [
+          82,
+          81
+        ],
+        [
+          83,
+          82
+        ],
+        [
+          84,
+          83
+        ],
+        [
+          85,
+          84
+        ],
+        [
+          86,
+          85
+        ],
+        [
+          87,
+          86
+        ],
+        [
+          88,
+          87
+        ],
+        [
+          89,
+          88
+        ],
+        [
+          90,
+          89
+        ],
+        [
+          91,
+          90
+        ],
+        [
+          92,
+          91
+        ],
+        [
+          93,
+          92
+        ],
+        [
+          94,
+          93
+        ],
+        [
+          95,
+          94
+        ],
+        [
+          64,
+          95
+        ]
+      ],
+      "faces": [],
+      "n_verts": 96,
+      "n_edges": 96,
+      "n_faces": 0,
+      "display_type": "TEXTURED",
+      "hide_viewport": false,
+      "hide_render": false
+    }
+  },
+  "stats": {
+    "n_bones": 122,
+    "n_with_shape": 119,
+    "n_collections": 11,
+    "n_ik": 5,
+    "n_widgets": 2
+  }
+}

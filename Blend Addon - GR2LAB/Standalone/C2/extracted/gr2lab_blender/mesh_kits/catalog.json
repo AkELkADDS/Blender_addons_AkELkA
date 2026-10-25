@@ -1,0 +1,299 @@
+{
+  "library": "GR2LAB_mesh_kits.blend",
+  "bases": {
+    "TIF_F_Base": {
+      "body_collection": "TIF_F_Base_body",
+      "cloth_collection": "TIF_F_Base_cloth",
+      "body": [
+        "TIF_F_NKD_Ears_C_Mesh",
+        "TIF_F_NKD_Horns_C_Mesh",
+        "TIF_F_NKD_Body_A_Mesh",
+        "TIF_F_NKD_Tail_A_Mesh",
+        "TIF_F_NKD_Head_C_Mesh",
+        "TIF_F_NKD_Head_C_Eyes_Mesh"
+      ],
+      "cloth": [
+        "HUM_F_CLT_Pants_A_Mesh",
+        "HUM_F_CLT_Shirt_A_Mesh"
+      ]
+    },
+    "TIF_FS_Base": {
+      "body_collection": "TIF_FS_Base_body",
+      "cloth_collection": "TIF_FS_Base_cloth",
+      "body": [
+        "TIF_FS_NKD_Ears_A_Mesh",
+        "TIF_FS_NKD_Horn_A_Mesh",
+        "TIF_FS_NKD_Body_A_Mesh",
+        "TIF_FS_NKD_Tail_A_Mesh",
+        "TIF_FS_NKD_Head_A_Mesh",
+        "TIF_FS_NKD_Head_A_Eyes_Mesh"
+      ],
+      "cloth": [
+        "HUM_FS_CLT_Pants_A_Mesh",
+        "HUM_FS_CLT_Shirt_A_Mesh"
+      ]
+    },
+    "TIF_M_Base": {
+      "body_collection": "TIF_M_Base_body",
+      "cloth_collection": "TIF_M_Base_cloth",
+      "body": [
+        "TIF_M_NKD_Ears_C_Mesh",
+        "TIF_M_NKD_Horns_C_Mesh",
+        "TIF_M_NKD_Body_A_Mesh",
+        "TIF_M_NKD_Tail_A_Mesh",
+        "TIF_M_NKD_Head_C_Mesh",
+        "TIF_M_NKD_Head_C_Eyes_Mesh"
+      ],
+      "cloth": [
+        "HUM_M_CLT_Pants_A_Mesh",
+        "HUM_M_CLT_Shirt_A_Mesh"
+      ]
+    },
+    "TIF_MS_Base": {
+      "body_collection": "TIF_MS_Base_body",
+      "cloth_collection": "TIF_MS_Base_cloth",
+      "body": [
+        "TIF_MS_NKD_Head_A_Remap_Ears_Mesh",
+        "TIF_MS_NKD_Horns_A_Mesh",
+        "TIF_MS_NKD_Tail_A_Mesh",
+        "TIF_MS_NKD_Head_A_Remap_Mesh",
+        "TIF_MS_NKD_Head_A_Remap_Eyes_Mesh",
+        "TIF_MS_NKD_Body_A_Mesh"
+      ],
+      "cloth": [
+        "HUM_MS_CLT_Pants_A_Mesh",
+        "HUM_MS_CLT_Shirt_A_Mesh"
+      ]
+    },
+    "HUM_F_Base": {
+      "body_collection": "HUM_F_Base_body",
+      "cloth_collection": "HUM_F_Base_cloth",
+      "body": [
+        "HUM_F_NKD_Head_C_Ears_Mesh",
+        "HUM_F_NKD_Body_A_Mesh",
+        "HUM_F_NKD_Head_C_Mesh",
+        "HUM_F_NKD_Head_C_Eyes_Mesh"
+      ],
+      "cloth": [
+        "HUM_F_CLT_Pants_A_Mesh.001",
+        "HUM_F_CLT_Shirt_A_Mesh.001"
+      ]
+    },
+    "HUM_FS_Base": {
+      "body_collection": "HUM_FS_Base_body",
+      "cloth_collection": "HUM_FS_Base_cloth",
+      "body": [
+        "HUM_FS_NKD_Head_A_Ears_Mesh",
+        "HUM_FS_NKD_Body_A_Mesh",
+        "HUM_FS_NKD_Head_A_Mesh",
+        "HUM_FS_NKD_Head_A_Eyes_Mesh"
+      ],
+      "cloth": [
+        "HUM_FS_CLT_Pants_A_Mesh.001",
+        "HUM_FS_CLT_Shirt_A_Mesh.001"
+      ]
+    },
+    "HUM_M_Base": {
+      "body_collection": "HUM_M_Base_body",
+      "cloth_collection": "HUM_M_Base_cloth",
+      "body": [
+        "HUM_M_NKD_Head_A_Ears_Mesh",
+        "HUM_M_NKD_Body_A_Mesh",
+        "HUM_M_NKD_Head_A_Mesh",
+        "HUM_M_NKD_Head_A_Eyes_Mesh"
+      ],
+      "cloth": [
+        "HUM_M_CLT_Pants_A_Mesh.001",
+        "HUM_M_CLT_Shirt_A_Mesh.001"
+      ]
+    },
+    "HUM_MS_Base": {
+      "body_collection": "HUM_MS_Base_body",
+      "cloth_collection": "HUM_MS_Base_cloth",
+      "body": [
+        "HUM_MS_NKD_Head_A_Ears_Mesh",
+        "HUM_MS_NKD_Body_A_Mesh",
+        "HUM_MS_NKD_Head_A_Mesh",
+        "HUM_MS_NKD_Head_A_Eyes_Mesh"
+      ],
+      "cloth": [
+        "HUM_MS_CLT_Pants_A_Mesh.001",
+        "HUM_MS_CLT_Shirt_A_Mesh.001"
+      ]
+    },
+    "HRC_F_Base": {
+      "body_collection": "HRC_F_Base_body",
+      "cloth_collection": "HRC_F_Base_cloth",
+      "body": [
+        "HRC_F_NKD_Body_A_Mesh",
+        "HRC_F_NKD_Head_A_Ears_Mesh",
+        "HRC_F_NKD_Head_A_Mesh",
+        "HRC_F_NKD_Head_A_Eyes_Mesh"
+      ],
+      "cloth": [
+        "HRC_F_CLT_Pants_A_Mesh.001",
+        "HRC_F_CLT_Shirt_A_Mesh.001"
+      ]
+    },
+    "HRC_M_Base": {
+      "body_collection": "HRC_M_Base_body",
+      "cloth_collection": "HRC_M_Base_cloth",
+      "body": [
+        "HRC_M_NKD_Body_A_Mesh",
+        "HRC_M_NKD_Head_B_Ears_Mesh",
+        "HRC_M_NKD_Head_B_Mesh",
+        "HRC_M_NKD_Head_B_Eyes_Mesh"
+      ],
+      "cloth": [
+        "HRC_M_CLT_Pants_A_Mesh.001",
+        "HRC_M_CLT_Shirt_A_Mesh.001"
+      ]
+    },
+    "HFL_F_Base": {
+      "body_collection": "HFL_F_Base_body",
+      "cloth_collection": "HFL_F_Base_cloth",
+      "body": [
+        "HFL_F_NKD_Body_A_Mesh",
+        "HFL_F_NKD_Head_A_Ears_Mesh",
+        "HFL_F_NKD_Head_A_Mesh",
+        "HFL_F_NKD_Head_A_Eyes_Mesh"
+      ],
+      "cloth": [
+        "HFL_F_CLT_Pants_A_Mesh.001",
+        "HFL_F_CLT_Shirt_A_Mesh.001"
+      ]
+    },
+    "HFL_M_Base": {
+      "body_collection": "HFL_M_Base_body",
+      "cloth_collection": "HFL_M_Base_cloth",
+      "body": [
+        "HFL_M_NKD_Body_A_Mesh",
+        "HFL_M_NKD_Head_A_Ears_Mesh",
+        "HFL_M_NKD_Head_A_Mesh",
+        "HFL_M_NKD_Head_A_Eyes_Mesh"
+      ],
+      "cloth": [
+        "HFL_M_CLT_Pants_A_Mesh",
+        "HFL_M_CLT_Shirt_A_Mesh"
+      ]
+    },
+    "GTY_F_Base": {
+      "body_collection": "GTY_F_Base_body",
+      "cloth_collection": "GTY_F_Base_cloth",
+      "body": [
+        "GTY_F_NKD_Ears_A_Mesh",
+        "GTY_F_NKD_Body_A_Mesh",
+        "GTY_F_NKD_Head_A_Mesh",
+        "GTY_F_NKD_Head_A_Eyes_Mesh"
+      ],
+      "cloth": [
+        "GTY_F_CLT_Pants_A_Mesh.002",
+        "GTY_F_CLT_Shirt_A_Mesh.002"
+      ]
+    },
+    "GTY_M_Base": {
+      "body_collection": "GTY_M_Base_body",
+      "cloth_collection": "GTY_M_Base_cloth",
+      "body": [
+        "GTY_M_NKD_Head_D_Ears_Mesh",
+        "GTY_M_NKD_Head_D_Mesh",
+        "GTY_M_NKD_Head_D_Eyes_Mesh",
+        "GTY_M_NKD_Body_A_Mesh"
+      ],
+      "cloth": [
+        "GTY_M_CLT_Pants_A_Mesh.001",
+        "GTY_M_CLT_Shirt_A_Mesh.001"
+      ]
+    },
+    "GNO_F_Base": {
+      "body_collection": "GNO_F_Base_body",
+      "cloth_collection": "GNO_F_Base_cloth",
+      "body": [
+        "GNO_F_NKD_Head_D_Ears_Mesh",
+        "GNO_F_NKD_Head_D_Mesh",
+        "GNO_F_NKD_Head_D_Eyes_Mesh",
+        "GNO_F_NKD_Body_A_Mesh"
+      ],
+      "cloth": [
+        "GNO_F_CLT_Pants_A_Mesh.001",
+        "GNO_F_CLT_Shirt_A_Mesh.001"
+      ]
+    },
+    "GNO_M_Base": {
+      "body_collection": "GNO_M_Base_body",
+      "cloth_collection": "GNO_M_Base_cloth",
+      "body": [
+        "GNO_M_NKD_Head_C_Ears_Mesh",
+        "GNO_M_NKD_Head_C_Mesh",
+        "GNO_M_NKD_Head_C_Eyes_Mesh",
+        "GNO_M_NKD_Body_A_Mesh"
+      ],
+      "cloth": [
+        "GNO_M_CLT_Pants_A_Mesh.001",
+        "GNO_M_CLT_Shirt_A_Mesh.001"
+      ]
+    },
+    "DWR_F_Base": {
+      "body_collection": "DWR_F_Base_body",
+      "cloth_collection": "DWR_F_Base_cloth",
+      "body": [
+        "DWR_F_NKD_Head_D_Ears_Mesh",
+        "DWR_F_NKD_Head_D_Mesh",
+        "DWR_F_NKD_Head_D_Eyes_Mesh",
+        "DWR_F_NKD_Body_A_Mesh"
+      ],
+      "cloth": [
+        "DWR_F_CLT_Pants_A_Mesh.001",
+        "DWR_F_CLT_Shirt_A_Mesh.001"
+      ]
+    },
+    "DWR_M_Base": {
+      "body_collection": "DWR_M_Base_body",
+      "cloth_collection": "DWR_M_Base_cloth",
+      "body": [
+        "DWR_M_NKD_Head_C_Ears_Mesh",
+        "DWR_M_NKD_Head_C_Mesh",
+        "DWR_M_NKD_Head_C_Eyes_Mesh",
+        "DWR_M_NKD_Body_A_Mesh"
+      ],
+      "cloth": [
+        "DWR_M_CLT_Pants_A_Mesh.001",
+        "DWR_M_CLT_Shirt_A_Mesh.001"
+      ]
+    },
+    "DGB_F_Base": {
+      "body_collection": "DGB_F_Base_body",
+      "cloth_collection": null,
+      "akelka_collection": "DGB_F_Base_akelka",
+      "body": [
+        "DGB_F_NKD_Head_B_Mesh",
+        "DGB_F_NKD_Head_B_Eyes_Mesh",
+        "DGB_F_NKD_Head_B_Top_Horns_MC_Mesh",
+        "DGB_F_NKD_Body_A_Mesh",
+        "DGB_F_NKD_Tail_A_Mesh"
+      ],
+      "cloth": [],
+      "akelka": [
+        "DGB_F_AKELKA_Body",
+        "DGB_F_AKELKA_Head"
+      ]
+    },
+    "DGB_M_Base": {
+      "body_collection": "DGB_M_Base_body",
+      "cloth_collection": null,
+      "akelka_collection": "DGB_M_Base_akelka",
+      "body": [
+        "DGB_M_NKD_Body_A_Mesh",
+        "DGB_M_NKD_Tail_A_Mesh",
+        "DGB_M_NKD_Head_D_Mesh",
+        "DGB_M_NKD_Head_D_Eyes_Mesh",
+        "DGB_M_NKD_Head_D_Top_Horns_MA_Mesh"
+      ],
+      "cloth": [],
+      "akelka": [
+        "DGB_M_AKELKA_Body",
+        "DGB_M_AKELKA_Head"
+      ]
+    }
+  }
+}

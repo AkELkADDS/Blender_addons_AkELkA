@@ -1,0 +1,2408 @@
+{
+  "format": "gr2lab_bind",
+  "version": 1,
+  "source_gr2": "HRC_M_Base.GR2",
+  "root": "Dummy_Root",
+  "bones": [
+    {
+      "name": "Dummy_Root",
+      "parent_name": null,
+      "bind_translation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "bind_rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "bind_scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "name": "Dummy_R_Foot_IK",
+      "parent_name": "Dummy_Root",
+      "bind_translation": [
+        -0.110562,
+        0.102086,
+        0.052418
+      ],
+      "bind_rotation": [
+        -0.6857691189996874,
+        0.17239697046755953,
+        0.6857691189996874,
+        -0.17239697046755953
+      ],
+      "bind_scale": [
+        0.9999998430464877,
+        0.9999998430464877,
+        1.0
+      ]
+    },
+    {
+      "name": "Dummy_L_Foot_IK",
+      "parent_name": "Dummy_Root",
+      "bind_translation": [
+        0.110562,
+        0.102086,
+        0.052418
+      ],
+      "bind_rotation": [
+        -0.17239697046755953,
+        -0.6857691189996874,
+        0.17239697046755953,
+        0.6857691189996874
+      ],
+      "bind_scale": [
+        0.9999998430464877,
+        0.9999998430464877,
+        1.0
+      ]
+    },
+    {
+      "name": "Dummy_R_Hand_IK",
+      "parent_name": "Dummy_Root",
+      "bind_translation": [
+        -0.70513,
+        1.337856,
+        -0.0571
+      ],
+      "bind_rotation": [
+        -0.1351558903479019,
+        0.6900681244715494,
+        -0.6330826721470081,
+        0.323643722109698
+      ],
+      "bind_scale": [
+        0.9999998939369943,
+        1.0000001066374944,
+        1.0000002654119649
+      ]
+    },
+    {
+      "name": "Dummy_L_Hand_IK",
+      "parent_name": "Dummy_Root",
+      "bind_translation": [
+        0.70513,
+        1.33786,
+        -0.0571
+      ],
+      "bind_rotation": [
+        0.323643722109698,
+        0.6330826721470081,
+        0.6900681244715494,
+        0.1351558903479019
+      ],
+      "bind_scale": [
+        0.9999998939369943,
+        1.0000001066374944,
+        1.0000002654119649
+      ]
+    },
+    {
+      "name": "Dummy_HitImpactFX",
+      "parent_name": "Dummy_Root",
+      "bind_translation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "bind_rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "bind_scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "name": "Dummy_FollowPhysics",
+      "parent_name": "Dummy_Root",
+      "bind_translation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "bind_rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "bind_scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "name": "Dummy_Custom_Anim",
+      "parent_name": "Dummy_Root",
+      "bind_translation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "bind_rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "bind_scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "name": "Dummy_Playerlight",
+      "parent_name": "Dummy_Root",
+      "bind_translation": [
+        0.0,
+        2.45,
+        0.0
+      ],
+      "bind_rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "bind_scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "name": "Dummy_OverheadFX",
+      "parent_name": "Dummy_Root",
+      "bind_translation": [
+        0.0,
+        2.15,
+        0.0
+      ],
+      "bind_rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "bind_scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "name": "Dummy_CastFX",
+      "parent_name": "Dummy_Root",
+      "bind_translation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "bind_rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "bind_scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "name": "Root_M",
+      "parent_name": "Dummy_Root",
+      "bind_translation": [
+        0.0,
+        1.193711,
+        0.003497
+      ],
+      "bind_rotation": [
+        -0.5,
+        -0.5,
+        0.5,
+        0.5
+      ],
+      "bind_scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "name": "Hip_R",
+      "parent_name": "Root_M",
+      "bind_translation": [
+        -0.01924,
+        -0.023361,
+        0.110562
+      ],
+      "bind_rotation": [
+        -0.0,
+        0.0,
+        0.9999585815836106,
+        0.009101379966438472
+      ],
+      "bind_scale": [
+        0.9999996701799456,
+        0.9999996701799456,
+        1.0
+      ]
+    },
+    {
+      "name": "Knee_R",
+      "parent_name": "Hip_R",
+      "bind_translation": [
+        0.540125,
+        0.0,
+        -0.0
+      ],
+      "bind_rotation": [
+        0.0,
+        -0.0,
+        0.042280794824407636,
+        0.9991057673685085
+      ],
+      "bind_scale": [
+        1.0000003324104447,
+        1.0000003324104447,
+        1.0
+      ]
+    },
+    {
+      "name": "Dummy_R_KneeFX_01",
+      "parent_name": "Knee_R",
+      "bind_translation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "bind_rotation": [
+        -0.5,
+        0.5,
+        0.5,
+        0.5
+      ],
+      "bind_scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "name": "Ankle_R",
+      "parent_name": "Knee_R",
+      "bind_translation": [
+        0.533524,
+        -0.0,
+        -0.0
+      ],
+      "bind_rotation": [
+        0.0,
+        0.0,
+        -0.5415684946991208,
+        0.8406566276128015
+      ],
+      "bind_scale": [
+        0.9999996828824497,
+        0.9999996828824497,
+        1.0
+      ]
+    },
+    {
+      "name": "Toes_R",
+      "parent_name": "Ankle_R",
+      "bind_translation": [
+        0.176441,
+        -0.0,
+        -0.0
+      ],
+      "bind_rotation": [
+        0.0,
+        -0.0,
+        -0.244218316826349,
+        0.9697202760211343
+      ],
+      "bind_scale": [
+        1.0000001959169809,
+        1.0000001959169809,
+        1.0
+      ]
+    },
+    {
+      "name": "ToesEnd_R_endBone",
+      "parent_name": "Toes_R",
+      "bind_translation": [
+        0.091658,
+        0.0,
+        0.0
+      ],
+      "bind_rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "bind_scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "name": "Dummy_R_Foot_01",
+      "parent_name": "Toes_R",
+      "bind_translation": [
+        0.0,
+        0.018648,
+        -0.0
+      ],
+      "bind_rotation": [
+        -0.7071067811865475,
+        0.0,
+        0.7071067811865476,
+        -0.0
+      ],
+      "bind_scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "name": "Hip_R_Twist_01",
+      "parent_name": "Hip_R",
+      "bind_translation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "bind_rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "bind_scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "name": "Hip_R_Twist_02",
+      "parent_name": "Hip_R_Twist_01",
+      "bind_translation": [
+        0.270063,
+        0.0,
+        -0.0
+      ],
+      "bind_rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "bind_scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "name": "Hip_L",
+      "parent_name": "Root_M",
+      "bind_translation": [
+        -0.019241,
+        -0.023361,
+        -0.110562
+      ],
+      "bind_rotation": [
+        0.0,
+        0.0,
+        -0.009101379966438472,
+        0.9999585815836106
+      ],
+      "bind_scale": [
+        0.9999996701799456,
+        0.9999996701799456,
+        1.0
+      ]
+    },
+    {
+      "name": "Knee_L",
+      "parent_name": "Hip_L",
+      "bind_translation": [
+        -0.540124,
+        0.0,
+        -0.0
+      ],
+      "bind_rotation": [
+        0.0,
+        0.0,
+        0.042280794824407636,
+        0.9991057673685085
+      ],
+      "bind_scale": [
+        1.0000003324104447,
+        1.0000003324104447,
+        1.0
+      ]
+    },
+    {
+      "name": "Dummy_L_KneeFX_01",
+      "parent_name": "Knee_L",
+      "bind_translation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "bind_rotation": [
+        -0.5,
+        -0.5,
+        0.5,
+        -0.5
+      ],
+      "bind_scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "name": "Ankle_L",
+      "parent_name": "Knee_L",
+      "bind_translation": [
+        -0.533524,
+        0.0,
+        -0.0
+      ],
+      "bind_rotation": [
+        0.0,
+        -0.0,
+        -0.5415684946991208,
+        0.8406566276128015
+      ],
+      "bind_scale": [
+        0.9999996828824497,
+        0.9999996828824497,
+        1.0
+      ]
+    },
+    {
+      "name": "Toes_L",
+      "parent_name": "Ankle_L",
+      "bind_translation": [
+        -0.17644,
+        0.0,
+        -0.0
+      ],
+      "bind_rotation": [
+        0.0,
+        -0.0,
+        -0.244218316826349,
+        0.9697202760211343
+      ],
+      "bind_scale": [
+        1.0000001959169809,
+        1.0000001959169809,
+        1.0
+      ]
+    },
+    {
+      "name": "Dummy_L_Foot_01",
+      "parent_name": "Toes_L",
+      "bind_translation": [
+        0.0,
+        -0.018648,
+        -0.0
+      ],
+      "bind_rotation": [
+        -0.0,
+        0.7071067811865475,
+        0.0,
+        0.7071067811865476
+      ],
+      "bind_scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "name": "ToesEnd_L_endBone",
+      "parent_name": "Toes_L",
+      "bind_translation": [
+        -0.091658,
+        -0.0,
+        -0.0
+      ],
+      "bind_rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "bind_scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "name": "Hip_L_Twist_01",
+      "parent_name": "Hip_L",
+      "bind_translation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "bind_rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "bind_scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "name": "Hip_L_Twist_02",
+      "parent_name": "Hip_L_Twist_01",
+      "bind_translation": [
+        -0.270062,
+        0.0,
+        -0.0
+      ],
+      "bind_rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "bind_scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "name": "Spine1_M",
+      "parent_name": "Root_M",
+      "bind_translation": [
+        0.093741,
+        0.003691,
+        -0.0
+      ],
+      "bind_rotation": [
+        0.0,
+        0.0,
+        0.029983979072086497,
+        0.9995503794201694
+      ],
+      "bind_scale": [
+        1.000000078142497,
+        1.000000078142497,
+        1.0
+      ]
+    },
+    {
+      "name": "Spine2_M",
+      "parent_name": "Spine1_M",
+      "bind_translation": [
+        0.11175,
+        -0.005855,
+        -0.0
+      ],
+      "bind_rotation": [
+        -0.0,
+        -0.0,
+        -0.03557252076003461,
+        0.9993670976006649
+      ],
+      "bind_scale": [
+        0.9999998079804816,
+        0.9999998079804816,
+        1.0
+      ]
+    },
+    {
+      "name": "Chest_M",
+      "parent_name": "Spine2_M",
+      "bind_translation": [
+        0.111896,
+        -0.001198,
+        -0.0
+      ],
+      "bind_rotation": [
+        0.0,
+        -0.0,
+        -0.001082500262278275,
+        0.9999994140964193
+      ],
+      "bind_scale": [
+        1.0000003436144411,
+        1.0000003436144411,
+        1.0
+      ]
+    },
+    {
+      "name": "Scapula_R",
+      "parent_name": "Chest_M",
+      "bind_translation": [
+        0.221727,
+        0.076435,
+        0.020973
+      ],
+      "bind_rotation": [
+        0.17624307531081804,
+        -0.7273207593776294,
+        -0.15559246673187152,
+        0.6447741692587151
+      ],
+      "bind_scale": [
+        0.9999999882735,
+        1.000000153617488,
+        1.0000004600368941
+      ]
+    },
+    {
+      "name": "Shoulder_R",
+      "parent_name": "Scapula_R",
+      "bind_translation": [
+        0.245702,
+        0.0,
+        -0.0
+      ],
+      "bind_rotation": [
+        0.0693055157596505,
+        -0.2605951730906161,
+        0.24262022866474497,
+        0.931891789545827
+      ],
+      "bind_scale": [
+        0.99999985931499,
+        0.9999997179129603,
+        1.0000001421644897
+      ]
+    },
+    {
+      "name": "Elbow_R",
+      "parent_name": "Shoulder_R",
+      "bind_translation": [
+        0.294646,
+        -0.0,
+        0.0
+      ],
+      "bind_rotation": [
+        0.0,
+        0.0,
+        0.12093564269207549,
+        0.9926603499317652
+      ],
+      "bind_scale": [
+        0.9999998551084894,
+        0.9999998551084894,
+        1.0
+      ]
+    },
+    {
+      "name": "Dummy_R_TentacleFX",
+      "parent_name": "Elbow_R",
+      "bind_translation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "bind_rotation": [
+        0.0,
+        -0.0,
+        -0.7071067811865475,
+        0.7071067811865476
+      ],
+      "bind_scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "name": "Elbow_Twist_R",
+      "parent_name": "Elbow_R",
+      "bind_translation": [
+        0.156327,
+        -0.0,
+        -0.0
+      ],
+      "bind_rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "bind_scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "name": "Wrist_R",
+      "parent_name": "Elbow_R",
+      "bind_translation": [
+        0.312654,
+        -0.0,
+        -0.0
+      ],
+      "bind_rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "bind_scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "name": "Dummy_R_Hand",
+      "parent_name": "Wrist_R",
+      "bind_translation": [
+        0.097761,
+        -0.000702,
+        0.029931
+      ],
+      "bind_rotation": [
+        -0.02929349292611499,
+        -0.6836043295648101,
+        0.7273375445896304,
+        0.05298226446230578
+      ],
+      "bind_scale": [
+        1.0000004112044156,
+        0.9999997643479722,
+        0.9999998556699896
+      ]
+    },
+    {
+      "name": "Dummy_R_HandFX",
+      "parent_name": "Wrist_R",
+      "bind_translation": [
+        0.097761,
+        -0.000702,
+        0.029931
+      ],
+      "bind_rotation": [
+        -0.02929349292611499,
+        -0.6836043295648101,
+        0.7273375445896304,
+        0.05298226446230578
+      ],
+      "bind_scale": [
+        1.0000004112044156,
+        0.9999997643479722,
+        0.9999998556699896
+      ]
+    },
+    {
+      "name": "RingFinger0_R",
+      "parent_name": "Wrist_R",
+      "bind_translation": [
+        0.071425,
+        -0.01029,
+        -0.000473
+      ],
+      "bind_rotation": [
+        0.7239566685077166,
+        -0.12551806731864273,
+        -0.04324652301461629,
+        0.676950302979638
+      ],
+      "bind_scale": [
+        1.0000001694324856,
+        1.000000228458474,
+        1.0000000301564995
+      ]
+    },
+    {
+      "name": "RingFinger1_R",
+      "parent_name": "RingFinger0_R",
+      "bind_translation": [
+        0.058393,
+        -3e-06,
+        0.0
+      ],
+      "bind_rotation": [
+        -0.0,
+        0.0,
+        -0.00729369111970242,
+        0.9999734006811632
+      ],
+      "bind_scale": [
+        1.0000003959024217,
+        1.0000003959024217,
+        1.0
+      ]
+    },
+    {
+      "name": "RingFinger2_R",
+      "parent_name": "RingFinger1_R",
+      "bind_translation": [
+        0.040122,
+        4e-06,
+        -0.0
+      ],
+      "bind_rotation": [
+        0.0,
+        -0.0,
+        0.019595762926442266,
+        0.9998079846027089
+      ],
+      "bind_scale": [
+        0.9999999878399999,
+        0.9999999878399999,
+        1.0
+      ]
+    },
+    {
+      "name": "RingFinger3_R",
+      "parent_name": "RingFinger2_R",
+      "bind_translation": [
+        0.032659,
+        -3e-06,
+        0.0
+      ],
+      "bind_rotation": [
+        -0.0,
+        0.0,
+        0.06577947421875864,
+        0.997834185008463
+      ],
+      "bind_scale": [
+        0.9999998773959924,
+        0.9999998773959924,
+        1.0
+      ]
+    },
+    {
+      "name": "RingFinger4_R_endBone",
+      "parent_name": "RingFinger3_R",
+      "bind_translation": [
+        0.033285,
+        2e-06,
+        -0.0
+      ],
+      "bind_rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "bind_scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "name": "ThumbFinger1_R",
+      "parent_name": "Wrist_R",
+      "bind_translation": [
+        0.040996,
+        0.023923,
+        0.01571
+      ],
+      "bind_rotation": [
+        0.8886175881030273,
+        0.37166131346191783,
+        0.26749941493041424,
+        0.02589785229377045
+      ],
+      "bind_scale": [
+        1.0000001954409807,
+        0.9999996108684243,
+        1.00000034607644
+      ]
+    },
+    {
+      "name": "ThumbFinger2_R",
+      "parent_name": "ThumbFinger1_R",
+      "bind_translation": [
+        0.049617,
+        2e-06,
+        -2e-06
+      ],
+      "bind_rotation": [
+        -0.0,
+        -0.0,
+        0.13197382397019816,
+        0.9912532016526773
+      ],
+      "bind_scale": [
+        1.0000001869384825,
+        1.0000001869384825,
+        1.0
+      ]
+    },
+    {
+      "name": "ThumbFinger3_R",
+      "parent_name": "ThumbFinger2_R",
+      "bind_translation": [
+        0.039294,
+        1e-06,
+        0.0
+      ],
+      "bind_rotation": [
+        -0.0,
+        0.0,
+        -0.017785819223422452,
+        0.9998418198067891
+      ],
+      "bind_scale": [
+        0.9999996705224458,
+        0.9999996705224458,
+        1.0
+      ]
+    },
+    {
+      "name": "ThumbFinger4_R_endBone",
+      "parent_name": "ThumbFinger3_R",
+      "bind_translation": [
+        0.039099,
+        -8e-06,
+        6e-06
+      ],
+      "bind_rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "bind_scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "name": "PinkyFinger0_R",
+      "parent_name": "Wrist_R",
+      "bind_translation": [
+        0.065637,
+        -0.033903,
+        0.000315
+      ],
+      "bind_rotation": [
+        0.7077361215547233,
+        -0.17494466208754667,
+        -0.0362685662800932,
+        0.6835119000081469
+      ],
+      "bind_scale": [
+        0.9999999202504969,
+        0.9999998126344825,
+        0.999999936174498
+      ]
+    },
+    {
+      "name": "PinkyFinger1_R",
+      "parent_name": "PinkyFinger0_R",
+      "bind_translation": [
+        0.048875,
+        -5e-06,
+        0.0
+      ],
+      "bind_rotation": [
+        0.01370248359540557,
+        -0.08841754977818969,
+        -0.0019478160596390504,
+        0.9959873417711079
+      ],
+      "bind_scale": [
+        0.999999890220994,
+        1.0000000919294958,
+        0.9999998742814921
+      ]
+    },
+    {
+      "name": "PinkyFinger2_R",
+      "parent_name": "PinkyFinger1_R",
+      "bind_translation": [
+        0.029675,
+        4e-06,
+        -1e-06
+      ],
+      "bind_rotation": [
+        -0.0,
+        -0.0,
+        0.034256605191019036,
+        0.9994130702571318
+      ],
+      "bind_scale": [
+        1.0000000300689995,
+        1.0000000300689995,
+        1.0
+      ]
+    },
+    {
+      "name": "PinkyFinger3_R",
+      "parent_name": "PinkyFinger2_R",
+      "bind_translation": [
+        0.019403,
+        -3e-06,
+        1e-06
+      ],
+      "bind_rotation": [
+        -0.0,
+        0.0,
+        0.029942921390601455,
+        0.999551610202593
+      ],
+      "bind_scale": [
+        1.0000001573649875,
+        1.0000001573649875,
+        1.0
+      ]
+    },
+    {
+      "name": "PinkyFinger4_R_endBone",
+      "parent_name": "PinkyFinger3_R",
+      "bind_translation": [
+        0.027523,
+        1e-06,
+        -0.0
+      ],
+      "bind_rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "bind_scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "name": "MiddleFinger1_R",
+      "parent_name": "Wrist_R",
+      "bind_translation": [
+        0.137465,
+        0.004521,
+        0.006848
+      ],
+      "bind_rotation": [
+        0.7293196754326542,
+        0.005148293159150758,
+        0.013861571639570672,
+        0.6840132797174479
+      ],
+      "bind_scale": [
+        1.0000003088369522,
+        0.999999607725423,
+        1.0000000188644997
+      ]
+    },
+    {
+      "name": "MiddleFinger2_R",
+      "parent_name": "MiddleFinger1_R",
+      "bind_translation": [
+        0.04462,
+        4e-06,
+        -0.0
+      ],
+      "bind_rotation": [
+        -0.0,
+        0.0,
+        0.062084271489416906,
+        0.9980709109244835
+      ],
+      "bind_scale": [
+        0.9999999128609962,
+        0.9999999128609962,
+        1.0
+      ]
+    },
+    {
+      "name": "MiddleFinger3_R",
+      "parent_name": "MiddleFinger2_R",
+      "bind_translation": [
+        0.035516,
+        1e-06,
+        1e-06
+      ],
+      "bind_rotation": [
+        -0.0,
+        0.0,
+        0.07925376928805225,
+        0.9968544728563122
+      ],
+      "bind_scale": [
+        1.0000003239624475,
+        1.0000003239624475,
+        1.0
+      ]
+    },
+    {
+      "name": "MiddleFinger4_R_endBone",
+      "parent_name": "MiddleFinger3_R",
+      "bind_translation": [
+        0.033277,
+        -3e-06,
+        -1e-06
+      ],
+      "bind_rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "bind_scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "name": "IndexFinger1_R",
+      "parent_name": "Wrist_R",
+      "bind_translation": [
+        0.133219,
+        0.037624,
+        0.014951
+      ],
+      "bind_rotation": [
+        0.7772145030084588,
+        0.07627979525959178,
+        0.10860364576483902,
+        0.6150807349036927
+      ],
+      "bind_scale": [
+        0.9999998297564855,
+        1.0000001284019917,
+        1.0000002175069764
+      ]
+    },
+    {
+      "name": "IndexFinger2_R",
+      "parent_name": "IndexFinger1_R",
+      "bind_translation": [
+        0.038999,
+        8e-06,
+        2e-06
+      ],
+      "bind_rotation": [
+        -0.0,
+        -0.0,
+        0.048655639679525006,
+        0.9988156129773784
+      ],
+      "bind_scale": [
+        0.9999997413204665,
+        0.9999997413204665,
+        1.0
+      ]
+    },
+    {
+      "name": "IndexFinger3_R",
+      "parent_name": "IndexFinger2_R",
+      "bind_translation": [
+        0.031423,
+        -3e-06,
+        -1e-06
+      ],
+      "bind_rotation": [
+        -0.0,
+        -0.0,
+        0.031084536984127685,
+        0.9995167590193185
+      ],
+      "bind_scale": [
+        0.999999495904873,
+        0.999999495904873,
+        1.0
+      ]
+    },
+    {
+      "name": "IndexFinger4_R_endBone",
+      "parent_name": "IndexFinger3_R",
+      "bind_translation": [
+        0.031953,
+        2e-06,
+        0.0
+      ],
+      "bind_rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "bind_scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "name": "Shoulder_Twist_R",
+      "parent_name": "Shoulder_R",
+      "bind_translation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "bind_rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "bind_scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "name": "Shoulder_R_Twist_01",
+      "parent_name": "Shoulder_R",
+      "bind_translation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "bind_rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "bind_scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "name": "Shoulder_R_Twist_02",
+      "parent_name": "Shoulder_R_Twist_01",
+      "bind_translation": [
+        0.147323,
+        -0.0,
+        0.0
+      ],
+      "bind_rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "bind_scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "name": "Scapula_L",
+      "parent_name": "Chest_M",
+      "bind_translation": [
+        0.221722,
+        0.076435,
+        -0.020973
+      ],
+      "bind_rotation": [
+        0.7273207380141753,
+        0.1762434267303103,
+        0.644774229185214,
+        0.15559226726946238
+      ],
+      "bind_scale": [
+        0.9999999882735,
+        1.000000153617488,
+        1.0000003399224422
+      ]
+    },
+    {
+      "name": "Shoulder_L",
+      "parent_name": "Scapula_L",
+      "bind_translation": [
+        -0.245702,
+        0.0,
+        1e-06
+      ],
+      "bind_rotation": [
+        0.0693055157596505,
+        -0.2605951730906161,
+        0.24262022866474497,
+        0.931891789545827
+      ],
+      "bind_scale": [
+        0.99999985931499,
+        0.9999997179129603,
+        1.0000001421644897
+      ]
+    },
+    {
+      "name": "Elbow_L",
+      "parent_name": "Shoulder_L",
+      "bind_translation": [
+        -0.294642,
+        0.0,
+        4e-06
+      ],
+      "bind_rotation": [
+        -0.0,
+        0.0,
+        0.12093564269207549,
+        0.9926603499317652
+      ],
+      "bind_scale": [
+        0.9999998551084894,
+        0.9999998551084894,
+        1.0
+      ]
+    },
+    {
+      "name": "Elbow_Twist_L",
+      "parent_name": "Elbow_L",
+      "bind_translation": [
+        -0.156327,
+        -0.0,
+        1e-06
+      ],
+      "bind_rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "bind_scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "name": "Dummy_L_TentacleFX",
+      "parent_name": "Elbow_L",
+      "bind_translation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "bind_rotation": [
+        -0.0,
+        0.0,
+        0.7071067811865475,
+        0.7071067811865476
+      ],
+      "bind_scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "name": "Wrist_L",
+      "parent_name": "Elbow_L",
+      "bind_translation": [
+        -0.312653,
+        -0.0,
+        2e-06
+      ],
+      "bind_rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "bind_scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "name": "Dummy_L_HandFX",
+      "parent_name": "Wrist_L",
+      "bind_translation": [
+        -0.097762,
+        0.000702,
+        -0.029933
+      ],
+      "bind_rotation": [
+        -0.7272947663784931,
+        0.052979221444433074,
+        -0.02929714513826028,
+        0.6836499047553607
+      ],
+      "bind_scale": [
+        1.0000002344349725,
+        0.999999713302459,
+        1.000000297516456
+      ]
+    },
+    {
+      "name": "Dummy_L_Hand",
+      "parent_name": "Wrist_L",
+      "bind_translation": [
+        -0.097762,
+        0.000702,
+        -0.029933
+      ],
+      "bind_rotation": [
+        -0.7272947663784931,
+        0.052979221444433074,
+        -0.02929714513826028,
+        0.6836499047553607
+      ],
+      "bind_scale": [
+        1.0000002344349725,
+        0.999999713302459,
+        1.000000297516456
+      ]
+    },
+    {
+      "name": "RingFinger0_L",
+      "parent_name": "Wrist_L",
+      "bind_translation": [
+        -0.071428,
+        0.010291,
+        0.000469
+      ],
+      "bind_rotation": [
+        0.7239566685077166,
+        -0.12551806731864273,
+        -0.04324652301461629,
+        0.676950302979638
+      ],
+      "bind_scale": [
+        1.0000001694324856,
+        1.000000228458474,
+        1.0000000301564995
+      ]
+    },
+    {
+      "name": "RingFinger1_L",
+      "parent_name": "RingFinger0_L",
+      "bind_translation": [
+        -0.058396,
+        1e-06,
+        -0.0
+      ],
+      "bind_rotation": [
+        -0.0,
+        -0.0,
+        -0.00729369111970242,
+        0.9999734006811632
+      ],
+      "bind_scale": [
+        1.0000003959024217,
+        1.0000003959024217,
+        1.0
+      ]
+    },
+    {
+      "name": "RingFinger2_L",
+      "parent_name": "RingFinger1_L",
+      "bind_translation": [
+        -0.040117,
+        1e-06,
+        -0.0
+      ],
+      "bind_rotation": [
+        0.0,
+        0.0,
+        0.019595762926442266,
+        0.9998079846027089
+      ],
+      "bind_scale": [
+        0.9999999878399999,
+        0.9999999878399999,
+        1.0
+      ]
+    },
+    {
+      "name": "RingFinger3_L",
+      "parent_name": "RingFinger2_L",
+      "bind_translation": [
+        -0.032662,
+        -1e-06,
+        0.0
+      ],
+      "bind_rotation": [
+        -0.0,
+        -0.0,
+        0.06577947421875864,
+        0.997834185008463
+      ],
+      "bind_scale": [
+        0.9999998773959924,
+        0.9999998773959924,
+        1.0
+      ]
+    },
+    {
+      "name": "RingFinger4_L_endBone",
+      "parent_name": "RingFinger3_L",
+      "bind_translation": [
+        -0.033282,
+        -0.0,
+        -0.0
+      ],
+      "bind_rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "bind_scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "name": "ThumbFinger1_L",
+      "parent_name": "Wrist_L",
+      "bind_translation": [
+        -0.040995,
+        -0.023923,
+        -0.015711
+      ],
+      "bind_rotation": [
+        0.8886176129856254,
+        0.37166134760375524,
+        0.2674994074400378,
+        0.025897587101125774
+      ],
+      "bind_scale": [
+        1.0000001954409807,
+        0.999999366003799,
+        1.00000034607644
+      ]
+    },
+    {
+      "name": "ThumbFinger2_L",
+      "parent_name": "ThumbFinger1_L",
+      "bind_translation": [
+        -0.049619,
+        -4e-06,
+        3e-06
+      ],
+      "bind_rotation": [
+        -0.0,
+        0.0,
+        0.13197382397019816,
+        0.9912532016526773
+      ],
+      "bind_scale": [
+        1.0000001869384825,
+        1.0000001869384825,
+        1.0
+      ]
+    },
+    {
+      "name": "ThumbFinger3_L",
+      "parent_name": "ThumbFinger2_L",
+      "bind_translation": [
+        -0.039292,
+        0.0,
+        -1e-06
+      ],
+      "bind_rotation": [
+        -0.0,
+        0.0,
+        -0.017785819223422452,
+        0.9998418198067891
+      ],
+      "bind_scale": [
+        0.9999996705224458,
+        0.9999996705224458,
+        1.0
+      ]
+    },
+    {
+      "name": "ThumbFinger4_L_endBone",
+      "parent_name": "ThumbFinger3_L",
+      "bind_translation": [
+        -0.039105,
+        3e-06,
+        -2e-06
+      ],
+      "bind_rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "bind_scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "name": "PinkyFinger0_L",
+      "parent_name": "Wrist_L",
+      "bind_translation": [
+        -0.065638,
+        0.033903,
+        -0.000316
+      ],
+      "bind_rotation": [
+        0.7077361215547233,
+        -0.17494466208754667,
+        -0.0362685662800932,
+        0.6835119000081469
+      ],
+      "bind_scale": [
+        0.9999999202504969,
+        0.9999998126344825,
+        0.999999936174498
+      ]
+    },
+    {
+      "name": "PinkyFinger1_L",
+      "parent_name": "PinkyFinger0_L",
+      "bind_translation": [
+        -0.048875,
+        4e-06,
+        -0.0
+      ],
+      "bind_rotation": [
+        0.01370248359540557,
+        -0.08841754977818969,
+        -0.0019478160596390504,
+        0.9959873417711079
+      ],
+      "bind_scale": [
+        0.999999890220994,
+        1.0000000919294958,
+        0.9999998742814921
+      ]
+    },
+    {
+      "name": "PinkyFinger2_L",
+      "parent_name": "PinkyFinger1_L",
+      "bind_translation": [
+        -0.029675,
+        -3e-06,
+        1e-06
+      ],
+      "bind_rotation": [
+        -0.0,
+        0.0,
+        0.034256605191019036,
+        0.9994130702571318
+      ],
+      "bind_scale": [
+        1.0000000300689995,
+        1.0000000300689995,
+        1.0
+      ]
+    },
+    {
+      "name": "PinkyFinger3_L",
+      "parent_name": "PinkyFinger2_L",
+      "bind_translation": [
+        -0.019404,
+        2e-06,
+        -1e-06
+      ],
+      "bind_rotation": [
+        0.0,
+        0.0,
+        0.029942921390601455,
+        0.999551610202593
+      ],
+      "bind_scale": [
+        1.0000001573649875,
+        1.0000001573649875,
+        1.0
+      ]
+    },
+    {
+      "name": "PinkyFinger4_L_endBone",
+      "parent_name": "PinkyFinger3_L",
+      "bind_translation": [
+        -0.027522,
+        0.0,
+        0.0
+      ],
+      "bind_rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "bind_scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "name": "MiddleFinger1_L",
+      "parent_name": "Wrist_L",
+      "bind_translation": [
+        -0.137468,
+        -0.00452,
+        -0.006853
+      ],
+      "bind_rotation": [
+        0.7293198462006479,
+        0.005148293892613761,
+        0.013861575327804411,
+        0.6840130977178701
+      ],
+      "bind_scale": [
+        1.0000003088369522,
+        0.999999607725423,
+        1.0000000827319966
+      ]
+    },
+    {
+      "name": "MiddleFinger2_L",
+      "parent_name": "MiddleFinger1_L",
+      "bind_translation": [
+        -0.044617,
+        -1e-06,
+        0.0
+      ],
+      "bind_rotation": [
+        -0.0,
+        0.0,
+        0.062084271489416906,
+        0.9980709109244835
+      ],
+      "bind_scale": [
+        0.9999999128609962,
+        0.9999999128609962,
+        1.0
+      ]
+    },
+    {
+      "name": "MiddleFinger3_L",
+      "parent_name": "MiddleFinger2_L",
+      "bind_translation": [
+        -0.035518,
+        -3e-06,
+        -1e-06
+      ],
+      "bind_rotation": [
+        -0.0,
+        0.0,
+        0.07925376928805225,
+        0.9968544728563122
+      ],
+      "bind_scale": [
+        1.0000003239624475,
+        1.0000003239624475,
+        1.0
+      ]
+    },
+    {
+      "name": "MiddleFinger4_L_endBone",
+      "parent_name": "MiddleFinger3_L",
+      "bind_translation": [
+        -0.033275,
+        4e-06,
+        1e-06
+      ],
+      "bind_rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "bind_scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "name": "IndexFinger1_L",
+      "parent_name": "Wrist_L",
+      "bind_translation": [
+        -0.133223,
+        -0.037624,
+        -0.014956
+      ],
+      "bind_rotation": [
+        0.7772145030084588,
+        0.07627979525959178,
+        0.10860364576483902,
+        0.6150807349036927
+      ],
+      "bind_scale": [
+        0.9999998297564855,
+        1.0000001284019917,
+        1.0000002175069764
+      ]
+    },
+    {
+      "name": "IndexFinger2_L",
+      "parent_name": "IndexFinger1_L",
+      "bind_translation": [
+        -0.038997,
+        -4e-06,
+        -1e-06
+      ],
+      "bind_rotation": [
+        0.0,
+        0.0,
+        0.048655639679525006,
+        0.9988156129773784
+      ],
+      "bind_scale": [
+        0.9999997413204665,
+        0.9999997413204665,
+        1.0
+      ]
+    },
+    {
+      "name": "IndexFinger3_L",
+      "parent_name": "IndexFinger2_L",
+      "bind_translation": [
+        -0.031424,
+        0.0,
+        0.0
+      ],
+      "bind_rotation": [
+        0.0,
+        -0.0,
+        0.031084536984127685,
+        0.9995167590193185
+      ],
+      "bind_scale": [
+        0.999999495904873,
+        0.999999495904873,
+        1.0
+      ]
+    },
+    {
+      "name": "IndexFinger4_L_endBone",
+      "parent_name": "IndexFinger3_L",
+      "bind_translation": [
+        -0.031951,
+        -0.0,
+        0.0
+      ],
+      "bind_rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "bind_scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "name": "Shoulder_Twist_L",
+      "parent_name": "Shoulder_L",
+      "bind_translation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "bind_rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "bind_scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "name": "Shoulder_L_Twist_01",
+      "parent_name": "Shoulder_L",
+      "bind_translation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "bind_rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "bind_scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "name": "Shoulder_L_Twist_02",
+      "parent_name": "Shoulder_L_Twist_01",
+      "bind_translation": [
+        -0.147318,
+        0.0,
+        -0.0
+      ],
+      "bind_rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "bind_scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "name": "Dummy_ChestFX",
+      "parent_name": "Chest_M",
+      "bind_translation": [
+        0.191811,
+        0.12605,
+        0.0
+      ],
+      "bind_rotation": [
+        0.4966517897837138,
+        0.5033259378421043,
+        -0.4966517897837138,
+        0.5033259378421042
+      ],
+      "bind_scale": [
+        1.0,
+        1.000000088512496,
+        1.000000088512496
+      ]
+    },
+    {
+      "name": "Dummy_Sheath_Music",
+      "parent_name": "Chest_M",
+      "bind_translation": [
+        0.324311,
+        -0.270544,
+        0.0
+      ],
+      "bind_rotation": [
+        -0.5021668055529863,
+        0.49782376339494794,
+        0.5021668055529864,
+        0.49782376339494794
+      ],
+      "bind_scale": [
+        1.0,
+        0.999999724019962,
+        0.999999724019962
+      ]
+    },
+    {
+      "name": "Dummy_Sheath_Upper_L",
+      "parent_name": "Chest_M",
+      "bind_translation": [
+        0.343785,
+        -0.231848,
+        -0.130994
+      ],
+      "bind_rotation": [
+        -0.024823714247930402,
+        0.8354954853257505,
+        -0.006267977148416446,
+        0.5489005278649324
+      ],
+      "bind_scale": [
+        1.000000328392946,
+        0.9999999925735,
+        1.0000000514444987
+      ]
+    },
+    {
+      "name": "Dummy_Sheath_Upper_R",
+      "parent_name": "Chest_M",
+      "bind_translation": [
+        0.343879,
+        -0.231834,
+        0.130775
+      ],
+      "bind_rotation": [
+        0.5480965418603964,
+        0.00661098540771927,
+        0.8363729482087691,
+        -0.00517352947297323
+      ],
+      "bind_scale": [
+        1.0000003914014235,
+        0.9999999407254984,
+        1.000000173056485
+      ]
+    },
+    {
+      "name": "Dummy_WingFX",
+      "parent_name": "Chest_M",
+      "bind_translation": [
+        0.218017,
+        -0.192078,
+        0.0
+      ],
+      "bind_rotation": [
+        0.4777143571652171,
+        0.5213338594012704,
+        -0.4777143571652171,
+        0.5213338594012703
+      ],
+      "bind_scale": [
+        1.0,
+        1.0000003231804477,
+        1.0000003231804477
+      ]
+    },
+    {
+      "name": "Neck_M",
+      "parent_name": "Chest_M",
+      "bind_translation": [
+        0.346185,
+        -0.014779,
+        -0.0
+      ],
+      "bind_rotation": [
+        -0.0,
+        0.0,
+        0.11201898233089586,
+        0.9937060670024866
+      ],
+      "bind_scale": [
+        1.0000005177998659,
+        1.0000005177998659,
+        1.0
+      ]
+    },
+    {
+      "name": "Head_M",
+      "parent_name": "Neck_M",
+      "bind_translation": [
+        0.106884,
+        -0.0,
+        0.0
+      ],
+      "bind_rotation": [
+        -0.0,
+        -0.0,
+        -0.10596157110096929,
+        0.9943702255446983
+      ],
+      "bind_scale": [
+        0.9999997024179557,
+        0.9999997024179557,
+        1.0
+      ]
+    },
+    {
+      "name": "Dummy_EyeFX_02",
+      "parent_name": "Head_M",
+      "bind_translation": [
+        0.04851,
+        0.112891,
+        0.0391
+      ],
+      "bind_rotation": [
+        -0.5,
+        -0.5,
+        0.5,
+        -0.5
+      ],
+      "bind_scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "name": "Dummy_EyeFX_01",
+      "parent_name": "Head_M",
+      "bind_translation": [
+        0.04851,
+        0.112891,
+        -0.039097
+      ],
+      "bind_rotation": [
+        -0.5,
+        -0.5,
+        0.5,
+        -0.5
+      ],
+      "bind_scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "name": "Dummy_HeadFX",
+      "parent_name": "Head_M",
+      "bind_translation": [
+        0.088229,
+        0.13643,
+        0.0
+      ],
+      "bind_rotation": [
+        -0.5,
+        -0.5,
+        0.5,
+        -0.5
+      ],
+      "bind_scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "name": "Dummy_MouthFX",
+      "parent_name": "Head_M",
+      "bind_translation": [
+        -0.021499,
+        0.092741,
+        0.0
+      ],
+      "bind_rotation": [
+        -0.5,
+        -0.5,
+        0.5,
+        -0.5
+      ],
+      "bind_scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "name": "Dummy_StatusFX",
+      "parent_name": "Head_M",
+      "bind_translation": [
+        0.033673,
+        0.022609,
+        0.0
+      ],
+      "bind_rotation": [
+        -0.5,
+        -0.5,
+        0.5,
+        -0.5
+      ],
+      "bind_scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "name": "HeadEnd_M_endBone",
+      "parent_name": "Head_M",
+      "bind_translation": [
+        0.188737,
+        0.0,
+        0.0
+      ],
+      "bind_rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "bind_scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "name": "Dummy_NeckFX",
+      "parent_name": "Neck_M",
+      "bind_translation": [
+        0.033962,
+        0.0,
+        0.0
+      ],
+      "bind_rotation": [
+        -0.5792279117257997,
+        -0.4055798642410262,
+        0.5792279117257997,
+        -0.4055798642410262
+      ],
+      "bind_scale": [
+        1.0,
+        1.0000003073244528,
+        1.0000003073244528
+      ]
+    },
+    {
+      "name": "Dummy_Sheath_Ranged",
+      "parent_name": "Spine2_M",
+      "bind_translation": [
+        0.102471,
+        -0.246626,
+        0.030467
+      ],
+      "bind_rotation": [
+        0.8218774455309337,
+        0.027162809795799117,
+        -0.5689438752244558,
+        -0.009083781200128599
+      ],
+      "bind_scale": [
+        1.0000001403229901,
+        0.9999996902249519,
+        1.000000335106944
+      ]
+    },
+    {
+      "name": "Dummy_Sheath_Shield",
+      "parent_name": "Spine2_M",
+      "bind_translation": [
+        0.157402,
+        -0.245095,
+        -0.173414
+      ],
+      "bind_rotation": [
+        0.008235246128948987,
+        -0.762456449869641,
+        -0.01153452246128612,
+        0.6468842999641283
+      ],
+      "bind_scale": [
+        0.9999998058904812,
+        0.999999739182466,
+        0.9999997609369713
+      ]
+    },
+    {
+      "name": "Dummy_BodyFX",
+      "parent_name": "Spine1_M",
+      "bind_translation": [
+        0.070436,
+        2e-06,
+        0.0
+      ],
+      "bind_rotation": [
+        -0.5,
+        -0.5,
+        0.5,
+        -0.5
+      ],
+      "bind_scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "name": "Dummy_Sheath_Lower_L",
+      "parent_name": "Spine1_M",
+      "bind_translation": [
+        0.010997,
+        -0.204003,
+        -0.078
+      ],
+      "bind_rotation": [
+        0.9036406504890229,
+        -0.05770354172797454,
+        -0.42319538388332556,
+        -0.031773427095820976
+      ],
+      "bind_scale": [
+        1.0000000721699973,
+        0.9999994700688596,
+        0.9999996539944401
+      ]
+    },
+    {
+      "name": "Dummy_Sheath_Lower_R",
+      "parent_name": "Spine1_M",
+      "bind_translation": [
+        0.010997,
+        -0.204003,
+        0.078
+      ],
+      "bind_rotation": [
+        -0.03483113259508221,
+        -0.41984383165095607,
+        -0.04802739713782125,
+        0.9056551871083466
+      ],
+      "bind_scale": [
+        0.999999810397482,
+        0.9999997039219561,
+        1.0000002234519751
+      ]
+    },
+    {
+      "name": "Dummy_Sheath_Hip_L",
+      "parent_name": "Root_M",
+      "bind_translation": [
+        -0.00971,
+        -0.02158,
+        -0.22947
+      ],
+      "bind_rotation": [
+        -0.5415630880842979,
+        0.29185480707882633,
+        -0.3473847804003785,
+        0.7077104249397234
+      ],
+      "bind_scale": [
+        0.9999997250689622,
+        0.9999994297383374,
+        1.0000003192129492
+      ]
+    },
+    {
+      "name": "Dummy_Sheath_Hip_R",
+      "parent_name": "Root_M",
+      "bind_translation": [
+        -0.00989,
+        -0.02135,
+        0.23064
+      ],
+      "bind_rotation": [
+        -0.7098774633974239,
+        0.34251117197851005,
+        -0.29796071459007784,
+        0.5384972065553902
+      ],
+      "bind_scale": [
+        0.9999999478889986,
+        1.000000047265999,
+        0.999999696785954
+      ]
+    }
+  ]
+}

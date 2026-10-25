@@ -1,0 +1,368 @@
+{
+  "format": "gr2lab_bind",
+  "version": 1,
+  "source_gr2": "TIF_F_Tail_Base.GR2",
+  "root": "Dummy_Root",
+  "bones": [
+    {
+      "name": "Dummy_Root",
+      "parent_name": null,
+      "bind_translation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "bind_rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "bind_scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "name": "Root_M",
+      "parent_name": "Dummy_Root",
+      "bind_translation": [
+        -0.0,
+        1.04532,
+        -0.0269
+      ],
+      "bind_rotation": [
+        -0.494693,
+        -0.505252,
+        0.494693,
+        0.505252
+      ],
+      "bind_scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "name": "Tail0_M",
+      "parent_name": "Root_M",
+      "bind_translation": [
+        0.075701,
+        -0.109346,
+        -0.0
+      ],
+      "bind_rotation": [
+        0.483557,
+        -0.875313,
+        -0.0,
+        0.0
+      ],
+      "bind_scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "name": "Tail1_M",
+      "parent_name": "Tail0_M",
+      "bind_translation": [
+        0.188002,
+        -0.0,
+        0.0
+      ],
+      "bind_rotation": [
+        0.0,
+        0.0,
+        -0.011312,
+        0.999936
+      ],
+      "bind_scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "name": "Tail2_M",
+      "parent_name": "Tail1_M",
+      "bind_translation": [
+        0.208817,
+        -0.0,
+        0.0
+      ],
+      "bind_rotation": [
+        0.0,
+        -0.0,
+        -0.00265,
+        0.999996
+      ],
+      "bind_scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "name": "Tail3_M",
+      "parent_name": "Tail2_M",
+      "bind_translation": [
+        0.196403,
+        -0.0,
+        0.0
+      ],
+      "bind_rotation": [
+        0.0,
+        0.0,
+        -0.015772,
+        0.999876
+      ],
+      "bind_scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "name": "Tail4_M",
+      "parent_name": "Tail3_M",
+      "bind_translation": [
+        0.159652,
+        -0.0,
+        0.0
+      ],
+      "bind_rotation": [
+        -0.0,
+        -0.0,
+        0.028382,
+        0.999597
+      ],
+      "bind_scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "name": "Tail5_M",
+      "parent_name": "Tail4_M",
+      "bind_translation": [
+        0.168306,
+        -0.0,
+        0.0
+      ],
+      "bind_rotation": [
+        0.0,
+        0.0,
+        -0.037039,
+        0.999314
+      ],
+      "bind_scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "name": "Tail6_M",
+      "parent_name": "Tail5_M",
+      "bind_translation": [
+        0.17234,
+        0.0,
+        0.0
+      ],
+      "bind_rotation": [
+        -0.0,
+        0.0,
+        0.02645,
+        0.99965
+      ],
+      "bind_scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "name": "Tail7_M",
+      "parent_name": "Tail6_M",
+      "bind_translation": [
+        0.082285,
+        -0.0,
+        0.0
+      ],
+      "bind_rotation": [
+        -0.0,
+        0.0,
+        0.005229,
+        0.999986
+      ],
+      "bind_scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "name": "Tail8_M_endBone",
+      "parent_name": "Tail7_M",
+      "bind_translation": [
+        0.164183,
+        -0.0,
+        0.0
+      ],
+      "bind_rotation": [
+        0.0,
+        -0.0,
+        0.0,
+        1.0
+      ],
+      "bind_scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "name": "Spine1_M",
+      "parent_name": "Root_M",
+      "bind_translation": [
+        0.071281,
+        -0.0,
+        -0.0
+      ],
+      "bind_rotation": [
+        0.0,
+        0.0,
+        -0.010559,
+        0.999944
+      ],
+      "bind_scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "name": "Spine2_M",
+      "parent_name": "Spine1_M",
+      "bind_translation": [
+        0.085026,
+        0.0,
+        0.0
+      ],
+      "bind_rotation": [
+        -0.0,
+        -0.0,
+        -0.010559,
+        0.999944
+      ],
+      "bind_scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "name": "Chest_M",
+      "parent_name": "Spine2_M",
+      "bind_translation": [
+        0.085026,
+        0.0,
+        -0.0
+      ],
+      "bind_rotation": [
+        0.0,
+        0.0,
+        -0.010559,
+        0.999944
+      ],
+      "bind_scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "name": "Hip_L",
+      "parent_name": "Root_M",
+      "bind_translation": [
+        -0.029542,
+        -0.017891,
+        -0.09874
+      ],
+      "bind_rotation": [
+        -0.0,
+        0.0,
+        0.035961,
+        0.999353
+      ],
+      "bind_scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "name": "Hip_L_Twist_01",
+      "parent_name": "Hip_L",
+      "bind_translation": [
+        -0.0,
+        -0.0,
+        -0.0
+      ],
+      "bind_rotation": [
+        0.0,
+        0.0,
+        -0.0,
+        1.0
+      ],
+      "bind_scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "name": "Hip_R",
+      "parent_name": "Root_M",
+      "bind_translation": [
+        -0.029541,
+        -0.017891,
+        0.09874
+      ],
+      "bind_rotation": [
+        -0.0,
+        0.0,
+        -0.999353,
+        0.035962
+      ],
+      "bind_scale": [
+        1.000007,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "name": "Hip_R_Twist_01",
+      "parent_name": "Hip_R",
+      "bind_translation": [
+        -0.0,
+        -0.0,
+        -0.0
+      ],
+      "bind_rotation": [
+        0.0,
+        -0.0,
+        0.0,
+        1.0
+      ],
+      "bind_scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    }
+  ]
+}

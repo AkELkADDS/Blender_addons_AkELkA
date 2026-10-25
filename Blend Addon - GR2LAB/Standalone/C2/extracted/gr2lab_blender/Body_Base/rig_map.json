@@ -1,0 +1,95 @@
+{
+  "description": "Rig-family overrides for Body_Base matching and batch validation tiers.",
+  "bind_optional_families": [
+    "CINE_Generic_Object",
+    "Dagger",
+    "SCENE",
+    "Elder_Brain",
+    "DRAGON_Red",
+    "HUM_CHD",
+    "TIF_CHD"
+  ],
+  "bind_optional_prefixes": [
+    "CINE_",
+    "PROP_"
+  ],
+  "head_families": [
+    "MFL_M_Head",
+    "MFLP_Head",
+    "HPHANT_Head",
+    "DGB_M_Head",
+    "DGB_F_Head",
+    "ELF_M_Head",
+    "ELF_F_Head",
+    "HUM_M_Head",
+    "HUM_F_Head",
+    "TIF_FS_Head",
+    "DOG_Head",
+    "CAT_Head",
+    "BEAR_Head",
+    "DRAGON_Skeletal_Head"
+  ],
+  "overrides": {
+    "ELF_M": null,
+    "ELF_F": null,
+    "MFL_M": null,
+    "MFLP": null,
+    "HEL_F": null,
+    "CAMBION_F": null,
+    "CAMBION_F_Wing": null,
+    "HUM_CHD": null,
+    "TIF_CHD": null
+  },
+  "missing_bases_manifest": [
+    {
+      "rig_family": "ELF_M",
+      "volume_estimate": 298,
+      "suggested_base": "ELF_M_Base.GR2",
+      "status": "missing",
+      "notes": "High-volume player companion rig; add base GR2 for bind/T-pose"
+    },
+    {
+      "rig_family": "ELF_F",
+      "volume_estimate": 122,
+      "suggested_base": "ELF_F_Base.GR2",
+      "status": "missing"
+    },
+    {
+      "rig_family": "MFL_M",
+      "volume_estimate": 184,
+      "suggested_base": "MFL_M_Base.GR2",
+      "status": "missing"
+    },
+    {
+      "rig_family": "MFLP",
+      "volume_estimate": 174,
+      "suggested_base": "MFLP_Base.GR2",
+      "status": "missing"
+    },
+    {
+      "rig_family": "HEL_F",
+      "volume_estimate": 206,
+      "suggested_base": "HEL_F_Base.GR2",
+      "status": "missing"
+    },
+    {
+      "rig_family": "CAMBION_F",
+      "volume_estimate": 150,
+      "suggested_base": "CAMBION_F_Base.GR2",
+      "status": "missing"
+    },
+    {
+      "rig_family": "CAMBION_F_Wing",
+      "volume_estimate": 148,
+      "suggested_base": "CAMBION_F_Wing_Base.GR2",
+      "status": "missing"
+    },
+    {
+      "rig_family": "TIF_FS_Tail",
+      "volume_estimate": 0,
+      "suggested_base": "TIF_FS_Tail_Base.GR2",
+      "status": "missing",
+      "notes": "Tail rig clips; prefer tail-specific base over TIF_FS_Base"
+    }
+  ]
+}
